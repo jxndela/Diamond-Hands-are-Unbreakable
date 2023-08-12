@@ -1,11 +1,21 @@
 // DSA Diamond Hands Assignment.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// Header Guard
 #pragma once
 
+// Include allowed libraries
 #include <iostream>
+#include <string>
+
+// Include all the header files
 #include "User.h"
 #include "CustomerDictionary.h"
 #include "Customer.h"
+#include "RestaurantStaff.h"
+#include "Restaurant.h"
+#include "FoodItem.h"
+#include "FoodItemAVL.h"
+#include "Order.h"
+#include "OrderQueue.h"
 
 using namespace std;
 
