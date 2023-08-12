@@ -67,7 +67,7 @@ private:
     // corresponding foodItemName. Afterwhich, it will delete the node
     // Pre : Need the starting node
     // Post: Return nullptr if succesful
-    AVLNode* deleteNodeRecursive(AVLNode* aNode, string& foodItemName);
+    AVLNode* deleteNodeRecursive(AVLNode* aNode, const string& foodItemName);
 
     // recurisive print function 
     void printInOrderRecursive(AVLNode* aNode);

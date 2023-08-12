@@ -180,7 +180,7 @@ AVLNode* FoodItemAVL::searchNodeRecursive(AVLNode* aNode, string& itemName)
 // corresponding foodItemName. Afterwhich, it will delete the node
 // Pre : Need the starting node
 // Post: Return nullptr if succesful
-AVLNode* FoodItemAVL::deleteNodeRecursive(AVLNode* aNode, string& itemName)
+AVLNode* FoodItemAVL::deleteNodeRecursive(AVLNode* aNode, const string& itemName)
 {
     if (aNode == nullptr)
         return aNode;
@@ -250,7 +250,10 @@ void FoodItemAVL::insertNode(FoodItem aFoodItem)
 // Post: Returns the address of the foodItem stored within the tree
 FoodItem* FoodItemAVL::searchNode(string& foodItemName)
 {
-    return searchNodeRecursive(root, foodItemName) != nullptr;
+    AVLNode* foundNode = searchNodeRecursive(root, foodItemName);
+    if (foundNode != nullptr)
+        return &(foundNode->foodItem);
+    return nullptr;
 }
 
 // Print in alphabetical order (A-Z)
