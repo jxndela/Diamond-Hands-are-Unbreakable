@@ -84,5 +84,11 @@ public:
 			}
 		}
 	}
+	
+	// loads data from file
+	void loadFromFile();
+	// saves data to file
+	void saveToFile();
 };
 
+	
