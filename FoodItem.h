@@ -49,7 +49,7 @@ public:
 	// Pre : ~
 	// Post: Retrieves the name of the food item
 	string getCategory();
-
+	 
 	// Function to get price of food item
 	// Pre : ~ 
 	// Post: Retrieves price of the food item

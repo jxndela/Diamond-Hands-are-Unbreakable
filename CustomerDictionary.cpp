@@ -99,7 +99,7 @@ bool CustomerDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 	return true;
 }
 
-string CustomerDictionary::retrieve(string aEmailKey)
+string CustomerDictionary::retrievePassword(string aEmailKey)
 {
 	// Hash the email key to obtain index of the user
 	int index = getHashedKey(aEmailKey);

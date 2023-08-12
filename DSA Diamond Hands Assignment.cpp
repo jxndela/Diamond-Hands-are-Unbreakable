@@ -64,6 +64,7 @@ bool isValidEmail(string& email)
 	}
 	return true;
 }
+
 // Check if valid postal code
 // Postal Codes in SG are all 6 digits long , any digit is OK
 bool isValidPostalCode(string& input)
@@ -134,11 +135,10 @@ bool login(string userInputEmail, string userInputPassword, CustomerDictionary& 
 
 	// Step 2: Check if emailkey is inside the dictionary
 	// If it is not inside, comparedHash = "USERNOTFOUND"
-	string comparedHash = aCustomerDictionary.retrieve(userInputEmail);
+	string comparedHash = aCustomerDictionary.retrievePassword(userInputEmail);
 	if (comparedHash == hashedPassword)
 	{
 		cout << "Authentication success" << endl;
-		cout << "----------------------" << endl;
 		return true;
 	}
 	else
@@ -184,7 +184,11 @@ int main()
 	CustomerDictionary userDatabase = CustomerDictionary();
 
 	// Set-up and exit condition for UI
+	Customer customer = Customer();
+
 	bool displayLogin = true;
+	bool customerLoggedIn = false;
+	bool restaurantStaffLoggedIn = false;
 	string loginChoice;
 
 	// User presented with two choices to log in or register
@@ -227,7 +231,7 @@ int main()
 				if (login(guestEmail, guestPassword, userDatabase))
 				{
 					// On log in success, 
-					cout << "Welcome Back" << endl;
+					customerLoggedIn = true;
 					break;
 				}
 
@@ -284,7 +288,24 @@ int main()
 			cout << "---------------------------------------" << endl;
 		}
 	}
-   
+
+	if (customerLoggedIn)
+	{
+		// Present interface for the user
+		cout << "====================================================" << endl;
+		cout << "Welcome Back" << endl;
+		cout << "What would you like to do?" << endl;
+		cout << "1. Create new order\n2. Check order\n3. Cancel Order" << endl;
+	}
+	if (restaurantStaffLoggedIn)
+	{
+		// Present interface for the user
+		cout << "====================================================" << endl;
+		cout << "Welcome Back" << endl;
+		cout << "What would you like to do?" << endl;
+		cout << "1. View Incoming Orders\n2. View customer information of latest order\n3. Update Order\n4. Generate Report" << endl;
+	}
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

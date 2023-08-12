@@ -48,7 +48,7 @@ public:
 	// Retrieve the hashedpw that matches the hashedKey
 	// Pre : The hashedKey must match at least one of the results 
 	// Post: Returns the hashedpw
-	string retrieve(string aEmailKey);
+	string retrievePassword(string aEmailKey);
 
 	// Check if Dictionary is empty
 	// Pre  : ~

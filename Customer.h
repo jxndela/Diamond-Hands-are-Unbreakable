@@ -13,8 +13,8 @@ class Customer :  User
 private:
 
     // Private attributes 
-    string customerName;    // Stores customer name
-    int postalCode;         // Store customer's postal code 
+    string customerName;   // Stores customer name
+    int postalCode;        // Store customer's postal code 
 
 public:
 
@@ -52,21 +52,21 @@ public:
     // Generate UI For browsing Food Selection
     // Pre : ~
     // Post: Show the food selection with options to sort 
-    //void browseFoodSelections();
+    void browseFoodSelections();
 
     // Generate a temporary Order Variable
     // Pre : No orders in progress 
     // Post: Create a temporary order to store foodItems in 
-    //void createNewOrder();
+    void createNewOrder();
 
     // Confirm the order and send it to Restaurant
     // Pre : Order is not empty
     // Post: Send the order to the Restaurant orders queue
-    //void confirmOrder();
+    void confirmOrder();
 
     // Cancel an order 
     // Pre : There must be an existing order that is in progress
     // Post: Returns true if successful, returns false otherwise
-    // bool cancelOrder(Order& order);
+    //bool cancelOrder(Order& order);
 };
 

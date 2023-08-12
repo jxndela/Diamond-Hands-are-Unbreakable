@@ -2,13 +2,15 @@
 #include <iostream>
 #include <string>
 #include "User.h"
+#include "Restaurant.h"
 
 using namespace std;
 
 class RestaurantStaff : User
 {
 private:
-	string branchName;	// Stores the branch which the staff works at
+
+	Restaurant* restaurantPointer = nullptr;	// Stores the branch which the staff works at
 
 public:
 
@@ -16,7 +18,7 @@ public:
 	RestaurantStaff();
 
 	// Parameterized Constructor
-	RestaurantStaff(string aBranchName);
+	RestaurantStaff(Restaurant* aRestaurantPointer);
 
 	// Destructor
 	~RestaurantStaff();

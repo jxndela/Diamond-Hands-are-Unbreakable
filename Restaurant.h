@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "FoodItemAVL.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ private:
 	string restaurantName;	// Store restaurant name
 	int postalCode;			// Store restaurant postal code
 	//OrderQueue incomingOrder;
-	// Contain FoodItem AVL Tree
+	FoodItemAVL restaurantMenu;
 
 public:
 	// Default Constructor
@@ -33,11 +34,7 @@ public:
 	// Post: postalCode
 	int getPostalCode();
 
-	// Get the order queue pointer from restaurant
-	// Pre : Order not queue not empty
-	// Post: Get pointer to order queue to save space complexity
-	//OrderQueue* getRestaurantOrders();
-
+	void printMenu();
 
 
 };

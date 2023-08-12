@@ -35,6 +35,13 @@ int Restaurant::getPostalCode()
 	return postalCode;
 }
 
+void Restaurant::printMenu()
+{
+	cout << "PRINTING MENU" << endl;
+	restaurantMenu.printInOrder();
+	cout << endl; 
+}
+
 
 
 // Get the order queue pointer from restaurant

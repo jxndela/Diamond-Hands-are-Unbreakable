@@ -3,12 +3,16 @@
 // Constructor
 RestaurantStaff::RestaurantStaff()
 {
+
 }
 
-// Parameterized Constructor
-// 1 : 1 relationship between Staff and Restaurant Branch
-RestaurantStaff::RestaurantStaff(string aBranchName)
+RestaurantStaff::RestaurantStaff(Restaurant* aRestaurantPointer)
 {
-	branchName = aBranchName;
+	aRestaurantPointer = aRestaurantPointer;
+}
+
+
+RestaurantStaff::~RestaurantStaff()
+{
 }
 
