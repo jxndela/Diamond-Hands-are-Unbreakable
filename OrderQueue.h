@@ -5,6 +5,8 @@
 
 using namespace std;
 
+class Order;
+
 struct orderNode
 {
 	Order* orderPointer;

@@ -121,13 +121,13 @@ bool Order::addFoodItem(FoodItem* aFoodItemPointer)
 // Remove food item from order
 // Pre : food item must exist within the order
 // Post : Return success or error message
-bool Order::removeFoodItem(FoodItem* item)
+bool Order::removeFoodItem(FoodItem* aFoodItemPointer)
 {
 	// Iterate through array
 	for (int i = 0; i < ORDER_MAX_SIZE; i++)
 	{
 		// If food item mathes
-		if (orderedItems[i] == item)
+		if (orderedItems[i] == aFoodItemPointer)
 		{
 			orderedItems[i] = nullptr;
 			cout << "FoodItem removed Succesfully" << endl;

@@ -3,8 +3,13 @@
 #include <string>
 #include "User.h"
 #include "Restaurant.h"
+#include "Order.h"
 
 using namespace std;
+
+// Forward Declaration
+class Order;
+class Restaurant;
 
 class RestaurantStaff : User
 {
@@ -31,7 +36,7 @@ public:
 	// View specific order information
 	// Pre : ~
 	// Post: Return UI showing customer info and food items
-	void viewOrderAndCustomerInfo(string aOrder);
+	void viewOrderAndCustomerInfo(Order aOrder);
 
 	// Update the order status 
 	// Pre : Order must exist

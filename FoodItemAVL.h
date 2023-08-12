@@ -3,6 +3,8 @@
 #include <string>
 #include "FoodItem.h"
 
+class FoodItem;
+
 using namespace std;
 
 // Implement the AVL Nodes that we will be using

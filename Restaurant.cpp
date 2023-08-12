@@ -42,20 +42,3 @@ void Restaurant::printMenu()
 	cout << endl; 
 }
 
-
-
-// Get the order queue pointer from restaurant
-// Pre : Order not queue not empty
-// Post: Get pointer to order queue to save space complexity
-//OrderQueue* Restaurant::getRestaurantOrders()
-//{
-//	// If empty return null ptr
-//	if (incomingOrder.isEmpty())
-//	{
-//		return nullptr;
-//	}
-//
-//	// Else return address
-//	return &incomingOrder;
-//}
-

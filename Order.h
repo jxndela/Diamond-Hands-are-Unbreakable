@@ -2,7 +2,6 @@
 #include <string>
 #include <iostream>
 #include "foodItem.h"
-#include "Restaurant.h"
 #include "User.h"
 #include "Customer.h"
 #include "RestaurantStaff.h"
@@ -10,18 +9,22 @@
 using namespace std;
 const int ORDER_MAX_SIZE = 20;
 
+// Forward declaration
+
+class Restaurant;
+
 class Order
 {
 private:
 
     string orderId;                         // Id serves as primary key
-    Customer* customerPointer;              // Stores pointer to customer rather than copying object
-    Restaurant* restaurantPointer;          // Stores pointer to restaurant rather than copying object
+    Customer* customerPointer = nullptr;    // Stores pointer to customer rather than copying object
+    Restaurant* restaurantPointer = nullptr;// Stores pointer to restaurant rather than copying object
     FoodItem* orderedItems[ORDER_MAX_SIZE]; // Stores array of pointer to food objects that is to be prepared
-    string orderStatus;                     // Stores information about the state of the order
+    string orderStatus = "In Progress";     // Stores information about the state of the order
     string customerName;                    // Stores customer name
     int customerPostalCode;                 // Stores customer postal code
-    int size;                               // Stores size of the order
+    int size = 0;                            // Stores size of the order
 
 public:
 

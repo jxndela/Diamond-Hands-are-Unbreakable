@@ -4,6 +4,7 @@
 #include "User.h"
 #include "Customer.h"
 
+class Customer;
 
 using namespace std;
 
