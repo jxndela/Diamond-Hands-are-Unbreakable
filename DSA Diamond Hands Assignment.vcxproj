@@ -129,13 +129,21 @@
   <ItemGroup>
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="DSA Diamond Hands Assignment.cpp" />
+    <ClCompile Include="FoodItem.cpp" />
+    <ClCompile Include="Order.cpp" />
+    <ClCompile Include="Restaurant.cpp" />
+    <ClCompile Include="RestaurantStaff.cpp" />
     <ClCompile Include="User.cpp" />
-    <ClCompile Include="UserDictionary.cpp" />
+    <ClCompile Include="CustomerDictionary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h" />
+    <ClInclude Include="FoodItem.h" />
+    <ClInclude Include="Order.h" />
+    <ClInclude Include="Restaurant.h" />
+    <ClInclude Include="RestaurantStaff.h" />
     <ClInclude Include="User.h" />
-    <ClInclude Include="UserDictionary.h" />
+    <ClInclude Include="CustomerDictionary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

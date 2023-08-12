@@ -4,6 +4,8 @@
 #include "User.h"
 //#include "Order.h"
 
+using namespace std;
+
 // Customer class is derived from user
 // This means that it inherits email + password
 class Customer :  User
@@ -18,9 +20,6 @@ public:
 
     // Default constructor 
     Customer();
-
-    // Parameterized constructor 
-    Customer(string aCustomerName, int aPostalCode);
 
     // Parameterized constructor 
     Customer(string aEmail, string aPasswordhash, string aCustomerName, int aPostalCode);

@@ -1,7 +1,7 @@
-#include "UserDictionary.h"
+#include "CustomerDictionary.h"
 
 // Constructor for the Dictionary
-UserDictionary::UserDictionary()
+CustomerDictionary::CustomerDictionary()
 {
 	// Initialize the values in each index of the users array and assign nullptr
 	for (int i = 0; i < CUSTOMER_MAX_SIZE; i++)
@@ -12,7 +12,7 @@ UserDictionary::UserDictionary()
 	size = 0;
 }
 
-UserDictionary::~UserDictionary()
+CustomerDictionary::~CustomerDictionary()
 {
 	// Iterate through each bucket
 	for (int i = 0; i < CUSTOMER_MAX_SIZE; ++i) {
@@ -29,7 +29,7 @@ UserDictionary::~UserDictionary()
 // Hash the key that will be used to search
 // Pre : ~
 // Post: Returns INT value based on hash algorithm hashedKey
-int UserDictionary::getHashedKey(string aEmailKey)
+int CustomerDictionary::getHashedKey(string aEmailKey)
 {
 	// TEMPORARY HASH FUNCTION
 	int sum = 0;
@@ -44,10 +44,10 @@ int UserDictionary::getHashedKey(string aEmailKey)
 // Pre : EmailKey must be input validated beforehand. This emailKey comes from user input
 //       User Object is created 
 // Post: New item added to dictionary, returns true. Otherwise return false
-bool UserDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
+bool CustomerDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 {
 	// Hash the email key to obtain index of the user
-	int index = UserDictionary::getHashedKey(aEmailKey);
+	int index = CustomerDictionary::getHashedKey(aEmailKey);
 
 	// If space contains a nullptr, start new linked list 
 	if (customers[index] == nullptr)
@@ -99,7 +99,7 @@ bool UserDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 	return true;
 }
 
-string UserDictionary::retrieve(string aEmailKey)
+string CustomerDictionary::retrieve(string aEmailKey)
 {
 	// Hash the email key to obtain index of the user
 	int index = getHashedKey(aEmailKey);
@@ -121,7 +121,7 @@ string UserDictionary::retrieve(string aEmailKey)
 	return "USERNOTFOUND";
 }
 
-bool UserDictionary::isEmpty()
+bool CustomerDictionary::isEmpty()
 {
 	return size == 0;
 }

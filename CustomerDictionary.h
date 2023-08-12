@@ -18,7 +18,7 @@ struct CustomerNode
 	CustomerNode* next = nullptr;	// Pointer to next item
 };
 
-class UserDictionary
+class CustomerDictionary
 {
 private:
 	// Attributes
@@ -27,8 +27,8 @@ private:
 
 public:
 	// Constructor for the Dictionary
-	UserDictionary();
-	~UserDictionary();
+	CustomerDictionary();
+	~CustomerDictionary();
 
 	// TODO: Parameterized constructor for dictionary (used to initialize dictionary with existing data from .txt file)
 	// Pre : Valid URL file path

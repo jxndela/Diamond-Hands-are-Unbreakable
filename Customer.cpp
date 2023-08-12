@@ -7,14 +7,6 @@ Customer::Customer()
 	postalCode = 650367;
 }
 
-// Parameterized constructor
-// Do not need email password as it user is downcasted into customer
-Customer::Customer(string aCustomerName, int aPostalCode)
-{
-	customerName = aCustomerName;
-	postalCode = aPostalCode;
-}
-
 Customer::Customer(string aEmail, string aPasswordhash, string aCustomerName, int aPostalCode)
 {
 	email = aEmail;

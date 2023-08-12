@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "User.h"
-#include "UserDictionary.h"
+#include "CustomerDictionary.h"
 #include "Customer.h"
 
 using namespace std;
@@ -117,14 +117,14 @@ int getValidatedInt()
 // Functions 1 : Login
 // Pre : Should only be when logged out
 // Post: Return a true or false statement 
-bool login(string userInputEmail, string userInputPassword, UserDictionary& aDictionary)
+bool login(string userInputEmail, string userInputPassword, CustomerDictionary& aCustomerDictionary)
 {
 	// Step 1: Hash the user input password
 	string hashedPassword = hashPassword(userInputPassword);
 
 	// Step 2: Check if emailkey is inside the dictionary
 	// If it is not inside, comparedHash = "USERNOTFOUND"
-	string comparedHash = aDictionary.retrieve(userInputEmail);
+	string comparedHash = aCustomerDictionary.retrieve(userInputEmail);
 	if (comparedHash == hashedPassword)
 	{
 		cout << "Authentication success" << endl;
@@ -143,7 +143,7 @@ bool login(string userInputEmail, string userInputPassword, UserDictionary& aDic
 // Register New Customer
 // Pre : Should only be when logged out
 bool registerAccount(string userInputEmail, string userInputPassword, 
-	string userInputName, int userInputPostalCode, UserDictionary& aDictionary)
+	string userInputName, int userInputPostalCode, CustomerDictionary& aCustomerDictionary)
 {
 
 	// Step 1: Hash the user input password
@@ -154,7 +154,7 @@ bool registerAccount(string userInputEmail, string userInputPassword,
 		userInputName, userInputPostalCode );
 
 	// STep 3: Add the user
-	bool addCustomerSuccess = aDictionary.addCustomer(userInputEmail, tempUser);
+	bool addCustomerSuccess = aCustomerDictionary.addCustomer(userInputEmail, tempUser);
 
 	// Step 4 : Check if adding into dictionary is successful, return false if failed.
 	if (addCustomerSuccess == false)
@@ -168,13 +168,10 @@ bool registerAccount(string userInputEmail, string userInputPassword,
 	return true;
 }
 
-
-
-
 int main()
 {
 	// Initaliaze user database
-	UserDictionary userDatabase = UserDictionary();
+	CustomerDictionary userDatabase = CustomerDictionary();
 
 	// Set-up and exit condition for UI
 	bool displayLogin = true;
@@ -199,7 +196,7 @@ int main()
 			{
 				userDatabase.printEverything();
 			}
-			// Login Function
+			// 1. Login Function
 			if (loginChoice == "1")
 			{
 				cout << "         _____   ______ _____ __   _" << endl;
@@ -225,7 +222,7 @@ int main()
 				}
 
 			}
-			// Register function
+			// 2. Register function
 			if (loginChoice == "2")
 			{	                             
 
@@ -268,6 +265,7 @@ int main()
 				cout << "-------------------------------------------------" << endl;
 
 			}
+			// 3. 
 		}
 		// For any invalid menu options
 		else
