@@ -43,6 +43,11 @@ public:
 
 	void printMenu();
 
+	OrderQueue* getIncomingOrder()
+	{
+		return incomingOrder;
+	}
+
 
 };
 

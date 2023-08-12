@@ -16,3 +16,9 @@ RestaurantStaff::~RestaurantStaff()
 {
 }
 
+void RestaurantStaff::viewAllOrders()
+{
+	cout << "VIEWING ALL ORDERS" << endl;
+	restaurantPointer->getIncomingOrder()->printQueue();
+}
+

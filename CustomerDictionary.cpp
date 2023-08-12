@@ -159,11 +159,9 @@ bool CustomerDictionary::isEmpty()
 
 void CustomerDictionary::loadFromFile()
 {
-	cout << "DOES THE FILE EXIST" << endl;
 	ifstream inFile("user_details.txt");
 	if (!inFile.is_open())
 	{
-		cout << "FILE DOES NOT EXIST" << endl;
 		// Create the file if it doesn't exist
 		ofstream newFile("user_details.txt");
 		newFile.close();
@@ -177,11 +175,10 @@ void CustomerDictionary::loadFromFile()
 	}
 
 	string emailKey, passwordHash;
-	cout << "FILE HAS BEEN READ" << endl;
 	while (inFile >> emailKey >> passwordHash) {
 		CustomerNode* newNode = new CustomerNode;
 		newNode->emailKey = emailKey;
-		newNode->customer.setPasswordHash(passwordHash); // Corrected line
+		newNode->customer.setPasswordHash(passwordHash);
 		newNode->next = nullptr;
 
 		int index = getHashedKey(emailKey);
@@ -197,7 +194,6 @@ void CustomerDictionary::loadFromFile()
 			current->next = newNode;
 		}
 	}
-	cout << "FILE HAS BEEN READ" << endl;
 	inFile.close();
 }
 
