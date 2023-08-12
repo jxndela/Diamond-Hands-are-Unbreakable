@@ -1,5 +1,4 @@
 #include "CustomerDictionary.h"
-#include <fstream>
 
 // Constructor for the Dictionary
 CustomerDictionary::CustomerDictionary()
@@ -11,16 +10,10 @@ CustomerDictionary::CustomerDictionary()
 	}
 	// Set default size to 0
 	size = 0;
-	
-	// Load user details from file
-	loadFromFile();
 }
 
 CustomerDictionary::~CustomerDictionary()
 {
-	// Save user details to file
-	saveToFile();
-	
 	// Iterate through each bucket
 	for (int i = 0; i < CUSTOMER_MAX_SIZE; ++i) {
 		// Delete linked list nodes in the current bucket
@@ -31,7 +24,6 @@ CustomerDictionary::~CustomerDictionary()
 			delete temp;
 		}
 	}
-	
 }
 
 // Hash the key that will be used to search
@@ -132,66 +124,4 @@ string CustomerDictionary::retrieve(string aEmailKey)
 bool CustomerDictionary::isEmpty()
 {
 	return size == 0;
-}
-
-// Function to save user login details to a text file
-void CustomerDictionary::saveToFile()
-{
-	ofstream outFile("user_details.txt");
-
-	for (int i = 0; i < CUSTOMER_MAX_SIZE; ++i) {
-		CustomerNode* current = customers[i];
-		while (current != nullptr) {
-			outFile << current->emailKey << " " << current->customer.getPasswordHash() << endl;
-			current = current->next;
-		}
-	}
-
-	cout << "FILE HAS BEEN SAVED" << endl;
-	outFile.close();
-}
-
-// Function to read user login details from a text file
-void CustomerDictionary::loadFromFile()
-{
-	cout << "DOES THE FILE EXIST" << endl;
-	ifstream inFile("user_details.txt");
-	if (!inFile.is_open())
-	{
-		cout << "FILE DOES NOT EXIST" << endl;
-		// Create the file if it doesn't exist
-		ofstream newFile("user_details.txt");
-		newFile.close();
-
-		// Try opening the newly created file
-		inFile.open("user_details.txt");
-		if (!inFile.is_open())
-		{
-			return; // Still unable to open the file
-		}
-	}
-
-	string emailKey, passwordHash;
-	cout << "FILE HAS BEEN READ" << endl;
-	while (inFile >> emailKey >> passwordHash) {
-		CustomerNode* newNode = new CustomerNode;
-		newNode->emailKey = emailKey;
-		newNode->customer.setPasswordHash(passwordHash); // Corrected line
-		newNode->next = nullptr;
-
-		int index = getHashedKey(emailKey);
-
-		if (customers[index] == nullptr) {
-			customers[index] = newNode;
-		}
-		else {
-			CustomerNode* current = customers[index];
-			while (current->next != nullptr) {
-				current = current->next;
-			}
-			current->next = newNode;
-		}
-	}
-	cout << "FILE HAS BEEN READ" << endl;
-	inFile.close();
 }

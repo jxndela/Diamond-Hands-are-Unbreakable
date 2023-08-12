@@ -5,7 +5,6 @@
 // Include allowed libraries
 #include <iostream>
 #include <string>
-#include <fstream>
 
 // Include all the header files
 #include "User.h"
@@ -154,7 +153,7 @@ bool login(string userInputEmail, string userInputPassword, CustomerDictionary& 
 // Register New Customer
 // Pre : Should only be when logged out
 bool registerAccount(string userInputEmail, string userInputPassword, 
-	string userInputName, int userInputPostalCode,	CustomerDictionary& aCustomerDictionary)
+	string userInputName, int userInputPostalCode, CustomerDictionary& aCustomerDictionary)
 {
 
 	// Step 1: Hash the user input password
@@ -175,7 +174,7 @@ bool registerAccount(string userInputEmail, string userInputPassword,
 	}
 
 	// Step 5 : Otherwise, adding is succesful return as true
-
+	
 	return true;
 }
 
@@ -274,8 +273,6 @@ int main()
 				// If success show message
 				cout << "Registration successful! Please proceed to log in" << endl;
 				cout << "-------------------------------------------------" << endl;
-				// Save the new user details to the text file
-				userDatabase.saveToFile();
 
 			}
 			// 3. 
