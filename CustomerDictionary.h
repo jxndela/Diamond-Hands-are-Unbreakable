@@ -4,6 +4,7 @@
 #include "User.h"
 #include "Customer.h"
 
+// Forward declaration
 class Customer;
 
 using namespace std;
