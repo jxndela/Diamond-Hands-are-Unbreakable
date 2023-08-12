@@ -131,6 +131,7 @@
     <ClCompile Include="DSA Diamond Hands Assignment.cpp" />
     <ClCompile Include="FoodItem.cpp" />
     <ClCompile Include="Order.cpp" />
+    <ClCompile Include="OrderQueue.cpp" />
     <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="RestaurantStaff.cpp" />
     <ClCompile Include="User.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Customer.h" />
     <ClInclude Include="FoodItem.h" />
     <ClInclude Include="Order.h" />
+    <ClInclude Include="OrderQueue.h" />
     <ClInclude Include="Restaurant.h" />
     <ClInclude Include="RestaurantStaff.h" />
     <ClInclude Include="User.h" />
