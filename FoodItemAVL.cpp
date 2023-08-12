@@ -174,12 +174,16 @@ AVLNode* FoodItemAVL::insertNodeRecursive(AVLNode* aNode, FoodItem& aFoodItem)
 //       returns nullptr otherwise
 AVLNode* FoodItemAVL::searchNodeRecursive(AVLNode* aNode, string& itemName)
 {
+    // Check if the current node is null or has the desired item name
     if (aNode == nullptr || aNode->foodItem.getName() == itemName)
-        return aNode;
-
+        return aNode; // Return the current node (nullptr if not found or matching)
+    
+    // Compare the desired item name with the current node's food item's name
     if (itemName < aNode->foodItem.getName())
+        // If the desired item name is smaller, search in the left subtree
         return searchNodeRecursive(aNode->left, itemName);
     else
+        // If the desired item name is greater, search in the right subtree
         return searchNodeRecursive(aNode->right, itemName);
 }
 
@@ -189,57 +193,78 @@ AVLNode* FoodItemAVL::searchNodeRecursive(AVLNode* aNode, string& itemName)
 // Post: Return nullptr if succesful
 AVLNode* FoodItemAVL::deleteNodeRecursive(AVLNode* aNode, const string& itemName)
 {
+    // Check if the current node is null
     if (aNode == nullptr)
-        return aNode;
-
+        return aNode; // Return nullptr since the item was not found
+    
+    // Compare the item name with the current node's food item's name
     if (itemName < aNode->foodItem.getName())
+        // If the desired item name is smaller, recursively search in the left subtree
         aNode->left = deleteNodeRecursive(aNode->left, itemName);
+    
     else if (itemName > aNode->foodItem.getName())
+        // If the desired item name is greater, recursively search in the right subtree
         aNode->right = deleteNodeRecursive(aNode->right, itemName);
     else
     {
+        // Case: Found the node with the desired item name
         if (aNode->left == nullptr || aNode->right == nullptr)
         {
+            // Create a temporary pointer to the non-null child (if any)
             AVLNode* temp = (aNode->left != nullptr) ? aNode->left : aNode->right;
 
             if (temp == nullptr)
             {
+                // If both children are null, remove the current node
                 temp = aNode;
                 aNode = nullptr;
             }
             else
-                *aNode = *temp;
+                *aNode = *temp; // Copy the contents of the non-null child to current node
 
-            delete temp;
+            delete temp; // Delete the temporary node
         }
         else
         {
-            AVLNode* temp = aNode->right;
+            // Case: Node has two children
+            // If the current node has both left and right children
+            AVLNode* temp = aNode->right; 
 
+            // Find the minimum value node in the right subtree
             while (temp->left != nullptr)
                 temp = temp->left;
 
+            // Copy the data of the leftmost node to the current node
             aNode->foodItem = temp->foodItem;
+            
+            // Recursively delete the leftmost node from the right subtree
             aNode->right = deleteNodeRecursive(aNode->right, temp->foodItem.getName());
         }
     }
-
+    // Update the height of the current node after deletion
     if (aNode == nullptr)
-        return aNode;
+        return aNode; // If the node was deleted, return nullptr
 
     aNode->height = 1 + max(getHeight(aNode->left), getHeight(aNode->right));
-
+    
+    // Rebalance the tree if necessary and return the updated node
     return balanceNode(aNode);
 }
 
 // recurisive print function 
 void FoodItemAVL::printInOrderRecursive(AVLNode* aNode)
 {
+    // Base case: If the current node is null, return
     if (aNode == nullptr)
         return;
 
+	// Recursively print the left subtree
     printInOrderRecursive(aNode->left);
+    
+	// Print the current node's food item's name
     cout << aNode->foodItem.getName() << endl;
+
+	// Recursively print the right subtree
     printInOrderRecursive(aNode->right);
 }
 
@@ -249,6 +274,7 @@ void FoodItemAVL::printInOrderRecursive(AVLNode* aNode)
 //       It will automatically correct the structure of the tree if unbalanced
 void FoodItemAVL::insertNode(FoodItem aFoodItem)
 {
+	// call recursive insert function
     root = insertNodeRecursive(root, aFoodItem);
 }
 
@@ -257,9 +283,14 @@ void FoodItemAVL::insertNode(FoodItem aFoodItem)
 // Post: Returns the address of the foodItem stored within the tree
 FoodItem* FoodItemAVL::searchNode(string& foodItemName)
 {
+    // Call the recursive searchNodeRecursive function to find the node with the desired item name
     AVLNode* foundNode = searchNodeRecursive(root, foodItemName);
+    
+    // Check if the desired item node was found
     if (foundNode != nullptr)
+        // Return a pointer to the food item within the found node
         return &(foundNode->foodItem);
+    // Return nullptr if the item was not found
     return nullptr;
 }
 
@@ -268,6 +299,7 @@ FoodItem* FoodItemAVL::searchNode(string& foodItemName)
 // Post: Prints the full item menu of the restaurant in which the AVL tree belongs to
 void FoodItemAVL::printInOrder()
 {
+	// Call the recursive printInOrderRecursive function to print the tree in alphabetical order
     printInOrderRecursive(root);
 }
 
@@ -277,12 +309,25 @@ void FoodItemAVL::printInOrder()
 //       Returns false if unable to find node
 bool FoodItemAVL::deleteNode(string& itemName)
 {
-    root = deleteNodeRecursive(root, itemName);
+    // Call the recursive deleteNodeRecursive function to delete the node with the desired item name
+    AVLNode* newRoot = deleteNodeRecursive(root, itemName);
+
+    // Update the root of the AVL tree
+    if (newRoot != nullptr) {
+        root = newRoot;
+        return true; // Successfully deleted the node
+    }
+
+    return false; // Node with itemName not found or tree is now empty
 }
+
 
 // Function to delete the entire AVL Tree
 void FoodItemAVL::deleteTree(AVLNode* aNode) {
+    
+	// Base case: If the current node is null, return
     if (aNode != nullptr) {
+		// Recursively delete the left and right subtrees
         deleteTree(aNode->left);
         deleteTree(aNode->right);
         delete aNode; // Delete the current node
