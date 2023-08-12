@@ -4,7 +4,7 @@ using namespace std;
 // Constructor
 FoodItemAVL::FoodItemAVL()
 {
-    // initalize root
+    // initalize attributes
     root = nullptr;
 }
 

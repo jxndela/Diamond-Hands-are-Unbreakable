@@ -9,9 +9,9 @@ using namespace std;
 struct AVLNode
 {
     FoodItem foodItem;     // AVL 
-    AVLNode* left;
-    AVLNode* right;
-    int height;
+    AVLNode* left = nullptr;
+    AVLNode* right = nullptr;
+    int height = 0;
 };
 
 // Purpose of AVL Tree structure - 
