@@ -54,7 +54,7 @@ void RestaurantStaff::updateFoodItem(FoodItem foodItem)
             break;
 
         case 2:
-            cout << "Enter new availability (0 or 1): ";
+            cout << "Enter new availability: ";
             bool newAvailability;
             cin >> newAvailability;
             foodItem.setAvailability(newAvailability); 
