@@ -273,6 +273,7 @@ int main()
 					cout << "Something went wrong, please try again" << endl;
 					cout << "--------------------------------------" << endl;
 					continue;
+					
 				}
 
 				// If success show message
