@@ -15,7 +15,7 @@ class Order
 private:
 
     string orderId;                         // Id serves as primary key
-    Customer* customerPointer;         // Stores pointer to customer rather than copying object
+    Customer* customerPointer;              // Stores pointer to customer rather than copying object
     Restaurant* restaurantPointer;          // Stores pointer to restaurant rather than copying object
     FoodItem* orderedItems[ORDER_MAX_SIZE]; // Stores array of pointer to food objects that is to be prepared
     string orderStatus;                     // Stores information about the state of the order

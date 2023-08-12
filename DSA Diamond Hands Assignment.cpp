@@ -185,7 +185,6 @@ int main()
 
 	// Set-up and exit condition for UI
 	Customer customer = Customer();
-
 	bool displayLogin = true;
 	bool customerLoggedIn = false;
 	bool restaurantStaffLoggedIn = false;
@@ -232,10 +231,12 @@ int main()
 				{
 					// On log in success, 
 					customerLoggedIn = true;
+					userDatabase.retrieveUser(guestEmail, customer);
 					break;
 				}
 
 			}
+
 			// 2. Register function
 			if (loginChoice == "2")
 			{	                             
@@ -279,6 +280,7 @@ int main()
 				cout << "-------------------------------------------------" << endl;
 
 			}
+
 			// 3. 
 		}
 		// For any invalid menu options
@@ -296,6 +298,7 @@ int main()
 		cout << "Welcome Back" << endl;
 		cout << "What would you like to do?" << endl;
 		cout << "1. Create new order\n2. Check order\n3. Cancel Order" << endl;
+		cout << customer.getEmail();
 	}
 	if (restaurantStaffLoggedIn)
 	{

@@ -121,6 +121,29 @@ string CustomerDictionary::retrievePassword(string aEmailKey)
 	return "USERNOTFOUND";
 }
 
+bool CustomerDictionary::retrieveUser(string aEmailKey, Customer& aCustomer)
+{
+	// hash email
+	int index = getHashedKey(aEmailKey);
+
+	// Search for key
+	CustomerNode* current = customers[index];
+	while (current != nullptr)
+	{
+		// return user if key found and true
+		if (current->emailKey == aEmailKey)
+		{
+			aCustomer = current->customer;
+			return true;
+		}
+		// else move on
+		current = current->next;
+	}
+	return false;
+}
+
+
+
 bool CustomerDictionary::isEmpty()
 {
 	return size == 0;

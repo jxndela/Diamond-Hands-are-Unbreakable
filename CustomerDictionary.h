@@ -50,6 +50,11 @@ public:
 	// Post: Returns the hashedpw
 	string retrievePassword(string aEmailKey);
 
+	// Retrieve the user that matches the email key
+	// Pre : 
+	// Post: Returns the user
+	bool retrieveUser(string aEmailKey, Customer& aCustomer);
+
 	// Check if Dictionary is empty
 	// Pre  : ~
 	// Post : Returns true if there nothing in the dictionary
