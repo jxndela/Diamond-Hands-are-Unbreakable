@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// Forward declaration
 class Order;
 class OrderQueue;
 class restaurantMenu;

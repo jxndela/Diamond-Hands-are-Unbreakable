@@ -297,12 +297,69 @@ int main()
 
 	if (customerLoggedIn)
 	{
+		// Pre - process lists of food
+		// Default is A-Z 
+		// If they want to  view in reverse order, use a stack 
+		const int MAX_FOOD_LIST_CAP = 10000;
+		FoodItem* ascendingNameFoodList[MAX_FOOD_LIST_CAP];
+		FoodItem* ascendingCategoryFoodList[MAX_FOOD_LIST_CAP];
+		FoodItem* ascendingPriceFoodList[MAX_FOOD_LIST_CAP];	
+		// INSERT OPERATIONS
+
+
 		// Present interface for the user
 		cout << "====================================================" << endl;
 		cout << "Welcome Back" << endl;
 		cout << "What would you like to do?" << endl;
-		cout << "1. Create new order\n2. Check order\n3. Cancel Order" << endl;
-		cout << customer.getEmail();
+		cout << "1. Create new order\n2. Check order\n3. Cancel Order\n4. Log out" << endl;
+		
+		// While loop for prompt
+		bool validCustomerResponse = false;
+		int customerInput;
+
+		while (!validCustomerResponse)
+		{
+			cout << "Your choice ? : ";
+			cin >> customerInput;
+			// 3 options
+			if (-customerInput < 0 && customerInput > 3)
+			{
+				cout << "Invalid input, please try select appropriate number" << endl;
+			}
+
+			if (customerInput == 1)
+			{
+				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
+				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
+				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
+				cout << "                                                                            " << endl;  
+
+				// 1. Show all the food options
+
+				// 2. Show item name categpru & price and restaurant
+				// 3. retrieve pointers from ARRAY after selecting item
+				// 4. put inside order
+				// 5. confirm order
+				// 6. send order if confirmed, else return back  to while loop
+			}
+
+			if (customerInput == 2)
+			{
+				cout << "____ _  _ ____ ____ _  _    ____ ____ ___  ____ ____ " << endl;
+				cout << "|    |__| |___ |    |_/     |  | |__/ |  | |___ |__/ " << endl;
+				cout << "|___ |  | |___ |___ | |_    |__| |  | |__/ |___ |  | " << endl;
+				cout <<                                                      "" << endl;
+			}
+			if (customerInput == 3)
+			{
+				cout << "____ ____ _  _ ____ ____ _       ____ ____ ___  ____ ____ " << endl;
+				cout << "|    |__| || | |    |___ |       |  | |__/ |  | |___ |__/ " << endl;
+				cout << "|___ |  | | || |___ |___ |___    |__| |  | |__/ |___ |  | " << endl;
+				cout << "                                                          " << endl;
+			}
+		}
+
+
 	}
 	if (restaurantStaffLoggedIn)
 	{
@@ -314,14 +371,3 @@ int main()
 	}
 
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

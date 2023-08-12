@@ -2,9 +2,12 @@
 #include <iostream>
 #include <string>
 #include "User.h"
-//#include "Order.h"
+#include "Order.h"
 
 using namespace std;
+
+// Forward declaration
+class Order;
 
 // Customer class is derived from user
 // This means that it inherits email + password
@@ -15,6 +18,7 @@ private:
     // Private attributes 
     string customerName;   // Stores customer name
     int postalCode;        // Store customer's postal code 
+    Order* currentOrder = nullptr;
 
 public:
 

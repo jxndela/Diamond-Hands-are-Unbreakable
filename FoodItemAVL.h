@@ -3,6 +3,7 @@
 #include <string>
 #include "FoodItem.h"
 
+// Forward declaration
 class FoodItem;
 
 using namespace std;

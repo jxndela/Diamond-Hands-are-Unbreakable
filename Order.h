@@ -10,7 +10,7 @@ using namespace std;
 const int ORDER_MAX_SIZE = 20;
 
 // Forward declaration
-
+class Customer;
 class Restaurant;
 
 class Order
