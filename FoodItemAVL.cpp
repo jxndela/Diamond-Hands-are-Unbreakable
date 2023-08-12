@@ -139,24 +139,31 @@ AVLNode* FoodItemAVL::balanceNode(AVLNode* aNode)
 //       containing aFoodItem into the correct position
 AVLNode* FoodItemAVL::insertNodeRecursive(AVLNode* aNode, FoodItem& aFoodItem)
 {
+    // Check if the current node is null
     if (aNode == nullptr)
     {
+        // Create a new node and initialize its properties
         AVLNode* newNode = new AVLNode;
         newNode->foodItem = aFoodItem;
         newNode->left = nullptr;
         newNode->right = nullptr;
-        newNode->height = 1;
-        return newNode;
+        newNode->height = 1; // Initialize height as 1 for the new node
+        return newNode; // Return the newly created node
     }
-
+    
+    // Compare the food item's name with the current node's food item's name
     if (aFoodItem.getName() < aNode->foodItem.getName())
+        // If the new food item's name is less, recursively insert on the left subtree
         aNode->left = insertNodeRecursive(aNode->left, aFoodItem);
     else if (aFoodItem.getName() > aNode->foodItem.getName())
+        // If the new food item's name is greater, recursively insert on the right subtree
         aNode->right = insertNodeRecursive(aNode->right, aFoodItem);
     else
-        return aNode; // Duplicate items are not allowed
+        return aNode; // Duplicate items are not allowed, return the current node
 
+    // Update the height of the current node after insertion
     aNode->height = 1 + max(getHeight(aNode->left), getHeight(aNode->right));
+    // Rebalance the tree if necessary and return the updated node
     return balanceNode(aNode);
 }
 
