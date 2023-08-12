@@ -77,3 +77,9 @@ string Customer::getEmail()
 //{
 	//return false;
 //}
+
+// set password hash
+void Customer::setPasswordHash(string aPasswordHash)
+{
+	passwordHash = aPasswordHash;
+}

@@ -68,5 +68,11 @@ public:
     // Pre : There must be an existing order that is in progress
     // Post: Returns true if successful, returns false otherwise
     //bool cancelOrder(Order& order);
+
+    // set password hash
+	// pre : ~
+	// post : password hash is set
+	void setPasswordHash(string aPasswordHash);
+    
 };
 

@@ -5,6 +5,7 @@
 // Include allowed libraries
 #include <iostream>
 #include <string>
+#include <fstream>
 
 // Include all the header files
 #include "User.h"
@@ -280,6 +281,8 @@ int main()
 				cout << "Registration successful! Please proceed to log in" << endl;
 				cout << "-------------------------------------------------" << endl;
 
+				// Save the new user details to the text file
+				userDatabase.saveToFile();
 			}
 
 			// 3. 
