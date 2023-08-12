@@ -317,7 +317,6 @@ bool FoodItemAVL::deleteNode(string& itemName)
         root = newRoot;
         return true; // Successfully deleted the node
     }
-
     return false; // Node with itemName not found or tree is now empty
 }
 
