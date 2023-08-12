@@ -321,7 +321,8 @@ int main()
 		{
 			cout << "Your choice ? : ";
 			cin >> customerInput;
-			if (customerInput != 1 || customerInput != 2 || customerInput != 3 || customerInput != 4)
+			// 3 options
+			if (-customerInput < 0 && customerInput > 3)
 			{
 				cout << "Invalid input, please try select appropriate number" << endl;
 			}
@@ -333,12 +334,29 @@ int main()
 				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
 				cout << "                                                                            " << endl;  
 
-				// Show all the food selections by Restaurant
+				// 1. Show all the food options
 
-				// 
+				// 2. Show item name categpru & price and restaurant
+				// 3. retrieve pointers from ARRAY after selecting item
+				// 4. put inside order
+				// 5. confirm order
+				// 6. send order if confirmed, else return back  to while loop
 			}
 
-
+			if (customerInput == 2)
+			{
+				cout << "____ _  _ ____ ____ _  _    ____ ____ ___  ____ ____ " << endl;
+				cout << "|    |__| |___ |    |_/     |  | |__/ |  | |___ |__/ " << endl;
+				cout << "|___ |  | |___ |___ | |_    |__| |  | |__/ |___ |  | " << endl;
+				cout <<                                                      "" << endl;
+			}
+			if (customerInput == 3)
+			{
+				cout << "____ ____ _  _ ____ ____ _       ____ ____ ___  ____ ____ " << endl;
+				cout << "|    |__| || | |    |___ |       |  | |__/ |  | |___ |__/ " << endl;
+				cout << "|___ |  | | || |___ |___ |___    |__| |  | |__/ |___ |  | " << endl;
+				cout << "                                                          " << endl;
+			}
 		}
 
 
