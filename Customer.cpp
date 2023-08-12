@@ -46,34 +46,39 @@ string Customer::getEmail()
 	return email;
 }
 
-// Check customer details - this function is for RestaurantStaff to get customer info
-// Pre : ~
-// Post: Using pass by reference, returns the customer name and postal code
-//void Customer::browseFoodSelections()
-//{
+ //Check customer details - this function is for RestaurantStaff to get customer info
+ //Pre : ~
+ //Post: Using pass by reference, returns the customer name and postal code
+void Customer::browseFoodSelections(Restaurant aRestaurantArray[], int aSizeOfArray)
+{
+	// For loop throughout all the restaurants
+	for (int i = 0; i < aSizeOfArray; i++)
+	{
+		Restaurant aRestaurant = aRestaurantArray[i];
 
-//}
+	}
+}
 
 // Generate a temporary Order Variable
 // Pre : No orders in progress 
 // Post: Create a temporary order to store foodItems in 
-//void Customer::createNewOrder()
-//{
+void Customer::createNewOrder()
+{
 
-//}
+}
 
 // Confirm the order and send it to Restaurant
 // Pre : Order is not empty
 // Post: Send the order to the Restaurant orders queue
-//void Customer::confirmOrder()
-//{
-	// Add to respective restaurant queue
-//}
+void Customer::confirmOrder()
+{
+	
+}
 
 // Cancel an order 
 // Pre : There must be an existing order that is in progress
 // Post: Returns true if successful, returns false otherwise
-//bool Customer::cancelOrder(Order& order)
-//{
-	//return false;
-//}
+bool Customer::cancelOrder()
+{
+	return false;
+}
