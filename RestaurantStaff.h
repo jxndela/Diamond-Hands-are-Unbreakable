@@ -41,12 +41,12 @@ public:
 	// Update the order status 
 	// Pre : Order must exist
 	// Post: Success or failure 
-	void updateOrderStatus();
+	void updateOrderStatus(Order aOrder);
 
 	// Update the food item attributes
 	// Pre : Food Item must exist
 	// Post: Success or failure 
-	void updateFoodItem();
+	void updateFoodItem(FoodItem foodItem);
 
 	// Generate Report
 	// Pre : Must have completed orders in a given time period
