@@ -68,6 +68,6 @@ public:
     // Cancel an order 
     // Pre : There must be an existing order that is in progress
     // Post: Returns true if successful, returns false otherwise
-    //bool cancelOrder(Order& order);
+    // bool cancelOrder(Order& order);
 };
 

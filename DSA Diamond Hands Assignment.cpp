@@ -12,7 +12,14 @@ using namespace std;
 // INPUT HELPERS
 string hashPassword(string aUnhashedPassword)
 {
-	return aUnhashedPassword;
+	// TEMPORARY HASH FUNCTION
+	int sum = 0;
+	for (int i = 0; i < aUnhashedPassword.length(); i++)
+	{
+		sum += aUnhashedPassword[i];
+	}
+	string hashedPassword = to_string((sum % CUSTOMER_MAX_SIZE));
+	return hashedPassword;
 }
 
 // Simple validator, however it is unable to accept domain name aside from .com
@@ -266,7 +273,7 @@ int main()
 		else
 		{
 			cout << "Invalid input. Redirecting back to menu" << endl;
-			cout << "=======================================" << endl;
+			cout << "---------------------------------------" << endl;
 		}
 	}
    
