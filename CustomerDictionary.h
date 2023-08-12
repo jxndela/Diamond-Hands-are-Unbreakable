@@ -77,5 +77,12 @@ public:
 			}
 		}
 	}
+	
+	
+	// Function to save user login details to a text file
+	void saveToFile();
+
+	// Function to read user login details from a text file
+	void loadFromFile();
 };
 

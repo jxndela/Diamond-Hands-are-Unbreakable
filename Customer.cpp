@@ -46,6 +46,11 @@ string Customer::getEmail()
 	return email;
 }
 
+void Customer::setPasswordHash(string aPasswordHash)
+{
+	passwordHash = aPasswordHash;
+}
+
 // Check customer details - this function is for RestaurantStaff to get customer info
 // Pre : ~
 // Post: Using pass by reference, returns the customer name and postal code

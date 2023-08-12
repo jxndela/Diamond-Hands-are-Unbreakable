@@ -44,11 +44,16 @@ public:
     // Post: Returns passwordHash
     string getPasswordHash();
 
+
     // Check the email of a user object
     // Pre : ~
     // Post: Returns email
     string getEmail();
 
+    // Set the passwordHash of a user object
+	// Pre : ~
+	// Post: Sets passwordHash
+	void setPasswordHash(string aPasswordHash);
     // Generate UI For browsing Food Selection
     // Pre : ~
     // Post: Show the food selection with options to sort 
