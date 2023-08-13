@@ -3,6 +3,7 @@
 #include <string>
 #include "User.h"
 #include "Order.h"
+#include "Restaurant.h"
 
 using namespace std;
 
@@ -71,7 +72,7 @@ public:
     // Cancel an order 
     // Pre : There must be an existing order that is in progress
     // Post: Returns true if successful, returns false otherwise
-    //bool cancelOrder(Order& order);
+    bool cancelOrder(Order& order);
 
     // set password hash
 	// pre : ~

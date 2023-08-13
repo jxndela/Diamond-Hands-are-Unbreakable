@@ -35,6 +35,8 @@ private:
     // Post: Gets the height of the left node - the right node
     int getBalanceFactor(AVLNode* aNode);
 
+
+
     // Rotate node right
     // Pre : pivot node
     // Post: rotated right
@@ -108,5 +110,10 @@ public:
     
     // Delete whole tree
     void deleteTree(AVLNode* aNode);
+
+    AVLNode* getRoot()
+    {
+        return root;
+    }
 };
 

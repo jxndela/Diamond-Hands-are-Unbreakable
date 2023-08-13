@@ -262,7 +262,12 @@ void FoodItemAVL::printInOrderRecursive(AVLNode* aNode)
     printInOrderRecursive(aNode->left);
     
 	// Print the current node's food item's name
-    cout << aNode->foodItem.getName() << endl;
+    if (aNode->foodItem.getAvailability() == true)
+    {
+        cout << aNode->foodItem.getName()
+            << "\t$" << aNode->foodItem.getPrice() << endl;
+    }
+
 
 	// Recursively print the right subtree
     printInOrderRecursive(aNode->right);

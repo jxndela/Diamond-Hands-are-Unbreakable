@@ -5,7 +5,9 @@
 // Include allowed libraries
 #include <iostream>
 #include <string>
-#include <fstream>
+#include <fstream>	// For reading writign files
+#include <sstream>	
+
 
 // Include all the header files
 #include "User.h"
@@ -19,6 +21,8 @@
 #include "OrderQueue.h"
 
 using namespace std;
+const int MAX_RESTAURANTS = 100;
+
 
 // INPUT HELPERS
 string hashPassword(string aUnhashedPassword)
@@ -124,6 +128,92 @@ int getValidatedInt()
 	}
 }
 
+// Read the restaurant file
+void readRestaurantFile(Restaurant restaurantDatabase[], int& numberOfRestaurants)
+{
+
+	ifstream file("restaurant.txt");
+	std::string line;
+
+	while (getline(file, line) && numberOfRestaurants < MAX_RESTAURANTS)
+	{
+		// store the first line
+		istringstream iss(line);
+		string firstWord; 
+		// store first word
+		iss >> firstWord;
+
+		if (firstWord == "Restaurant")
+		{
+			// Create temp storers
+			string restaurantName;
+			int postalCode;
+			// After identifier sotre the restaurant name
+						// Store next value into postal code
+			iss >> restaurantName >> postalCode;
+			restaurantDatabase[numberOfRestaurants] = Restaurant(restaurantName, postalCode);
+			numberOfRestaurants++;
+		}
+		else if (firstWord == "FoodItem")
+		{
+			// create temp
+			string name, description, category;
+			double price;
+			iss >> name >> description >> category >> price;
+			FoodItem tempFoodItem(name, description, category, price);
+			// -1 index start at0
+			restaurantDatabase[numberOfRestaurants - 1].restaurantMenuPointer()->insertNode(tempFoodItem);
+		}
+
+	}
+	file.close();
+}
+
+// Write Food items
+void writeFoodItems(ofstream& file, AVLNode* root)
+{
+	if (root == nullptr)
+		return;
+
+	// Write left subtree
+	writeFoodItems(file, root->left);
+
+	// Write current food item
+	file << "FoodItem " << root->foodItem.getName() << " " << root->foodItem.getFoodDescription()
+		<< " " << root->foodItem.getCategory() << " " << root->foodItem.getPrice() << "\n";
+
+	// Write right subtree
+	writeFoodItems(file, root->right);
+}
+
+// Write Restaurant files
+void writeRestaurantFile(Restaurant restaurantDatabase[], int numberOfRestaurants)
+{
+	ofstream file("restaurant.txt");
+
+	for (int i = 0; i < numberOfRestaurants; i++)
+	{
+		// Write restaurant details
+		file << "Restaurant " << restaurantDatabase[i].getRestaurantName() << " " << restaurantDatabase[i].getPostalCode() << "\n";
+
+		// Write food items by traversing the AVL tree
+		writeFoodItems(file, restaurantDatabase[i].restaurantMenuPointer()->getRoot());
+	}
+
+	file.close();
+}
+
+// print restaurants
+void printRestaurants(Restaurant restaurantDatabase[], int numberOfRestaurants) {
+	std::cout << "Restaurants in the database:\n";
+	for (int i = 0; i < numberOfRestaurants; i++) {
+		std::cout << "Name: " << restaurantDatabase[i].getRestaurantName()
+			<< " - Postal Code: " << restaurantDatabase[i].getPostalCode() << "\n";
+		restaurantDatabase[i].printMenu();
+	}
+}
+
+
 
 // USERS
 // Functions 1 : Login
@@ -184,6 +274,11 @@ int main()
 	// Initaliaze user database
 	CustomerDictionary userDatabase = CustomerDictionary();
 
+	// Initialize restaurants
+	Restaurant restaurantDatabase[CUSTOMER_MAX_SIZE]; 
+	int numberOfRestaurants = 0;
+	readRestaurantFile(restaurantDatabase, numberOfRestaurants);
+
 	// Set-up and exit condition for UI
 	Customer customer = Customer();
 	bool displayLogin = true;
@@ -206,9 +301,10 @@ int main()
 
 		if (loginChoice == "1" || loginChoice == "2" || loginChoice == "0")
 		{
+			// Temp 
 			if (loginChoice == "0")
 			{
-				userDatabase.printEverything();
+				printRestaurants(restaurantDatabase, numberOfRestaurants);
 			}
 			// 1. Login Function
 			if (loginChoice == "1")
@@ -333,14 +429,7 @@ int main()
 				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
 				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
 				cout << "                                                                            " << endl;  
-
-				// 1. Show all the food options
-
-				// 2. Show item name categpru & price and restaurant
-				// 3. retrieve pointers from ARRAY after selecting item
-				// 4. put inside order
-				// 5. confirm order
-				// 6. send order if confirmed, else return back  to while loop
+				customer.createNewOrder();
 			}
 
 			if (customerInput == 2)
@@ -349,6 +438,7 @@ int main()
 				cout << "|    |__| |___ |    |_/     |  | |__/ |  | |___ |__/ " << endl;
 				cout << "|___ |  | |___ |___ | |_    |__| |  | |__/ |___ |  | " << endl;
 				cout <<                                                      "" << endl;
+
 			}
 			if (customerInput == 3)
 			{
@@ -357,6 +447,7 @@ int main()
 				cout << "|___ |  | | || |___ |___ |___    |__| |  | |__/ |___ |  | " << endl;
 				cout << "                                                          " << endl;
 			}
+
 		}
 
 

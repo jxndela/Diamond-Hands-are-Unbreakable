@@ -1,0 +1,29 @@
+Restaurant KayaToastCafe 159753
+FoodItem KayaToast Breakfast Toast 1.50
+FoodItem Kopi Traditional Coffee 1.20
+FoodItem SoftBoiledEggs Breakfast Eggs 1.10
+FoodItem TehTarik Breakfast Tea 1.30
+FoodItem NasiLemak Lunch RiceDish 2.99
+Restaurant HainaneseChicken 486072
+FoodItem ChickenRice Lunch RiceDish 5.99
+FoodItem ChilliCrab Dinner Seafood 18.99
+FoodItem TigerBeer Beverage Beer 6.99
+FoodItem BakKutTeh Dinner PorkSoup 7.50
+FoodItem Satay Appetizer GrilledMeat 0.50
+Restaurant LaksaHouse 278989
+FoodItem Laksa Lunch NoodleSoup 7.50
+FoodItem Popiah Appetizer SpringRoll 2.50
+FoodItem BarleyDrink Beverage ColdDrink 1.80
+FoodItem CharKwayTeow Dinner FriedNoodles 5.50
+FoodItem Otah Appetizer FishCake 1.00
+Restaurant DimSumPalace 623456
+FoodItem XiaoLongBao Dinner SoupDumpling 4.00
+FoodItem SiuMai Lunch PorkDumpling 3.00
+FoodItem EggTart Dessert Pastry 2.00
+FoodItem HarGow Lunch ShrimpDumpling 3.50
+Restaurant IndianCurryHouse 492105
+FoodItem ButterChicken Lunch CurryDish 6.50
+FoodItem TandooriNaan Bread Flatbread 1.20
+FoodItem MangoLassi Beverage YogurtDrink 2.80
+FoodItem Biryani Dinner RiceDish 7.50
+FoodItem Samosa Appetizer FriedPastry 1.50

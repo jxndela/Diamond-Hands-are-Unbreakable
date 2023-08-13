@@ -12,7 +12,7 @@ private:
 	string foodItemDescription;		// Stores description of food item
 	string category;				// Stores the category of food that the item belongs to
 	double price;					// Stores price of food item
-	bool isAvailable;				// Stores availability of food item
+	bool isAvailable = true;		// Stores availability of food item
 
 public:
 	// Default constructor

@@ -37,8 +37,9 @@ int Restaurant::getPostalCode()
 
 void Restaurant::printMenu()
 {
-	cout << "PRINTING MENU" << endl;
+	cout << "PRINTING MENU" << endl
+		<< "=============" << endl;
 	restaurantMenu.printInOrder();
-	cout << endl; 
+	cout <<"=============" << endl; 
 }
 

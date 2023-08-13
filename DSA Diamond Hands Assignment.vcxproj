@@ -134,6 +134,7 @@
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="OrderQueue.cpp" />
     <ClCompile Include="Restaurant.cpp" />
+    <ClCompile Include="RestaurantArray.cpp" />
     <ClCompile Include="RestaurantStaff.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="CustomerDictionary.cpp" />
@@ -145,11 +146,13 @@
     <ClInclude Include="Order.h" />
     <ClInclude Include="OrderQueue.h" />
     <ClInclude Include="Restaurant.h" />
+    <ClInclude Include="RestaurantArray.h" />
     <ClInclude Include="RestaurantStaff.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="CustomerDictionary.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="restaurant.txt" />
     <Text Include="user_details.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

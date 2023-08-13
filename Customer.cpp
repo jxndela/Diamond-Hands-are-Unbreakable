@@ -49,34 +49,40 @@ string Customer::getEmail()
 // Check customer details - this function is for RestaurantStaff to get customer info
 // Pre : ~
 // Post: Using pass by reference, returns the customer name and postal code
-//void Customer::browseFoodSelections()
-//{
+void Customer::browseFoodSelections()
+{
 
-//}
+}
 
 // Generate a temporary Order Variable
 // Pre : No orders in progress 
 // Post: Create a temporary order to store foodItems in 
-//void Customer::createNewOrder()
-//{
+void Customer::createNewOrder()
+{
+	// 1. Show all the food options
 
-//}
+	// 2. Show item name categpru & price and restaurant
+	// 3. retrieve pointers from ARRAY after selecting item
+	// 4. put inside order
+	// 5. confirm order
+	// 6. send order if confirmed, else return back  to while loop
+}
 
 // Confirm the order and send it to Restaurant
 // Pre : Order is not empty
 // Post: Send the order to the Restaurant orders queue
-//void Customer::confirmOrder()
-//{
-	// Add to respective restaurant queue
-//}
+void Customer::confirmOrder()
+{
+	 
+}
 
 // Cancel an order 
 // Pre : There must be an existing order that is in progress
 // Post: Returns true if successful, returns false otherwise
-//bool Customer::cancelOrder(Order& order)
-//{
-	//return false;
-//}
+bool Customer::cancelOrder(Order& order)
+{
+	return false;
+}
 
 // set password hash
 void Customer::setPasswordHash(string aPasswordHash)

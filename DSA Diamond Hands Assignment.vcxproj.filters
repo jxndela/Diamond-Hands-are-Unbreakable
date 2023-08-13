@@ -45,6 +45,9 @@
     <ClCompile Include="FoodItemAVL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RestaurantArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="User.h">
@@ -74,9 +77,15 @@
     <ClInclude Include="FoodItemAVL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RestaurantArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="user_details.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="restaurant.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>

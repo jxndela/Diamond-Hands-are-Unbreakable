@@ -49,6 +49,10 @@ public:
 		return incomingOrder;
 	}
 
-
+	FoodItemAVL* restaurantMenuPointer()
+	{
+		FoodItemAVL* aPointer = &restaurantMenu;
+		return aPointer;
+	}
 };
 
