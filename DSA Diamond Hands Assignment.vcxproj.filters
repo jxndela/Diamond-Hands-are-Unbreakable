@@ -48,6 +48,9 @@
     <ClCompile Include="RestaurantArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StaffDictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="User.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RestaurantArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StaffDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
