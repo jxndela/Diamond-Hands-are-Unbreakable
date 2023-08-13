@@ -214,7 +214,14 @@ void printRestaurants(Restaurant restaurantDatabase[], int numberOfRestaurants) 
 	}
 }
 
-
+// print restaurants titles
+void printRestaurantsTitles(Restaurant restaurantDatabase[], int numberOfRestaurants) {
+	std::cout << "Restaurants in the database:\n";
+	for (int i = 0; i < numberOfRestaurants; i++) {
+		std::cout << i + 1 << ". " << "Name: " << restaurantDatabase[i].getRestaurantName()
+			<< " - Postal Code: " << restaurantDatabase[i].getPostalCode() << "\n";
+	}
+}
 
 // USERS
 // Functions 1 : Login
@@ -471,15 +478,54 @@ int main()
 				// Restaurant staff registration
 				cout << "Restaurant Staff Registration" << endl;
 				string staffEmail, staffPassword, staffName;
-				Restaurant* staffRestaurant;
+				Restaurant* restaurantChosen;
 
 				staffEmail = getUserEmailInput();
 
 				cout << "Please enter your password: ";
 				cin >> staffPassword;
+				
+				// Create an array of valid inputs
+				// Start at index zero, but value start at 1
+				string restaurantChoices[MAX_RESTAURANTS];
+				for (int i = 0; i < numberOfRestaurants; i++)
+				{
+					restaurantChoices[i] = to_string(i + 1);
+				}
+				
+				// Create exit condition
+				bool validRestaurantChoice = false;
+				string restaurantChoice;
+				printRestaurantsTitles(restaurantDatabase, numberOfRestaurants);
+				
+				// Prompt user to select restaurant to order from
+				while (!validRestaurantChoice)
+				{
 
-				/*cout << "Please enter the restaurant: ";
-				cin >> staffRestaurant;*/
+					cout << "Please enter the restaurant you are assigned to: ";
+					cin >> restaurantChoice;
+					bool found = false;
+					// If it is not valid 
+
+					for (int i = 0; i < numberOfRestaurants; i++)
+					{
+						if (restaurantChoice == restaurantChoices[i])
+						{
+							validRestaurantChoice = true;
+							restaurantChosen = &restaurantDatabase[stoi(restaurantChoice) - 1];
+							found = true;
+							break;
+						}
+					}
+					// Exit out of for loop
+					if (found)
+					{
+						break;
+					}
+					else
+						cout << "Please enter appropriate integer corresponding to restaurant" << endl;
+
+				}
 
 
 				if (registerStaffAccount(staffEmail, staffPassword, nullptr, staffDatabase))
@@ -550,7 +596,8 @@ int main()
 				// Create exit condition
 				bool validRestaurantChoice = false;
 				string restaurantChoice; 
-				Restaurant* restaurantChosen; // This is the one that is ultimately selected
+				Restaurant* restaurantChosen = nullptr; // Initialize the pointer to nullptr
+				// This is the one that is ultimately selected
 
 				// Prompt user to select restaurant to order from
 				while (!validRestaurantChoice)
