@@ -10,7 +10,7 @@ class RestaurantStaff;
 using namespace std;
 
 // Hard ceiling of users
-const int CUSTOMER_MAX_SIZE = 5;
+const int STAFF_MAX_SIZE = 5;
 
 struct RestaurantStaffNode
 {
@@ -24,7 +24,7 @@ class StaffDictionary
 {
 private:
 	// Attributes
-	RestaurantStaffNode* staffs[CUSTOMER_MAX_SIZE];
+	RestaurantStaffNode* staffs[STAFF_MAX_SIZE];
 	int size;
 	
 

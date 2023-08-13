@@ -5,7 +5,7 @@
 StaffDictionary::StaffDictionary()
 {
 	// Initialize the values in each index of the users array and assign nullptr
-	for (int i = 0; i < CUSTOMER_MAX_SIZE; i++)
+	for (int i = 0; i < STAFF_MAX_SIZE; i++)
 	{
 		staffs[i] = nullptr;
 	}
@@ -22,7 +22,7 @@ StaffDictionary::~StaffDictionary()
 	saveToFile();
 
 	// Iterate through each bucket
-	for (int i = 0; i < CUSTOMER_MAX_SIZE; ++i) {
+	for (int i = 0; i < STAFF_MAX_SIZE; ++i) {
 		// Delete linked list nodes in the current bucket
 		RestaurantStaffNode* current = staffs[i];
 		while (current != nullptr) {
@@ -44,7 +44,7 @@ int StaffDictionary::getHashedKey(string aEmailKey)
 	{
 		sum += aEmailKey[i];
 	}
-	return sum % CUSTOMER_MAX_SIZE;
+	return sum % STAFF_MAX_SIZE;
 }
 
 // Add new item with the specified key to the Dictionary
@@ -203,7 +203,7 @@ void StaffDictionary::saveToFile()
 {
 	ofstream outFile("staff_details.txt");
 
-	for (int i = 0; i < CUSTOMER_MAX_SIZE; ++i) {
+	for (int i = 0; i < STAFF_MAX_SIZE; ++i) {
 		RestaurantStaffNode* current = staffs[i];
 		while (current != nullptr) {
 			outFile << current->emailKey << " " << current->staff.getPasswordHash() << endl;

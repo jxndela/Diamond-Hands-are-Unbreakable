@@ -402,6 +402,7 @@ int main()
 				cin >> staffPassword;
 
 				// Check staff login
+
 				if (login(staffEmail, staffPassword, staffDatabase))
 				{
 					cout << "Restaurant staff login successful!" << endl;
@@ -489,7 +490,7 @@ int main()
 					{
 						if (restaurantChoice == restaurantChoices[i])
 						{
-							validRestaurantChoice == true;
+							validRestaurantChoice = true;
 							Restaurant* restaurantChosen = &restaurantDatabase[stoi(restaurantChoice) - 1];
 							temporaryOrder = customer.createNewOrder(restaurantChosen);
 							found = true;
