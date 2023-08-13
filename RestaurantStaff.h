@@ -83,6 +83,11 @@ public:
 	// pre : ~
 	// post : restaurant pointer is set
 	void setRestaurantPointer(Restaurant* aRestaurantPointer);
+
+	// get restaurant pointer
+	// pre : ~
+	// post : returns restaurant pointer
+	Restaurant* getRestaurantPointer();
 	
 
 };

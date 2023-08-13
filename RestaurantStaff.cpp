@@ -102,3 +102,8 @@ void RestaurantStaff::setRestaurantPointer(Restaurant* aRestaurantPointer)
 {
 	restaurantPointer = aRestaurantPointer;
 }
+
+Restaurant* RestaurantStaff::getRestaurantPointer()
+{
+	return restaurantPointer;
+}

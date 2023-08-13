@@ -659,7 +659,7 @@ int main()
 					}
 					else
 					{
-						cout << foodItemPointer->getName() << " has been added to you order.";
+						cout << foodItemPointer->getName() << " has been added to your order.";
 					}
 
 					//if (temporaryOrder.)
@@ -702,8 +702,75 @@ int main()
 		// Present interface for the user
 		cout << "====================================================" << endl;
 		cout << "Welcome Back, " << restaurantStaff->getRestaurantName() << endl;
-		cout << "What would you like to do?" << endl;
-		cout << "1. View Incoming Orders\n2. View customer information of latest order\n3. Update Order\n4. Generate Report" << endl;
+		while (true)
+		{
+			cout << "1. View Incoming Orders\n2. View customer information of latest order\n3. Update Order\n4. Generate Report\n5. Add food item To Menu\n6. Edit food item\n7. View Menu" << endl;
+			cout << "What would you like to do? ";
+			// Get input from user
+			string staffInput;
+			cin >> staffInput;
+
+			// If input is 1
+			if (staffInput == "1")
+			{
+				// Print out all the orders
+				restaurantStaff->viewAllOrders();
+			}
+			else if (staffInput == "2")
+			{
+				// Print out the latest order
+			}
+			else if (staffInput == "3")
+			{
+				// Update order
+
+			}
+			else if (staffInput == "4")
+			{
+				// Generate report
+			}
+			else if (staffInput == "5")
+			{
+				// Add food item to menu
+			}
+			else if (staffInput == "6")
+			{
+				// Edit food item
+				while (true)
+				{
+					restaurantStaff->getRestaurantPointer()->printMenu();
+					cout << "Which food item would you like to edit? (q to quit)" << endl;
+
+					string foodItemName;
+					cin >> foodItemName;
+					
+					if (foodItemName == "q")
+						break;
+					
+					FoodItem* foodItemPointer = restaurantStaff->getRestaurantPointer()->restaurantMenuPointer()->searchNode(foodItemName);
+					if (foodItemPointer == nullptr)
+					{
+						cout << "Food item does not exist, please try again";
+					}
+					else
+					{
+						restaurantStaff->updateFoodItem(*foodItemPointer);
+					}
+					
+				}
+				
+			}
+			else if (staffInput == "7")
+			{
+				// View menu
+				restaurantStaff->getRestaurantPointer()->printMenu();
+			}
+			else
+			{
+				cout << "Invalid input, please try select appropriate number" << endl;
+			}
+		}
+
 	}
 
 }
