@@ -11,6 +11,7 @@
 #include "User.h"
 #include "CustomerDictionary.h"
 #include "Customer.h"
+#include "StaffDictionary.h"
 #include "RestaurantStaff.h"
 #include "Restaurant.h"
 #include "FoodItem.h"
@@ -181,6 +182,8 @@ bool registerAccount(string userInputEmail, string userInputPassword,
 
 int main()
 {
+	// Initalize staff database
+	StaffDictionary staffDatabase = StaffDictionary();
 	// Initaliaze user database
 	CustomerDictionary userDatabase = CustomerDictionary();
 
@@ -200,7 +203,7 @@ int main()
 		cout << " |__|__| |______ |_____ |_____  |_____| |  |  | |______" << endl;
 		cout << endl;;
 		cout << "What would like to do?\n";
-		cout << "0.admin\n1. Login\n2. Register\n";
+		cout << "0. admin\n1. User Login\n2. User Register\n3. Staff Login\n4.Staff Register\n" << endl;
 		cout << "Your choice? (1 - 2) : ";
 		cin >> loginChoice;
 
@@ -287,6 +290,34 @@ int main()
 
 			// 3. 
 		}
+
+		if (loginChoice == "4" || loginChoice == "3")
+		{
+			if (loginChoice == "3")
+			{
+				// Restaurant staff login
+				cout << "Restaurant Staff Login" << endl;
+				string staffEmail, staffPassword;
+				cout << "Please enter your email: ";
+				cin >> staffEmail;
+				cout << "Please enter your password: ";
+				cin >> staffPassword;
+
+				// Check staff login
+				if (login(staffEmail, staffPassword, staffDatabase))
+				{
+					cout << "Restaurant staff login successful!" << endl;
+					restaurantStaffLoggedIn = true;
+					// ... (provide restaurant staff actions)
+				}
+				else
+				{
+					cout << "Invalid email or password for restaurant staff." << endl;
+				}
+			}
+		}
+
+		
 		// For any invalid menu options
 		else
 		{

@@ -135,6 +135,7 @@
     <ClCompile Include="OrderQueue.cpp" />
     <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="RestaurantStaff.cpp" />
+    <ClCompile Include="StaffDictionary.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="CustomerDictionary.cpp" />
   </ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="OrderQueue.h" />
     <ClInclude Include="Restaurant.h" />
     <ClInclude Include="RestaurantStaff.h" />
+    <ClInclude Include="StaffDictionary.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="CustomerDictionary.h" />
   </ItemGroup>

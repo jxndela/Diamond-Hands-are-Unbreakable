@@ -48,6 +48,21 @@ public:
 	// Post: Success or failure 
 	void updateFoodItem(FoodItem foodItem);
 
+	// Check the email of a user object
+	// Pre : ~
+	// Post: Returns email
+	string getEmail();
+
+	// Check the passwordHash of a user object
+	// Pre : ~
+	// Post: Returns passwordHash
+	string getPasswordHash();
+
+	// set password hash
+	// pre : ~
+	// post : password hash is set
+	void setPasswordHash(string aPasswordHash);
+
 	// Generate Report
 	// Pre : Must have completed orders in a given time period
 	// Post: Shows monthly report of total earnings and statistics.
