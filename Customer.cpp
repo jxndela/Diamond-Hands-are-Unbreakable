@@ -46,26 +46,18 @@ string Customer::getEmail()
 	return email;
 }
 
-// Check customer details - this function is for RestaurantStaff to get customer info
-// Pre : ~
-// Post: Using pass by reference, returns the customer name and postal code
-void Customer::browseFoodSelections()
-{
-
-}
 
 // Generate a temporary Order Variable
 // Pre : No orders in progress 
 // Post: Create a temporary order to store foodItems in 
-void Customer::createNewOrder()
+// Can only order from 1 restaurant
+Order* Customer::createNewOrder(Restaurant* aRestaurantPointer)
 {
-	// 1. Show all the food options
-
-	// 2. Show item name categpru & price and restaurant
-	// 3. retrieve pointers from ARRAY after selecting item
-	// 4. put inside order
-	// 5. confirm order
-	// 6. send order if confirmed, else return back  to while loop
+	Customer* customerOrdering = this;
+	string aOrderId = customerName + to_string(numberOfpreviousOrders + 1);
+	Order newOrder(aOrderId, customerOrdering, aRestaurantPointer);
+	Order* newOrderPointer = &newOrder;
+	return newOrderPointer;
 }
 
 // Confirm the order and send it to Restaurant

@@ -207,7 +207,7 @@ void writeRestaurantFile(Restaurant restaurantDatabase[], int numberOfRestaurant
 void printRestaurants(Restaurant restaurantDatabase[], int numberOfRestaurants) {
 	std::cout << "Restaurants in the database:\n";
 	for (int i = 0; i < numberOfRestaurants; i++) {
-		std::cout << "Name: " << restaurantDatabase[i].getRestaurantName()
+		std::cout << i+1 << ". " << "Name: " << restaurantDatabase[i].getRestaurantName()
 			<< " - Postal Code: " << restaurantDatabase[i].getPostalCode() << "\n";
 		restaurantDatabase[i].printMenu();
 	}
@@ -268,6 +268,8 @@ bool registerAccount(string userInputEmail, string userInputPassword,
 	
 	return true;
 }
+
+// Function 3 : display UI for register and display
 
 int main()
 {
@@ -411,28 +413,80 @@ int main()
 		
 		// While loop for prompt
 		bool validCustomerResponse = false;
-		int customerInput;
+		string customerInput;
 
 		while (!validCustomerResponse)
 		{
 			cout << "Your choice ? : ";
 			cin >> customerInput;
-			// 3 options
-			if (-customerInput < 0 && customerInput > 3)
-			{
-				cout << "Invalid input, please try select appropriate number" << endl;
-			}
 
-			if (customerInput == 1)
+			// 3 options
+			if (customerInput == "1")
 			{
 				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
 				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
 				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
 				cout << "                                                                            " << endl;  
-				customer.createNewOrder();
-			}
+				
+				// Display UI for restaurants and their menus
+				printRestaurants(restaurantDatabase, numberOfRestaurants);
+				
+				// Create the temporary order
+				Order* temporaryOrder = nullptr;
 
-			if (customerInput == 2)
+				// Create an array of valid inputs
+				// Start at index zero, but value start at 1
+				string restaurantChoices[MAX_RESTAURANTS];
+				for (int i = 0; i < numberOfRestaurants; i++)
+				{
+					restaurantChoices[i] = to_string(i + 1);
+				}
+
+				// Create exit condition
+				bool validRestaurantChoice = false;
+				string restaurantChoice; 
+
+				// Prompt user to select restaurant to order from
+				while (!validRestaurantChoice)
+				{
+					cout << "which restaurant would you like to order from? : ";
+					cin >> restaurantChoice;
+					bool found = false;
+					// If it is not valid 
+
+					for (int i = 0; i < numberOfRestaurants; i++)
+					{
+						if (restaurantChoice == restaurantChoices[i])
+						{
+							validRestaurantChoice == true;
+							Restaurant* restaurantChosen = &restaurantDatabase[stoi(restaurantChoice) - 1];
+							temporaryOrder = customer.createNewOrder(restaurantChosen);
+							found = true;
+							break;
+						}
+					}
+					// Exit out of for loop
+					if (found)
+					{
+						cout << "order successfully created" << endl;
+						break;
+					}
+					else
+						cout << "Please enter appropriate integer corresponding to restaurant" << endl;
+					
+				}
+				// Broke out of while loop - Order is created
+
+				// Show that specific restaurant menu
+
+				// Option to add or remove
+
+				// 
+
+				// 
+				
+			}
+			else if (customerInput == "2")
 			{
 				cout << "____ _  _ ____ ____ _  _    ____ ____ ___  ____ ____ " << endl;
 				cout << "|    |__| |___ |    |_/     |  | |__/ |  | |___ |__/ " << endl;
@@ -440,17 +494,20 @@ int main()
 				cout <<                                                      "" << endl;
 
 			}
-			if (customerInput == 3)
+			else if (customerInput == "3")
 			{
 				cout << "____ ____ _  _ ____ ____ _       ____ ____ ___  ____ ____ " << endl;
 				cout << "|    |__| || | |    |___ |       |  | |__/ |  | |___ |__/ " << endl;
 				cout << "|___ |  | | || |___ |___ |___    |__| |  | |__/ |___ |  | " << endl;
 				cout << "                                                          " << endl;
 			}
-
+			else
+			{
+				cout << "Invalid input, please try select appropriate number" << endl;
+				continue;
+			}
 		}
-
-
+		// Break out of user options menu
 	}
 	if (restaurantStaffLoggedIn)
 	{

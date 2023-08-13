@@ -9,6 +9,7 @@ using namespace std;
 
 // Forward declaration
 class Order;
+class Restaurant;
 
 // Customer class is derived from user
 // This means that it inherits email + password
@@ -20,6 +21,7 @@ private:
     string customerName;   // Stores customer name
     int postalCode;        // Store customer's postal code 
     Order* currentOrder = nullptr;
+    int numberOfpreviousOrders = 0; 
 
 public:
 
@@ -54,15 +56,11 @@ public:
     // Post: Returns email
     string getEmail();
 
-    // Generate UI For browsing Food Selection
-    // Pre : ~
-    // Post: Show the food selection with options to sort 
-    void browseFoodSelections();
-
+    // Can only order from 1 restaurant
     // Generate a temporary Order Variable
     // Pre : No orders in progress 
     // Post: Create a temporary order to store foodItems in 
-    void createNewOrder();
+    Order* createNewOrder(Restaurant* aRestaurantPointer);
 
     // Confirm the order and send it to Restaurant
     // Pre : Order is not empty
