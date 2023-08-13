@@ -272,6 +272,58 @@ bool registerAccount(string userInputEmail, string userInputPassword,
 
 // Function 3 : display UI for register and display
 
+// STAFF
+// Functions 1 : Login
+// Pre : Should only be when logged out
+// Post: Return a true or false statement 
+bool stafflogin(string staffInputEmail, string staffInputPassword, StaffDictionary& aStaffDictionary)
+{
+	// Step 1: Hash the staff input password
+	string hashedPassword = hashPassword(staffInputPassword);
+
+	// Step 2: Check if emailkey is inside the dictionary
+	// If it is not inside, comparedHash = "USERNOTFOUND"
+	string comparedHash = aStaffDictionary.retrievePassword(staffInputEmail);
+	if (comparedHash == hashedPassword)
+	{
+		cout << "Authentication success" << endl;
+		return true;
+	}
+	else
+	{
+		cout << "Something went wrong, please try logging in again" << endl;
+		cout << "-------------------------------------------------" << endl;
+		return false;
+	}
+}
+
+// Function 2 : Register
+// Register New staff
+// Pre : Should only be when logged out
+bool registerStaffAccount(string email, string password, Restaurant* aRestaurantPointer, StaffDictionary& staffDatabase)
+{
+	// Step 1: Hash the user input password
+	string hashedPassword = hashPassword(password);
+
+	// Step 2: Create a temporary restaurant staff object
+	RestaurantStaff tempStaff = RestaurantStaff(email, hashedPassword, aRestaurantPointer);
+
+	// Step 3: Add the restaurant staff to the database
+	bool addStaffSuccess = staffDatabase.addStaff(email, tempStaff);
+
+	if (!addStaffSuccess)
+	{
+		cout << "Restaurant staff account already exists." << endl;
+		return false;
+	}
+
+	// Save the new restaurant staff details to the text file
+	staffDatabase.saveToFile();
+
+	cout << "Restaurant staff registration successful!" << endl;
+	return true;
+}
+
 int main()
 {
 	// Initalize staff database
@@ -301,7 +353,7 @@ int main()
 		cout << endl;;
 		cout << "What would like to do?\n";
 		cout << "0. admin\n1. User Login\n2. User Register\n3. Staff Login\n4.Staff Register\n" << endl;
-		cout << "Your choice? (1 - 2) : ";
+		cout << "Your choice? (1 - 4) : ";
 		cin >> loginChoice;
 
 		if (loginChoice == "1" || loginChoice == "2" || loginChoice == "0")
@@ -396,22 +448,43 @@ int main()
 				// Restaurant staff login
 				cout << "Restaurant Staff Login" << endl;
 				string staffEmail, staffPassword;
-				cout << "Please enter your email: ";
-				cin >> staffEmail;
+
+				staffEmail = getUserEmailInput();
+
 				cout << "Please enter your password: ";
 				cin >> staffPassword;
 
 				// Check staff login
-
-				if (login(staffEmail, staffPassword, staffDatabase))
+				if (stafflogin(staffEmail, staffPassword, staffDatabase))
 				{
 					cout << "Restaurant staff login successful!" << endl;
 					restaurantStaffLoggedIn = true;
-					// ... (provide restaurant staff actions)
+					break;
 				}
 				else
 				{
 					cout << "Invalid email or password for restaurant staff." << endl;
+				}
+			}
+			if (loginChoice == "4")
+			{
+				// Restaurant staff registration
+				cout << "Restaurant Staff Registration" << endl;
+				string staffEmail, staffPassword, staffName;
+				Restaurant* staffRestaurant;
+
+				staffEmail = getUserEmailInput();
+
+				cout << "Please enter your password: ";
+				cin >> staffPassword;
+
+				/*cout << "Please enter the restaurant: ";
+				cin >> staffRestaurant;*/
+
+
+				if (registerStaffAccount(staffEmail, staffPassword, nullptr, staffDatabase))
+				{
+					cout << "You are now registered as restaurant staff!" << endl;
 				}
 			}
 		}

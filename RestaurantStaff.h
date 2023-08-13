@@ -23,7 +23,7 @@ public:
 	RestaurantStaff();
 
 	// Parameterized Constructor
-	RestaurantStaff(Restaurant* aRestaurantPointer);
+	RestaurantStaff(string aEmail, string aPasswordhash, Restaurant* aRestaurantPointer);
 
 	// Destructor
 	~RestaurantStaff();
@@ -69,4 +69,3 @@ public:
 	void generateReport();
 
 };
-

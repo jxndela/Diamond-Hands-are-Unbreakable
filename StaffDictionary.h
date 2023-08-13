@@ -26,7 +26,7 @@ private:
 	// Attributes
 	RestaurantStaffNode* staffs[STAFF_MAX_SIZE];
 	int size;
-	
+
 
 public:
 	// Constructor for the Dictionary
@@ -69,8 +69,3 @@ public:
 	// saves data to file
 	void saveToFile();
 };
-
-
-
-
-

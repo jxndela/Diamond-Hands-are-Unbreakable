@@ -6,9 +6,11 @@ RestaurantStaff::RestaurantStaff()
 
 }
 
-RestaurantStaff::RestaurantStaff(Restaurant* aRestaurantPointer)
+RestaurantStaff::RestaurantStaff(string aEmail, string aPasswordhash, Restaurant* aRestaurantPointer)
 {
-	aRestaurantPointer = aRestaurantPointer;
+    email = aEmail;
+    passwordHash = aPasswordhash;
+    aRestaurantPointer = aRestaurantPointer;
 }
 
 
@@ -18,18 +20,18 @@ RestaurantStaff::~RestaurantStaff()
 
 void RestaurantStaff::viewAllOrders()
 {
-	restaurantPointer->getIncomingOrder()->printQueue();
+    restaurantPointer->getIncomingOrder()->printQueue();
 }
 
 void RestaurantStaff::viewOrderAndCustomerInfo(Order aOrder)
 {
-	aOrder.printOrderInformation();
+    aOrder.printOrderInformation();
 }
 
 void RestaurantStaff::updateOrderStatus(Order aOrder)
 {
-	cout << "Order has been set to completed" << endl;
-	aOrder.setOrderStatusComplete();
+    cout << "Order has been set to completed" << endl;
+    aOrder.setOrderStatusComplete();
 }
 
 void RestaurantStaff::updateFoodItem(FoodItem foodItem)
@@ -50,14 +52,14 @@ void RestaurantStaff::updateFoodItem(FoodItem foodItem)
             cout << "Enter new price: ";
             double newPrice;
             cin >> newPrice;
-            foodItem.setFoodItemPrice(newPrice); 
+            foodItem.setFoodItemPrice(newPrice);
             break;
 
         case 2:
             cout << "Enter new availability: ";
             bool newAvailability;
             cin >> newAvailability;
-            foodItem.setAvailability(newAvailability); 
+            foodItem.setAvailability(newAvailability);
             break;
 
         case 3:
@@ -70,4 +72,18 @@ void RestaurantStaff::updateFoodItem(FoodItem foodItem)
     }
 }
 
+string RestaurantStaff::getEmail()
+{
+    return email;
+}
 
+string RestaurantStaff::getPasswordHash()
+{
+    return passwordHash;
+}
+
+
+void RestaurantStaff::setPasswordHash(string newPasswordHash)
+{
+    passwordHash = newPasswordHash;
+}

@@ -162,7 +162,7 @@ void StaffDictionary::loadFromFile()
 	ifstream inFile("staff_details.txt");
 	if (!inFile.is_open())
 	{
-		
+
 		// Create the file if it doesn't exist
 		ofstream newFile("staff_details.txt");
 		newFile.close();
