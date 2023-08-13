@@ -12,8 +12,6 @@ StaffDictionary::StaffDictionary()
 	// Set default size to 0
 	size = 0;
 
-	// Load user details from file
-	loadFromFile();
 }
 
 StaffDictionary::~StaffDictionary()
@@ -157,16 +155,57 @@ bool StaffDictionary::isEmpty()
 }
 
 
-void StaffDictionary::loadFromFile()
+//void StaffDictionary::loadFromFile()
+//{
+//	ifstream inFile("staff_details.txt");
+//	if (!inFile.is_open())
+//	{
+//
+//		// Create the file if it doesn't exist
+//		ofstream newFile("staff_details.txt");
+//		newFile.close();
+//		cout << "file has been created" << endl;
+//
+//		// Try opening the newly created file
+//		inFile.open("staff_details.txt");
+//		if (!inFile.is_open())
+//		{
+//			return; // Still unable to open the file
+//		}
+//	}
+//
+//	string emailKey, passwordHash;
+//	while (inFile >> emailKey >> passwordHash) {
+//		RestaurantStaffNode* newNode = new RestaurantStaffNode;
+//		newNode->emailKey = emailKey;
+//		newNode->staff.setPasswordHash(passwordHash);
+//		newNode->next = nullptr;
+//
+//		int index = getHashedKey(emailKey);
+//
+//		if (staffs[index] == nullptr) {
+//			staffs[index] = newNode;
+//		}
+//		else {
+//			RestaurantStaffNode* current = staffs[index];
+//			while (current->next != nullptr) {
+//				current = current->next;
+//			}
+//			current->next = newNode;
+//		}
+//	}
+//	inFile.close();
+//}
+
+void StaffDictionary::loadFromFile(Restaurant restaurantDatabase[], int numberOfRestaurants)
 {
 	ifstream inFile("staff_details.txt");
 	if (!inFile.is_open())
 	{
-
 		// Create the file if it doesn't exist
 		ofstream newFile("staff_details.txt");
 		newFile.close();
-		cout << "file has been created" << endl;
+		cout << "File has been created" << endl;
 
 		// Try opening the newly created file
 		inFile.open("staff_details.txt");
@@ -176,11 +215,31 @@ void StaffDictionary::loadFromFile()
 		}
 	}
 
-	string emailKey, passwordHash;
-	while (inFile >> emailKey >> passwordHash) {
+	string emailKey, passwordHash, restaurantName;
+	while (inFile >> emailKey >> passwordHash >> restaurantName) {
 		RestaurantStaffNode* newNode = new RestaurantStaffNode;
 		newNode->emailKey = emailKey;
 		newNode->staff.setPasswordHash(passwordHash);
+
+		// Find the corresponding restaurant in the restaurantDatabase
+		Restaurant* associatedRestaurant = nullptr;
+		for (int i = 0; i < numberOfRestaurants; ++i) {
+			if (restaurantDatabase[i].getRestaurantName() == restaurantName) {
+				associatedRestaurant = &restaurantDatabase[i];
+				break;
+			}
+		}
+
+		if (associatedRestaurant) {
+			newNode->staff.setRestaurantName(restaurantName); // Set the restaurant name
+			newNode->staff.setRestaurantPointer(associatedRestaurant); // Set the restaurant pointer
+		}
+		else {
+			cout << "Associated restaurant not found for staff with email: " << emailKey << endl;
+			delete newNode;
+			continue;
+		}
+
 		newNode->next = nullptr;
 
 		int index = getHashedKey(emailKey);
@@ -199,6 +258,8 @@ void StaffDictionary::loadFromFile()
 	inFile.close();
 }
 
+
+
 void StaffDictionary::saveToFile()
 {
 	ofstream outFile("staff_details.txt");
@@ -206,10 +267,25 @@ void StaffDictionary::saveToFile()
 	for (int i = 0; i < STAFF_MAX_SIZE; ++i) {
 		RestaurantStaffNode* current = staffs[i];
 		while (current != nullptr) {
-			outFile << current->emailKey << " " << current->staff.getPasswordHash() << endl;
+			outFile << current->emailKey << " " << current->staff.getPasswordHash()
+				<< " " << current->staff.getRestaurantName() << endl;
 			current = current->next;
 		}
 	}
 
 	outFile.close();
+}
+
+RestaurantStaff* StaffDictionary::search(string email)
+{
+	int index = getHashedKey(email);
+
+	RestaurantStaffNode* current = staffs[index];
+	while (current != nullptr) {
+		if (current->emailKey == email) {
+			return &current->staff;
+		}
+		current = current->next;
+	}
+	return nullptr;
 }

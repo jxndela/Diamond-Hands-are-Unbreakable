@@ -10,7 +10,7 @@ RestaurantStaff::RestaurantStaff(string aEmail, string aPasswordhash, Restaurant
 {
     email = aEmail;
     passwordHash = aPasswordhash;
-    aRestaurantPointer = aRestaurantPointer;
+    restaurantPointer = aRestaurantPointer;
 }
 
 
@@ -86,4 +86,19 @@ string RestaurantStaff::getPasswordHash()
 void RestaurantStaff::setPasswordHash(string newPasswordHash)
 {
     passwordHash = newPasswordHash;
+}
+
+string RestaurantStaff::getRestaurantName()
+{
+	return restaurantName;
+}
+
+void RestaurantStaff::setRestaurantName(string aRestaurantName)
+{
+	restaurantName = aRestaurantName;
+}
+
+void RestaurantStaff::setRestaurantPointer(Restaurant* aRestaurantPointer)
+{
+	restaurantPointer = aRestaurantPointer;
 }

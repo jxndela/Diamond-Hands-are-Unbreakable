@@ -94,5 +94,8 @@
     <Text Include="restaurant.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="staff_details.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

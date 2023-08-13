@@ -22,6 +22,7 @@
 #include "OrderQueue.h"
 
 using namespace std;
+
 const int MAX_RESTAURANTS = 100;
 
 
@@ -314,6 +315,7 @@ bool registerStaffAccount(string email, string password, Restaurant* aRestaurant
 
 	// Step 2: Create a temporary restaurant staff object
 	RestaurantStaff tempStaff = RestaurantStaff(email, hashedPassword, aRestaurantPointer);
+	tempStaff.setRestaurantName(aRestaurantPointer->getRestaurantName());
 
 	// Step 3: Add the restaurant staff to the database
 	bool addStaffSuccess = staffDatabase.addStaff(email, tempStaff);
@@ -333,22 +335,25 @@ bool registerStaffAccount(string email, string password, Restaurant* aRestaurant
 
 int main()
 {
-	// Initalize staff database
-	StaffDictionary staffDatabase = StaffDictionary();
-	// Initaliaze user database
-	CustomerDictionary userDatabase = CustomerDictionary();
-
 	// Initialize restaurants
 	Restaurant restaurantDatabase[MAX_RESTAURANTS]; 
 	int numberOfRestaurants = 0;
 	readRestaurantFile(restaurantDatabase, numberOfRestaurants);
+	// Initalize staff database
+	StaffDictionary staffDatabase = StaffDictionary();
+	staffDatabase.loadFromFile(restaurantDatabase, numberOfRestaurants);
+	// Initaliaze user database
+	CustomerDictionary userDatabase = CustomerDictionary();
+	
 
 	// Set-up and exit condition for UI
 	Customer customer = Customer();
+	RestaurantStaff* restaurantStaff = nullptr;
 	bool displayLogin = true;
 	bool customerLoggedIn = false;
 	bool restaurantStaffLoggedIn = false;
 	string loginChoice;
+	string staffEmail;
 
 	// User presented with two choices to log in or register
 	while (displayLogin)
@@ -454,7 +459,7 @@ int main()
 			{
 				// Restaurant staff login
 				cout << "Restaurant Staff Login" << endl;
-				string staffEmail, staffPassword;
+				string staffPassword;
 
 				staffEmail = getUserEmailInput();
 
@@ -477,8 +482,8 @@ int main()
 			{
 				// Restaurant staff registration
 				cout << "Restaurant Staff Registration" << endl;
-				string staffEmail, staffPassword, staffName;
-				Restaurant* restaurantChosen;
+				string staffPassword;
+				Restaurant* restaurantChosen = nullptr;
 
 				staffEmail = getUserEmailInput();
 
@@ -528,7 +533,7 @@ int main()
 				}
 
 
-				if (registerStaffAccount(staffEmail, staffPassword, nullptr, staffDatabase))
+				if (registerStaffAccount(staffEmail, staffPassword, restaurantChosen, staffDatabase))
 				{
 					cout << "You are now registered as restaurant staff!" << endl;
 				}
@@ -692,9 +697,11 @@ int main()
 	}
 	if (restaurantStaffLoggedIn)
 	{
+		restaurantStaff = staffDatabase.search(staffEmail);
+		
 		// Present interface for the user
 		cout << "====================================================" << endl;
-		cout << "Welcome Back" << endl;
+		cout << "Welcome Back, " << restaurantStaff->getRestaurantName() << endl;
 		cout << "What would you like to do?" << endl;
 		cout << "1. View Incoming Orders\n2. View customer information of latest order\n3. Update Order\n4. Generate Report" << endl;
 	}

@@ -65,7 +65,14 @@ public:
 
 
 	// loads data from file
-	void loadFromFile();
+	void loadFromFile(Restaurant restaurantDatabase[], int numberOfRestaurants);
+	/*void loadFromFile();*/
 	// saves data to file
 	void saveToFile();
+
+	// searches for a user in the dictionary, returns a pointer to the user if found
+	// Pre  : aEmailKey must be in email format
+	// Post : returns true if user is found
+	RestaurantStaff* search(string email);
+	
 };

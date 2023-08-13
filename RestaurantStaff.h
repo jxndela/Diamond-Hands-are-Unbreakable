@@ -16,6 +16,7 @@ class RestaurantStaff : User
 private:
 
 	Restaurant* restaurantPointer = nullptr;	// Stores the branch which the staff works at
+	string restaurantName;						// Stores the name of the restaurant
 
 public:
 
@@ -67,5 +68,21 @@ public:
 	// Pre : Must have completed orders in a given time period
 	// Post: Shows monthly report of total earnings and statistics.
 	void generateReport();
+
+	// restaurant name
+	// pre : ~
+	// post : returns restaurant name
+	string getRestaurantName();
+	
+	// set restaurant name
+	// pre : ~
+	// post : restaurant name is set
+	void setRestaurantName(string aRestaurantName);
+
+	// set restaurant pointer
+	// pre : ~
+	// post : restaurant pointer is set
+	void setRestaurantPointer(Restaurant* aRestaurantPointer);
+	
 
 };
