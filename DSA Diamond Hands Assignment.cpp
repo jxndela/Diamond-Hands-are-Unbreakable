@@ -332,7 +332,7 @@ int main()
 	CustomerDictionary userDatabase = CustomerDictionary();
 
 	// Initialize restaurants
-	Restaurant restaurantDatabase[CUSTOMER_MAX_SIZE]; 
+	Restaurant restaurantDatabase[MAX_RESTAURANTS]; 
 	int numberOfRestaurants = 0;
 	readRestaurantFile(restaurantDatabase, numberOfRestaurants);
 
@@ -550,6 +550,7 @@ int main()
 				// Create exit condition
 				bool validRestaurantChoice = false;
 				string restaurantChoice; 
+				Restaurant* restaurantChosen; // This is the one that is ultimately selected
 
 				// Prompt user to select restaurant to order from
 				while (!validRestaurantChoice)
@@ -564,7 +565,7 @@ int main()
 						if (restaurantChoice == restaurantChoices[i])
 						{
 							validRestaurantChoice = true;
-							Restaurant* restaurantChosen = &restaurantDatabase[stoi(restaurantChoice) - 1];
+							restaurantChosen = &restaurantDatabase[stoi(restaurantChoice) - 1];
 							temporaryOrder = customer.createNewOrder(restaurantChosen);
 							found = true;
 							break;
@@ -573,7 +574,7 @@ int main()
 					// Exit out of for loop
 					if (found)
 					{
-						cout << "order successfully created" << endl;
+						cout << "Creating an empty order form..." << endl;
 						break;
 					}
 					else
@@ -581,10 +582,38 @@ int main()
 					
 				}
 				// Broke out of while loop - Order is created
+				// Show that specific restaurant menu to prompt user
+				restaurantChosen->printMenu();
+				cout << "What would you like to order?" << endl;
+				// 
+				bool isOrderConfirmed = false;
 
-				// Show that specific restaurant menu
+				// While not confirmed and not full, allow adding of food items
+				while (!isOrderConfirmed && !temporaryOrder->isFull())
+				{
+					// temp
+					FoodItem* foodItemPointer = nullptr;
+					string foodItemName;
+					// prompt user
+					cout << "Type the exact name of the food you would like to order" << endl;
+					cin >> foodItemName;
 
-				// Option to add or remove
+					// search in the menu if it exists
+					foodItemPointer = restaurantChosen->restaurantMenuPointer()->searchNode(foodItemName);
+
+					if (foodItemPointer == nullptr)
+					{
+						cout << "Food item does not exist, please try again";
+					}
+					else
+					{
+						cout << foodItemPointer->getName() << " has been added to you order.";
+					}
+
+					//if (temporaryOrder.)
+				}
+				
+
 
 				// 
 

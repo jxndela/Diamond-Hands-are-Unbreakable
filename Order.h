@@ -62,6 +62,9 @@ public:
     // Post: Get customer postalcode
     int getCustomerPostalCode();
 
+    // Get size of the 
+
+
     // Set method for order status from restaurant
     // Pre  : ~
     // Post : order status changed to completed
