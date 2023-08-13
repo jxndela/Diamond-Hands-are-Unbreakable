@@ -364,7 +364,7 @@ int main()
 		cout << " |__|__| |______ |_____ |_____  |_____| |  |  | |______" << endl;
 		cout << endl;;
 		cout << "What would like to do?\n";
-		cout << "0. admin\n1. User Login\n2. User Register\n3. Staff Login\n4.Staff Register\n" << endl;
+		cout << "0. admin\n1. User Login\n2. User Register\n3. Staff Login\n4. Staff Register\n" << endl;
 		cout << "Your choice? (1 - 4) : ";
 		cin >> loginChoice;
 
