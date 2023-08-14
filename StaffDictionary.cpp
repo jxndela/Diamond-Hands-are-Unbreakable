@@ -194,7 +194,7 @@ bool StaffDictionary::isEmpty()
 //			current->next = newNode;
 //		}
 //	}
-//	inFile.close();
+//	inFile.close
 //}
 
 void StaffDictionary::loadFromFile(Restaurant restaurantDatabase[], int numberOfRestaurants)

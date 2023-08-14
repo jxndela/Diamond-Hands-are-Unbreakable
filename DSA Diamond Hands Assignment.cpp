@@ -756,13 +756,15 @@ int main()
 					FoodItem* foodItemPointer = restaurantStaff->getRestaurantPointer()->restaurantMenuPointer()->searchNode(foodItemName);
 					if (foodItemPointer == nullptr)
 					{
-						cout << "Food item does not exist, please try again";
+						cout << "Food item does not exist, please try again" << endl;
 					}
 					else
 					{
-						restaurantStaff->updateFoodItem(*foodItemPointer);
+						restaurantStaff->updateFoodItem(foodItemPointer);
+						// Save changes to the restaurant.txt file after updating the food item
+						writeRestaurantFile(restaurantDatabase, numberOfRestaurants);
 					}
-					
+
 				}
 				
 			}
