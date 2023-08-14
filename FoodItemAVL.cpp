@@ -273,6 +273,27 @@ void FoodItemAVL::printInOrderRecursive(AVLNode* aNode)
     printInOrderRecursive(aNode->right);
 }
 
+// recursive print function (all items)
+void FoodItemAVL::printAllInOrderRecursive(AVLNode* aNode)
+{
+    // Base case: If the current node is null, return
+    if (aNode == nullptr)
+        return;
+
+    // Recursively print the left subtree
+    printAllInOrderRecursive(aNode->left);
+
+    // Print the current node's food item's details
+    cout << aNode->foodItem.getName()
+        << "\t$" << aNode->foodItem.getPrice()
+        << "\tAvailable: " << (aNode->foodItem.getAvailability() ? "True" : "False")
+        << endl;
+
+    // Recursively print the right subtree
+    printAllInOrderRecursive(aNode->right);
+}
+
+
 // Insert node into the AVL tree
 // Pre : Tree must exist i guess
 // Post: The node will be inserted into the tree int the correct position
@@ -306,6 +327,15 @@ void FoodItemAVL::printInOrder()
 {
 	// Call the recursive printInOrderRecursive function to print the tree in alphabetical order
     printInOrderRecursive(root);
+}
+
+// Print in alphabetical order (A-Z) (all items)
+// Pre : Not a null AVL Tree
+// Post: Prints the full item menu of the restaurant in which the AVL tree belongs to
+void FoodItemAVL::printAllInOrder()
+{
+	// Call the recursive printInOrderRecursive function to print the tree in alphabetical order
+	printAllInOrderRecursive(root);
 }
 
 // Delete a node inside AVL Tree by searching for its name

@@ -340,6 +340,31 @@ bool registerStaffAccount(string& email, string& password, Restaurant* aRestaura
 	return true;
 }
 
+// Function 3 : Edit Food Items
+void editFoodItems(RestaurantStaff* restaurantStaff) {
+	while (true) {
+		restaurantStaff->getRestaurantPointer()->printMenuAll();
+		cout << "Which food item would you like to edit? (q to quit)" << endl;
+
+		string foodItemName;
+		cin >> foodItemName;
+
+		if (foodItemName == "q") {
+			break;
+		}
+
+		FoodItem* foodItemPointer = restaurantStaff->getRestaurantPointer()->restaurantMenuPointer()->searchNode(foodItemName);
+		if (foodItemPointer == nullptr) {
+			cout << "Food item does not exist, please try again" << endl;
+		}
+		else {
+			restaurantStaff->updateFoodItem(foodItemPointer);
+		}
+	}
+}
+
+
+
 int main()
 {
 	// Initialize restaurants
@@ -747,41 +772,21 @@ int main()
 				// Add food item to menu
 				restaurantStaff->addFoodItem(restaurantStaff);
 				// Save changes to the restaurant.txt file after adding the food item
-				/////writeRestaurantFile(restaurantDatabase, numberOfRestaurants);
+				//writeRestaurantFile(restaurantDatabase, numberOfRestaurants);
 			}
 			else if (staffInput == "6")
 			{
-				// Edit food item
-				while (true)
-				{
-					restaurantStaff->getRestaurantPointer()->printMenu();
-					cout << "Which food item would you like to edit? (q to quit)" << endl;
+				// Call the editFoodItems function
+				editFoodItems(restaurantStaff);
+				// Save changes to the restaurant.txt file after updating the food item
+				//writeRestaurantFile(restaurantDatabase, numberOfRestaurants);
 
-					string foodItemName;
-					cin >> foodItemName;
-					
-					if (foodItemName == "q")
-						break;
-					
-					FoodItem* foodItemPointer = restaurantStaff->getRestaurantPointer()->restaurantMenuPointer()->searchNode(foodItemName);
-					if (foodItemPointer == nullptr)
-					{
-						cout << "Food item does not exist, please try again" << endl;
-					}
-					else
-					{
-						restaurantStaff->updateFoodItem(foodItemPointer);
-						// Save changes to the restaurant.txt file after updating the food item
-						///////writeRestaurantFile(restaurantDatabase, numberOfRestaurants);
-					}
-
-				}
 				
 			}
 			else if (staffInput == "7")
 			{
 				// View menu
-				restaurantStaff->getRestaurantPointer()->printMenu();
+				restaurantStaff->getRestaurantPointer()->printMenuAll();
 			}
 			else
 			{

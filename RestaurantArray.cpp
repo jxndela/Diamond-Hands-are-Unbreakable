@@ -55,6 +55,7 @@ void RestaurantArray::readRestaurantFile()
 		// If restaurant
 		if (firstWord == "Restaurant")
 		{
+
 			getline(ss, restaurantName, ',');
 			getline(ss, postalCodeString);
 			postalCode = stoi(postalCodeString);
