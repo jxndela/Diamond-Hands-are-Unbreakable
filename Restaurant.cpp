@@ -43,3 +43,11 @@ void Restaurant::printMenu()
 	cout <<"=============" << endl; 
 }
 
+void Restaurant::printMenuAll()
+{
+	cout << "PRINTING MENU" << endl
+		<< "=============" << endl;
+	restaurantMenu.printAllInOrder();
+	cout << "=============" << endl;
+}
+

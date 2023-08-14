@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <limits>
 // Constructor
 RestaurantStaff::RestaurantStaff()
 {
@@ -38,38 +39,50 @@ void RestaurantStaff::updateOrderStatus(Order aOrder)
 
 void RestaurantStaff::updateFoodItem(FoodItem* foodItemPointer)
 {
-    while (true)
-    {
+    while (true) {
         cout << "What would you like to update?" << endl;
         cout << "1. Price" << endl;
         cout << "2. Availability" << endl;
         cout << "3. Exit" << endl;
 
         int choice;
-        cin >> choice;
+        if (!(cin >> choice)) {
+            cout << "Invalid input. Please enter a valid number." << endl;
+            cin.clear(); // Clear error state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
+            continue; // Restart the loop
+        }
 
-        switch (choice)
-        {
-        case 1:
+        switch (choice) {
+        case 1: {
             cout << "Enter new price: ";
             double newPrice;
-            cin >> newPrice;
+            if (!(cin >> newPrice)) {
+                cout << "Invalid input for price. Please enter a valid number." << endl;
+                cin.clear(); // Clear error state
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
+                continue; // Restart the loop
+            }
             foodItemPointer->setFoodItemPrice(newPrice);
             cout << "Price updated successfully!" << endl;
             break;
+        }
 
-        case 2:
-            cout << "Enter new availability (1 for available, 0 for not available): ";
-            int newAvailability; // Use an integer to represent boolean (1 for true, 0 for false)
-            cin >> newAvailability;
-            if (newAvailability == 0 || newAvailability == 1) {
+        case 2: {
+            cout << "Enter new availability (True for available, False for not available): ";
+            string newAvailabilityStr;
+            cin >> newAvailabilityStr;
+
+            if (newAvailabilityStr == "True" || newAvailabilityStr == "False") {
+                bool newAvailability = (newAvailabilityStr == "True");
                 foodItemPointer->setAvailability(newAvailability);
                 cout << "Availability updated successfully!" << endl;
             }
             else {
-                cout << "Invalid input for availability. Please enter 0 or 1." << endl;
+                cout << "Invalid input for availability. Please enter 'True' or 'False'." << endl;
             }
             break;
+        }
 
         case 3:
             return;
@@ -96,9 +109,21 @@ void RestaurantStaff::addFoodItem(RestaurantStaff* restaurantStaff)
     cout << "Enter the category of the new food item: ";
     getline(cin, category);
 
-    cout << "Enter the price of the new food item: ";
-    cin >> price;
-    
+    while (true) 
+    {
+        cout << "Enter the price of the new food item: ";
+        if (cin >> price) 
+        {
+            break; // Input is valid, exit the loop
+        }
+        else 
+        {
+            cout << "Invalid input for price. Please enter a valid number." << endl;
+            cin.clear(); // Clear error state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
+        }
+    }
+
     FoodItem newFoodItem(name, description, category, price);
 
     // Add the new food item to the restaurant's menu
@@ -106,6 +131,7 @@ void RestaurantStaff::addFoodItem(RestaurantStaff* restaurantStaff)
 
     cout << "New food item added to the menu!" << endl;
 }
+
 
 
 
@@ -118,6 +144,7 @@ string RestaurantStaff::getPasswordHash()
 {
     return passwordHash;
 }
+
 
 
 void RestaurantStaff::setPasswordHash(string newPasswordHash)
