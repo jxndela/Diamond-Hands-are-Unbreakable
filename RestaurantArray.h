@@ -24,6 +24,7 @@ class RestaurantArray
 private:
 
 	Restaurant restaurants[MAX_RESTAURANTS];
+	int numberOfRestaurants = 0;
 
 public:
 
@@ -37,24 +38,3 @@ public:
 
 };
 
-class RestaurantStack
-{
-private:
-
-	string stack[STACK_MAX_SIZE];
-	int top;
-
-public:
-	// Constructor
-	RestaurantStack();
-	// Destructor
-	~RestaurantStack();
-	// Push
-	void push(string& value);
-	// pop
-	void pop();
-	// get top
-	string getTop();
-	// is empty
-	bool isEmpty();
-};

@@ -343,7 +343,12 @@ bool registerStaffAccount(string& email, string& password, Restaurant* aRestaura
 int main()
 {
 	// Initialize restaurants
-	Restaurant restaurantDatabase[MAX_RESTAURANTS]; 
+	Restaurant restaurantDatabase[MAX_RESTAURANTS];
+
+	RestaurantArray testingArray;
+
+	testingArray.printRestaurants();
+
 	int numberOfRestaurants = 0;
 	/////readRestaurantFile(restaurantDatabase, numberOfRestaurants);
 	// Initalize staff database
@@ -369,7 +374,7 @@ int main()
 		cout << " _  _  _ _______        _______  _____  _______ _______" << endl;
 		cout << " |  |  | |______ |      |       |     | |  |  | |______" << endl;
 		cout << " |__|__| |______ |_____ |_____  |_____| |  |  | |______" << endl;
-		cout << endl;;
+		cout << endl;
 		cout << "What would like to do?\n";
 		cout << "0. admin\n1. User Login\n2. User Register\n3. Staff Login\n4. Staff Register\n" << endl;
 		cout << "Your choice? (1 - 4) : ";

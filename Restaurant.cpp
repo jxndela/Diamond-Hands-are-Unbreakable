@@ -3,8 +3,8 @@
 // Default Constructor
 Restaurant::Restaurant()
 {
-	restaurantName = "";
-	postalCode = 650367;	// Doxxing myself
+	restaurantName = "SUCK MY COCK";
+	postalCode = 123456;
 }
 
 // Parameterized Constructor
