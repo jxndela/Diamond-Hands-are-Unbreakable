@@ -57,6 +57,7 @@ Order* Customer::createNewOrder(Restaurant* aRestaurantPointer)
 	string aOrderId = customerName + to_string(numberOfpreviousOrders + 1);
 	Order newOrder(aOrderId, customerOrdering, aRestaurantPointer);
 	Order* newOrderPointer = &newOrder;
+	
 	return newOrderPointer;
 }
 
