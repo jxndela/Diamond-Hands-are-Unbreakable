@@ -7,17 +7,17 @@ using namespace std;
 
 class Order;
 
-struct orderNode
+struct OrderNode
 {
 	Order* orderPointer;
-	orderNode* next;
+	OrderNode* next;
 };
 
 class OrderQueue
 {
 private:
-	orderNode* frontNode;
-	orderNode* backNode;
+	OrderNode* frontNode;
+	OrderNode* backNode;
 	int size;
 
 public:

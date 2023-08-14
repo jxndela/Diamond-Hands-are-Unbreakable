@@ -58,7 +58,7 @@ void OrderQueue::printQueue()
 
 	// Create temporary node pointer set to front
 	// Create a counter to show appropriate number starting at 1
-	orderNode* current = frontNode;
+	OrderNode* current = frontNode;
 	int counter = 1;
 
 	// Iterate throught the queue
@@ -75,7 +75,7 @@ void OrderQueue::printQueue()
 bool OrderQueue::enqueue(Order* aOrderPointer)
 {
 	// Create temp node
-	orderNode* tempNode = new orderNode();
+	OrderNode* tempNode = new OrderNode();
 	tempNode->orderPointer = aOrderPointer;
 	tempNode->next = nullptr;
 
@@ -109,7 +109,7 @@ bool OrderQueue::dequeue()
 	}
 
 	// Create a temporary pointer
-	orderNode* tempPointer = frontNode;
+	OrderNode* tempPointer = frontNode;
 
 	// Check if it is last item in queue
 	if (frontNode == backNode)
