@@ -719,6 +719,7 @@ int main()
 			else if (staffInput == "2")
 			{
 				// Print out the latest order
+				
 			}
 			else if (staffInput == "3")
 			{
@@ -732,6 +733,9 @@ int main()
 			else if (staffInput == "5")
 			{
 				// Add food item to menu
+				restaurantStaff->addFoodItem(restaurantStaff);
+				// Save changes to the restaurant.txt file after adding the food item
+				writeRestaurantFile(restaurantDatabase, numberOfRestaurants);
 			}
 			else if (staffInput == "6")
 			{

@@ -49,6 +49,12 @@ public:
 	// Post: Success or failure 
 	void updateFoodItem(FoodItem* foodItem);
 
+	// add a new food item to the menu
+	// pre : ~
+	// post : food item is added to the menu
+	void addFoodItem(RestaurantStaff* restaurantStaff);
+
+
 	// Check the email of a user object
 	// Pre : ~
 	// Post: Returns email

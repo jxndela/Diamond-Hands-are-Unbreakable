@@ -1,5 +1,7 @@
 #include "RestaurantStaff.h"
-
+#include <iostream>
+#include <iomanip>
+#include <sstream>
 // Constructor
 RestaurantStaff::RestaurantStaff()
 {
@@ -77,6 +79,32 @@ void RestaurantStaff::updateFoodItem(FoodItem* foodItemPointer)
             break;
         }
     }
+}
+
+void RestaurantStaff::addFoodItem(RestaurantStaff* restaurantStaff)
+{
+    string name, description, category;
+    double price;
+
+    cout << "Enter the name of the new food item: ";
+    cin.ignore(); // Clear any remaining newline character
+    getline(cin, name);
+
+    cout << "Enter the description of the new food item: ";
+    getline(cin, description);
+
+    cout << "Enter the category of the new food item: ";
+    getline(cin, category);
+
+    cout << "Enter the price of the new food item: ";
+    cin >> price;
+    
+    FoodItem newFoodItem(name, description, category, price);
+
+    // Add the new food item to the restaurant's menu
+    restaurantStaff->getRestaurantPointer()->restaurantMenuPointer()->insertNode(newFoodItem);
+
+    cout << "New food item added to the menu!" << endl;
 }
 
 
