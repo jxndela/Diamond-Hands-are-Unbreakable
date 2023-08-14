@@ -36,7 +36,7 @@ CustomerDictionary::~CustomerDictionary()
 // Hash the key that will be used to search
 // Pre : ~
 // Post: Returns INT value based on hash algorithm hashedKey
-int CustomerDictionary::getHashedKey(string aEmailKey)
+int CustomerDictionary::getHashedKey(string& aEmailKey)
 {
 	// TEMPORARY HASH FUNCTION
 	int sum = 0;
@@ -106,7 +106,7 @@ bool CustomerDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 	return true;
 }
 
-string CustomerDictionary::retrievePassword(string aEmailKey)
+string CustomerDictionary::retrievePassword(string& aEmailKey)
 {
 	// Hash the email key to obtain index of the user
 	int index = getHashedKey(aEmailKey);
@@ -128,7 +128,7 @@ string CustomerDictionary::retrievePassword(string aEmailKey)
 	return "USERNOTFOUND";
 }
 
-bool CustomerDictionary::retrieveUser(string aEmailKey, Customer& aCustomer)
+bool CustomerDictionary::retrieveUser(string& aEmailKey, Customer& aCustomer)
 {
 	// hash email
 	int index = getHashedKey(aEmailKey);

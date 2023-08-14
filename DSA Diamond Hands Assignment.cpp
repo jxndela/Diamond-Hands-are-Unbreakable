@@ -231,8 +231,8 @@ void printRestaurantsTitles(Restaurant restaurantDatabase[], int numberOfRestaur
 // Functions 1 : Login
 // Pre : Should only be when logged out
 // Post: Return a true or false statement 
-bool login(const string& userInputEmail, const string& userInputPassword, 
-	CustomerDictionary& aCustomerDictionary)
+bool login(string& userInputEmail,string& userInputPassword,
+           CustomerDictionary& aCustomerDictionary)
 {
 	// Step 1: Hash the user input password
 	string hashedPassword = hashPassword(userInputPassword);
