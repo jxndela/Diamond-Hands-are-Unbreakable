@@ -38,22 +38,22 @@ public:
 
     // Get Customer Name
     // Pre : ~
-    // Post: customer name
+    // Post: String customer name
     string getCustomerName();
 
     // Get Customer Name
     // Pre : ~
-    // Post: customer name
+    // Post: INT customer postal code is returned 
     int getCustomerPostalCode();
 
     // Check the passwordHash of a user object
     // Pre : ~
-    // Post: Returns passwordHash
+    // Post: Returns passwordHash string
     string getPasswordHash();
 
     // Check the email of a user object
     // Pre : ~
-    // Post: Returns email
+    // Post: Returns email string
     string getEmail();
 
     // Can only order from 1 restaurant

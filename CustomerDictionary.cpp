@@ -36,7 +36,7 @@ CustomerDictionary::~CustomerDictionary()
 // Hash the key that will be used to search
 // Pre : ~
 // Post: Returns INT value based on hash algorithm hashedKey
-int CustomerDictionary::getHashedKey(string aEmailKey)
+int CustomerDictionary::getHashedKey(string& aEmailKey)
 {
 	// TEMPORARY HASH FUNCTION
 	int sum = 0;
@@ -68,15 +68,13 @@ bool CustomerDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 	// Otherwise, a collision has occured i.e. Index is the same
 	else
 	{
+		// Create a current node pointer
 		CustomerNode* current = customers[index];
-
 		// Duplicate key on first in chain (User is already registered)
 		if (current->emailKey == aEmailKey)
 		{
 			return false;
 		}
-			
-
 		// Iterate through the chain as long next is not nullptr
 		while (current->next != nullptr)
 		{
@@ -88,9 +86,7 @@ bool CustomerDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 				// If matched, it means that user exists at some point of the chain
 				return false;
 			}
-
 		}
-
 		// Exited while loop, no users matched
 		CustomerNode* newUserNode = new CustomerNode;
 		newUserNode->emailKey = aEmailKey;
@@ -106,7 +102,7 @@ bool CustomerDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 	return true;
 }
 
-string CustomerDictionary::retrievePassword(string aEmailKey)
+string CustomerDictionary::retrievePassword(string& aEmailKey)
 {
 	// Hash the email key to obtain index of the user
 	int index = getHashedKey(aEmailKey);
@@ -128,7 +124,7 @@ string CustomerDictionary::retrievePassword(string aEmailKey)
 	return "USERNOTFOUND";
 }
 
-bool CustomerDictionary::retrieveUser(string aEmailKey, Customer& aCustomer)
+bool CustomerDictionary::retrieveUser(string& aEmailKey, Customer& aCustomer)
 {
 	// hash email
 	int index = getHashedKey(aEmailKey);

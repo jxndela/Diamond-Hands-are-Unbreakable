@@ -20,7 +20,7 @@ public:
 
 	// Parameterized constructor
 	// isAvaiable is set to TRUE by default
-	FoodItem(string aName, string aDescription, string aCategory, double aPrice);
+	FoodItem(string& aName, string& aDescription, string& aCategory, double& aPrice);
 
 	// Destructor
 	~FoodItem();

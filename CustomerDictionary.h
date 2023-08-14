@@ -40,7 +40,7 @@ public:
 	// Hash the key that will be used to search
 	// Pre : ~
 	// Post: Returns INT value based on hash algorithm hashedKey
-	int getHashedKey(string aEmailKey);
+	int getHashedKey(string& aEmailKey);
 
 	// Add new item with the specified key to the Dictionary
 	// Pre : EmailKey must be in email format
@@ -50,12 +50,12 @@ public:
 	// Retrieve the hashedpw that matches the hashedKey
 	// Pre : The hashedKey must match at least one of the results 
 	// Post: Returns the hashedpw
-	string retrievePassword(string aEmailKey);
+	string retrievePassword(string& aEmailKey);
 
 	// Retrieve the user that matches the email key
 	// Pre : 
 	// Post: Returns the user
-	bool retrieveUser(string aEmailKey, Customer& aCustomer);
+	bool retrieveUser(string& aEmailKey, Customer& aCustomer);
 
 	// Check if Dictionary is empty
 	// Pre  : ~
@@ -65,10 +65,9 @@ public:
 	// Temporary
 	void printEverything()
 	{
-		CustomerNode* current;
 		for (int i = 0; i < CUSTOMER_MAX_SIZE; i++)
 		{
-			current = customers[i];
+			CustomerNode* current = customers[i];
 			while (current != nullptr)
 			{
 				string var1 = current->customer.getEmail();

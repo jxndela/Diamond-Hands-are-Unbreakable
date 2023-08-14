@@ -5,7 +5,7 @@
 // Include allowed libraries
 #include <iostream>
 #include <string>
-#include <fstream>	// For reading writign files
+#include <fstream>	// For reading writing files
 #include <sstream>	
 
 
@@ -27,7 +27,7 @@ const int MAX_RESTAURANTS = 100;
 
 
 // INPUT HELPERS
-string hashPassword(string aUnhashedPassword)
+string hashPassword(const string& aUnhashedPassword)
 {
 	// TEMPORARY HASH FUNCTION
 	int sum = 0;
@@ -46,8 +46,8 @@ bool isValidEmail(string& email)
 		return false;
 
 	// Find locations of @ and . symbol
-	size_t atIndex = email.find('@');
-	size_t dotIndex = email.rfind('.');
+	const size_t atIndex = email.find('@');
+	const size_t dotIndex = email.rfind('.');
 
 	// Check if '@' and '.' are both present and in the correct order
 	// if index is -1, means not present
@@ -56,15 +56,15 @@ bool isValidEmail(string& email)
 	}
 
 	// Check for ".com" domain nane
-	string domain = email.substr(dotIndex + 1);
+	string const domain = email.substr(dotIndex + 1);
 	if (domain != "com") {
 		return false;
 	}
 
-	// Check for alphanumeric characters before '@'
-	string localPart = email.substr(0, atIndex);
+	// Check for alphanumeric characters before '@' index 0 to atIndex
+	string const localPart = email.substr(0, atIndex);
 	// Iterate through the characters
-	for (char c : localPart) {
+	for (char  c : localPart) {
 		if (!isalnum(c)) {
 			return false;
 		}
@@ -74,12 +74,12 @@ bool isValidEmail(string& email)
 
 // Check if valid postal code
 // Postal Codes in SG are all 6 digits long , any digit is OK
-bool isValidPostalCode(string& input)
+bool isValidPostalCode(const string& input)
 {
 	if (input.length() != 6) {
 		return false;
 	}
-	for (char c : input) {
+	for (const char c : input) {
 		if (!isdigit(c)) {
 			return false;
 		}
@@ -108,6 +108,8 @@ string getUserEmailInput()
 		// Else, it means it passed validation req
 		return userInputEmail;
 	}
+	// ensure all control paths will return a value
+	return {};
 }
 
 // Similar function but for int values 
@@ -128,6 +130,7 @@ int getValidatedInt()
 		// Else passes validations
 		return stoi(userInputPostalCode);
 	}
+	return 0;
 }
 
 // Read the restaurant file
@@ -207,7 +210,7 @@ void writeRestaurantFile(Restaurant restaurantDatabase[], int numberOfRestaurant
 
 // print restaurants
 void printRestaurants(Restaurant restaurantDatabase[], int numberOfRestaurants) {
-	std::cout << "Restaurants in the database:\n";
+	cout << "Restaurants in the database:\n";
 	for (int i = 0; i < numberOfRestaurants; i++) {
 		std::cout << i+1 << ". " << "Name: " << restaurantDatabase[i].getRestaurantName()
 			<< " - Postal Code: " << restaurantDatabase[i].getPostalCode() << "\n";
@@ -217,7 +220,7 @@ void printRestaurants(Restaurant restaurantDatabase[], int numberOfRestaurants) 
 
 // print restaurants titles
 void printRestaurantsTitles(Restaurant restaurantDatabase[], int numberOfRestaurants) {
-	std::cout << "Restaurants in the database:\n";
+	cout << "Restaurants in the database:\n";
 	for (int i = 0; i < numberOfRestaurants; i++) {
 		std::cout << i + 1 << ". " << "Name: " << restaurantDatabase[i].getRestaurantName()
 			<< " - Postal Code: " << restaurantDatabase[i].getPostalCode() << "\n";
@@ -228,7 +231,8 @@ void printRestaurantsTitles(Restaurant restaurantDatabase[], int numberOfRestaur
 // Functions 1 : Login
 // Pre : Should only be when logged out
 // Post: Return a true or false statement 
-bool login(string userInputEmail, string userInputPassword, CustomerDictionary& aCustomerDictionary)
+bool login(string& userInputEmail,string& userInputPassword,
+           CustomerDictionary& aCustomerDictionary)
 {
 	// Step 1: Hash the user input password
 	string hashedPassword = hashPassword(userInputPassword);
@@ -252,8 +256,8 @@ bool login(string userInputEmail, string userInputPassword, CustomerDictionary& 
 // Function 2 : Register
 // Register New Customer
 // Pre : Should only be when logged out
-bool registerAccount(string userInputEmail, string userInputPassword, 
-	string userInputName, int userInputPostalCode, CustomerDictionary& aCustomerDictionary)
+bool registerAccount(const string& userInputEmail, const string& userInputPassword,
+	const string& userInputName, int userInputPostalCode, CustomerDictionary& aCustomerDictionary)
 {
 
 	// Step 1: Hash the user input password
@@ -284,7 +288,8 @@ bool registerAccount(string userInputEmail, string userInputPassword,
 // Functions 1 : Login
 // Pre : Should only be when logged out
 // Post: Return a true or false statement 
-bool stafflogin(string staffInputEmail, string staffInputPassword, StaffDictionary& aStaffDictionary)
+bool stafflogin(const string& staffInputEmail, const string& staffInputPassword, 
+	StaffDictionary& aStaffDictionary)
 {
 	// Step 1: Hash the staff input password
 	string hashedPassword = hashPassword(staffInputPassword);
@@ -308,7 +313,8 @@ bool stafflogin(string staffInputEmail, string staffInputPassword, StaffDictiona
 // Function 2 : Register
 // Register New staff
 // Pre : Should only be when logged out
-bool registerStaffAccount(string email, string password, Restaurant* aRestaurantPointer, StaffDictionary& staffDatabase)
+bool registerStaffAccount(string& email, string& password, Restaurant* aRestaurantPointer, 
+	StaffDictionary& staffDatabase)
 {
 	// Step 1: Hash the user input password
 	string hashedPassword = hashPassword(password);
@@ -555,9 +561,9 @@ int main()
 		// Default is A-Z 
 		// If they want to  view in reverse order, use a stack 
 		const int MAX_FOOD_LIST_CAP = 10000;
-		FoodItem* ascendingNameFoodList[MAX_FOOD_LIST_CAP];
-		FoodItem* ascendingCategoryFoodList[MAX_FOOD_LIST_CAP];
-		FoodItem* ascendingPriceFoodList[MAX_FOOD_LIST_CAP];	
+		//FoodItem* ascendingNameFoodList[MAX_FOOD_LIST_CAP];
+		//FoodItem* ascendingCategoryFoodList[MAX_FOOD_LIST_CAP];
+		//FoodItem* ascendingPriceFoodList[MAX_FOOD_LIST_CAP];	
 		// INSERT OPERATIONS
 
 
