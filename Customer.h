@@ -58,7 +58,9 @@ public:
 
     // Can only order from 1 restaurant
     // Generate a temporary Order Variable
-    // Pre : No orders in progress 
+    // Pre : No orders in progress
+    //       We also need restaurant that you are ordering from
+    //       As well as 
     // Post: Create a temporary order to store foodItems in 
     Order* createNewOrder(Restaurant* aRestaurantPointer);
 
