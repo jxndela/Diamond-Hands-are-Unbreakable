@@ -77,6 +77,8 @@ private:
     // recurisive print function 
     void printInOrderRecursive(AVLNode* aNode);
 
+    // recurisive print function (all items)
+	void printAllInOrderRecursive(AVLNode* aNode);
 
 
 public:
@@ -101,6 +103,12 @@ public:
     // Pre : Not a null AVL Tree
     // Post: Prints the full item menu of the restaurant in which the AVL tree belongs to
     void printInOrder();
+
+    // Print in alphabetical order (A-Z) (all items)
+    // Pre : Not a null AVL Tree
+    // Post: Prints the full item menu of the restaurant in which the AVL tree belongs to
+    void printAllInOrder();
+
 
     // Delete a node inside AVL Tree by searching for its name
     // Pre : Not a null AVL Tree 

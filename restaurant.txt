@@ -8,7 +8,7 @@ Restaurant HainaneseChicken 486072
 FoodItem BakKutTeh Dinner PorkSoup 7.5
 FoodItem ChickenRice Lunch RiceDish 5.99
 FoodItem ChilliCrab Dinner Seafood 18.99
-FoodItem Satay Appetizer GrilledMeat 0.75
+FoodItem Satay Appetizer GrilledMeat 2
 FoodItem TigerBeer Beverage Beer 6.99
 Restaurant LaksaHouse 278989
 FoodItem BarleyDrink Beverage ColdDrink 1.8

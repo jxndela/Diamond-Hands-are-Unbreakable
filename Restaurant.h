@@ -44,6 +44,8 @@ public:
 
 	void printMenu();
 
+	void printMenuAll();
+
 	OrderQueue* getIncomingOrder()
 	{
 		return incomingOrder;
