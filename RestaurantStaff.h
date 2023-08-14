@@ -47,7 +47,7 @@ public:
 	// Update the food item attributes
 	// Pre : Food Item must exist
 	// Post: Success or failure 
-	void updateFoodItem(FoodItem foodItem);
+	void updateFoodItem(FoodItem* foodItem);
 
 	// Check the email of a user object
 	// Pre : ~

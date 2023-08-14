@@ -34,7 +34,7 @@ void RestaurantStaff::updateOrderStatus(Order aOrder)
     aOrder.setOrderStatusComplete();
 }
 
-void RestaurantStaff::updateFoodItem(FoodItem foodItem)
+void RestaurantStaff::updateFoodItem(FoodItem* foodItemPointer)
 {
     while (true)
     {
@@ -52,14 +52,21 @@ void RestaurantStaff::updateFoodItem(FoodItem foodItem)
             cout << "Enter new price: ";
             double newPrice;
             cin >> newPrice;
-            foodItem.setFoodItemPrice(newPrice);
+            foodItemPointer->setFoodItemPrice(newPrice);
+            cout << "Price updated successfully!" << endl;
             break;
 
         case 2:
-            cout << "Enter new availability: ";
-            bool newAvailability;
+            cout << "Enter new availability (1 for available, 0 for not available): ";
+            int newAvailability; // Use an integer to represent boolean (1 for true, 0 for false)
             cin >> newAvailability;
-            foodItem.setAvailability(newAvailability);
+            if (newAvailability == 0 || newAvailability == 1) {
+                foodItemPointer->setAvailability(newAvailability);
+                cout << "Availability updated successfully!" << endl;
+            }
+            else {
+                cout << "Invalid input for availability. Please enter 0 or 1." << endl;
+            }
             break;
 
         case 3:
@@ -71,6 +78,8 @@ void RestaurantStaff::updateFoodItem(FoodItem foodItem)
         }
     }
 }
+
+
 
 string RestaurantStaff::getEmail()
 {
