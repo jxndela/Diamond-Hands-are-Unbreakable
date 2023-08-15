@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "User.h"
+#include <fstream>
 #include "Customer.h"
 
 // Forward declaration
@@ -32,11 +33,6 @@ public:
 	CustomerDictionary();
 	~CustomerDictionary();
 
-	// TODO: Parameterized constructor for dictionary (used to initialize dictionary with existing data from .txt file)
-	// Pre : Valid URL file path
-	// Post: Constructs Dictionary with values stored
-	// UserDictionary(string txtfilepath)
-
 	// Hash the key that will be used to search
 	// Pre : ~
 	// Post: Returns INT value based on hash algorithm hashedKey
@@ -62,32 +58,28 @@ public:
 	// Post : Returns true if there nothing in the dictionary
 	bool isEmpty();
 
-	// Temporary
-	void printEverything()
-	{
-		for (int i = 0; i < CUSTOMER_MAX_SIZE; i++)
-		{
-			CustomerNode* current = customers[i];
-			while (current != nullptr)
-			{
-				string var1 = current->customer.getEmail();
-				string var2 = current->customer.getPasswordHash();
-				string var3 = current->customer.getCustomerName();
-				int var4 = current->customer.getCustomerPostalCode();
-				cout << endl;
-				cout << "email: " << var1 << endl;
-				cout << "pw: " << var2 << endl;
-				cout << "name: " << var3 << endl;
-				cout << "postal : " << var4 << endl;
-				current = current->next;
-			}
-		}
-	}
-	
 	// loads data from file
 	void loadFromFile();
 	// saves data to file
 	void saveToFile();
+
+	// INPUT HELPERS
+	string hashPassword(string& aUnhashedPassword);
+
+	// Pre : Should only be when logged out
+	// Post: Return a true or false statement 
+	bool customerLogin(Customer* aCustomer);
+
+	// Register New Customer
+	// Pre : Should only be when logged out
+	bool registerCustomerAccount();
+
+	// Simple validator
+	string getValidEmail();
+
+	// Check if valid postal code
+	// Postal Codes in SG are all 6 digits long , any digit is OK
+	int getValidPostalCode();
 };
 
 	

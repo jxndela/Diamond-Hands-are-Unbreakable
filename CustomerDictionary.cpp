@@ -1,5 +1,4 @@
 #include "CustomerDictionary.h"
-#include <fstream>
 
 // Constructor for the Dictionary
 CustomerDictionary::CustomerDictionary()
@@ -16,6 +15,7 @@ CustomerDictionary::CustomerDictionary()
 	loadFromFile();
 }
 
+// destructor
 CustomerDictionary::~CustomerDictionary()
 {
 	// Save user details to file before exiting
@@ -124,6 +124,9 @@ string CustomerDictionary::retrievePassword(string& aEmailKey)
 	return "USERNOTFOUND";
 }
 
+// Retrieve the user that matches the email key
+// Pre : 
+// Post: Returns the user
 bool CustomerDictionary::retrieveUser(string& aEmailKey, Customer& aCustomer)
 {
 	// hash email
@@ -145,8 +148,9 @@ bool CustomerDictionary::retrieveUser(string& aEmailKey, Customer& aCustomer)
 	return false;
 }
 
-
-
+// Check if Dictionary is empty
+// Pre  : ~
+// Post : Returns true if there nothing in the dictionary
 bool CustomerDictionary::isEmpty()
 {
 	return size == 0;
@@ -193,6 +197,7 @@ void CustomerDictionary::loadFromFile()
 	inFile.close();
 }
 
+// saves data to file
 void CustomerDictionary::saveToFile()
 {
 	ofstream outFile("user_details.txt");
@@ -207,3 +212,143 @@ void CustomerDictionary::saveToFile()
 
 	outFile.close();
 }
+
+string CustomerDictionary::hashPassword(string& aUnhashedPassword)
+{
+	// TEMPORARY HASH FUNCTION
+	int sum = 0;
+	for (int i = 0; i < aUnhashedPassword.length(); i++)
+	{
+		sum += aUnhashedPassword[i];
+	}
+	string hashedPassword = to_string((sum % CUSTOMER_MAX_SIZE));
+	return hashedPassword;
+}
+
+
+// Pre : Should only be when logged out
+// Post: Return a true or false statement 
+bool CustomerDictionary::customerLogin(Customer* aCustomer)
+{
+	bool isExistingCustomer = false;
+	int indexLocation;
+	string userInputEmail = getValidEmail();
+	string userInputPassword;
+	cout << "Please enter a password : ";
+	cin >> userInputPassword;
+	// Step 1: Hash the user input password
+	string hashedPassword = hashPassword(userInputPassword);
+	// Step 2: Check if emailkey is inside the dictionary
+	for (int i = 0; i < size -1; i++)
+	{
+		if (userInputEmail == customers[i]->emailKey)
+		{
+			isExistingCustomer = true;
+			indexLocation = i;
+			break;
+		}
+	}
+	// Step 3 check password
+	string comparedHash = retrievePassword(userInputEmail);
+	if (comparedHash == hashedPassword && isExistingCustomer)
+	{
+		cout << "Authentication success" << endl;
+		aCustomer = *customers[indexLocation];
+		return true;
+	}
+	cout << "Something went wrong, please try logging in again" << endl;
+	cout << "-------------------------------------------------" << endl;
+	return false;
+}
+
+// Register New Customer
+// Pre : Should only be when logged out
+bool CustomerDictionary::registerCustomerAccount()
+{
+	string userInputEmail = getValidEmail();
+	string userInputPassword;
+	cout << "Please enter a password : ";
+	cin >> userInputPassword;
+	string userInputName;
+	cout << "Please enter your Name : ";
+	cin >> userInputName;
+	int userInputPostalCode = getValidPostalCode();
+
+	// Step 1: Hash the user input password
+	string hashedPassword = hashPassword(userInputPassword);
+	// Step 2: Create a temporary user 
+	Customer tempUser = Customer(userInputEmail, hashedPassword,
+		userInputName, userInputPostalCode);
+	// STep 3: Add the user
+	bool addCustomerSuccess = addCustomer(userInputEmail, tempUser);
+	// Step 4 : Check if adding into dictionary is successful, return false if failed.
+	if (addCustomerSuccess == false)
+	{
+		cout << "User already exists." << endl;
+		cout << "--------------------" << endl;
+		return false;
+	}
+	// Step 5 : Otherwise, adding is succesful return as true
+	cout << "Registration success. Please proceed to login" << endl;
+	saveToFile();
+	return true;
+}
+
+// Simple validator
+string CustomerDictionary::getValidEmail()
+{
+	bool validEmail = false;
+	string userInputEmail;
+	while (!validEmail)
+	{
+		cout << "Please enter your email : ";
+		cin >> userInputEmail;
+		// Reject empty input
+		if (userInputEmail.length() == 0)
+		{
+			cout << "Input cannot be empty. Please try again." << endl;
+			continue;
+		}
+		// Check for email format
+		int atSymbolIndex = userInputEmail.find('@');
+		int dotSymbolIndex = userInputEmail.rfind('.');
+		if (atSymbolIndex == -1 || dotSymbolIndex == -1 || atSymbolIndex > dotSymbolIndex)
+		{
+			cout << "Improper email format. Should look like example@gmail.com" << endl;
+			continue;
+		}
+		validEmail = true;
+	}
+	return userInputEmail;
+}
+
+// Check if valid postal code
+// Postal Codes in SG are all 6 digits long , any digit is OK
+int CustomerDictionary::getValidPostalCode()
+{
+	bool validPostal = false;
+	string userInputPostalCode;
+	while(!validPostal)
+	{
+		bool isAllDigits = true;
+		cout << "Please enter your postal code : ";
+		cin >> userInputPostalCode;
+		// Check length
+		if (userInputPostalCode.length() != 6) {
+			cout << "Please enter valid 6 digit postal code." << endl;
+			continue;
+		}
+		for (char aChar : userInputPostalCode) {
+			if (!isdigit(aChar)) 
+			{
+				cout << "Please enter valid 6 digit postal code." << endl;
+				isAllDigits = false;
+			}
+		}
+		if (isAllDigits) break;
+		validPostal = true;
+	}
+	// string to int and return
+	return stoi(userInputPostalCode);
+}
+

@@ -61,8 +61,8 @@ bool isValidEmail(string& email)
 	// Check for alphanumeric characters before '@' index 0 to atIndex
 	string const localPart = email.substr(0, atIndex);
 	// Iterate through the characters
-	for (char  c : localPart) {
-		if (!isalnum(c)) {
+	for (char  x : localPart) {
+		if (!isalnum(x)) {
 			return false;
 		}
 	}
@@ -130,63 +130,7 @@ int getValidatedInt()
 	return 0;
 }
 
-// USERS
-// Functions 1 : Login
-// Pre : Should only be when logged out
-// Post: Return a true or false statement 
-bool login(string& userInputEmail,string& userInputPassword,
-           CustomerDictionary& aCustomerDictionary)
-{
-	// Step 1: Hash the user input password
-	string hashedPassword = hashPassword(userInputPassword);
-
-	// Step 2: Check if emailkey is inside the dictionary
-	// If it is not inside, comparedHash = "USERNOTFOUND"
-	string comparedHash = aCustomerDictionary.retrievePassword(userInputEmail);
-	if (comparedHash == hashedPassword)
-	{
-		cout << "Authentication success" << endl;
-		return true;
-	}
-	else
-	{
-		cout << "Something went wrong, please try logging in again" << endl;
-		cout << "-------------------------------------------------" << endl;
-		return false;
-	}
-}
-
-// Function 2 : Register
-// Register New Customer
-// Pre : Should only be when logged out
-bool registerCustomerAccount(const string& userInputEmail, const string& userInputPassword,
-	const string& userInputName, int userInputPostalCode, CustomerDictionary& aCustomerDictionary)
-{
-
-	// Step 1: Hash the user input password
-	string hashedPassword = hashPassword(userInputPassword);
-
-	// Step 2: Create a temporary user 
-	Customer tempUser =  Customer(userInputEmail, hashedPassword, 
-		userInputName, userInputPostalCode );
-
-	// STep 3: Add the user
-	bool addCustomerSuccess = aCustomerDictionary.addCustomer(userInputEmail, tempUser);
-
-	// Step 4 : Check if adding into dictionary is successful, return false if failed.
-	if (addCustomerSuccess == false)
-	{
-		cout << "User already exists." << endl;
-		return false;
-	}
-
-	// Step 5 : Otherwise, adding is succesful return as true
-	
-	return true;
-}
-
-// Function 3 : display UI for register and display
-
+//TODO: SHIFT ALL THE STAFF THINGS INTO STAFF DICTIONARY
 // STAFF
 // Functions 1 : Login
 // Pre : Should only be when logged out
@@ -265,11 +209,9 @@ void editFoodItems(RestaurantStaff* restaurantStaff) {
 	}
 }
 
-
-
 int main()
 {
-	// Initialize the Restaurant database
+	// Initialize the Restaurant database, automatically creates fooditems previously stored
 	// Constructor automatically reads save file
 	RestaurantArray restaurantDatabase;
 	/////readRestaurantFile(restaurantDatabase, numberOfRestaurants);
@@ -278,208 +220,141 @@ int main()
 	staffDatabase.loadFromFile(restaurantDatabase.GetAllRestaurant(), restaurantDatabase.getNumberOfRestaurants());
 	// Initaliaze user database
 	CustomerDictionary userDatabase;
-	
-
 	// Set-up and exit condition for UI
-	Customer customer = Customer();
+	Customer* customerPointer;
 	RestaurantStaff* restaurantStaff = nullptr;
-	bool displayLandingPage = true;
 	bool customerLoggedIn = false;
 	bool restaurantStaffLoggedIn = false;
-	string loginChoice;
 	string staffEmail;
 
+	// Display message and prompt for choice
+	cout << " _  _  _ _______        _______  _____  _______ _______" << endl;
+	cout << " |  |  | |______ |      |       |     | |  |  | |______" << endl;
+	cout << " |__|__| |______ |_____ |_____  |_____| |  |  | |______" << endl;
+	cout << endl;
+
 	// User presented with two choices to log in or register
-	while (displayLandingPage)
+	while (customerLoggedIn == false && restaurantStaffLoggedIn == false)
 	{
-		// Display message and prompt for choice
-		cout << " _  _  _ _______        _______  _____  _______ _______" << endl;
-		cout << " |  |  | |______ |      |       |     | |  |  | |______" << endl;
-		cout << " |__|__| |______ |_____ |_____  |_____| |  |  | |______" << endl;
-		cout << endl;
-		cout << "What would like to do?\n";
-		cout << "0. admin\n1. User Login\n2. User Register\n3. Staff Login\n4. Staff Register\n" << endl;
+		cout << "1. User Login" << endl;
+		cout << "2. User Register" << endl;
+		cout << "3. Staff Login" << endl;
+		cout << "4. Staff Register" << endl;
 		cout << "Your choice? (1 - 4) : ";
+		int loginChoice;
 		cin >> loginChoice;
 
-		if (loginChoice == "1" || loginChoice == "2" || loginChoice == "0")
+		switch (loginChoice)
 		{
-			// Temp for us to check anything fast
-			if (loginChoice == "0")
+		case 1:	// 1. User Login
+			cout << "         _____   ______ _____ __   _" << endl;
+			cout << " |      |     | |  ____   |   | |  |" << endl;
+			cout << " |_____ |_____| |_____| __|__ |  |_|" << endl;
+			cout << endl;
+			cout << "Customer Login" << endl;
+			// If successful, break out of while loop
+			if (userDatabase.customerLogin(customerPointer))
 			{
-				Restaurant newRestaurant;
-				int i = 5;
-				restaurantDatabase.addRestaurant(newRestaurant, i);
+				customerLoggedIn = true;
+				break;
 			}
-			// 1. Login Function
-			if (loginChoice == "1")
+		case 2:	// 2. User Register
+			cout << "  ______ _______  ______ _____ _______ _______ _______  ______" << endl;
+			cout << " |_____/ |______ |  ____   |   |______    |    |______ |_____/" << endl;
+			cout << " |    L_ |______ |_____| __|__ ______|    |    |______ |    L_" << endl;
+			cout << endl;
+			cout << "Customer Registration" << endl;
+			// If successful, break out of while loop
+			if (userDatabase.registerCustomerAccount())
 			{
-				cout << "         _____   ______ _____ __   _" << endl;
-				cout << " |      |     | |  ____   |   | |  |" << endl;
-				cout << " |_____ |_____| |_____| __|__ |  |_|" << endl;
-				cout << endl;
-				// Store guest Information
-				string guestEmail; 
-				string guestPassword;
+				break;
+			}
+		case 3:	// 3. Staff Login
+			cout << "         _____   ______ _____ __   _" << endl;
+			cout << " |      |     | |  ____   |   | |  |" << endl;
+			cout << " |_____ |_____| |_____| __|__ |  |_|" << endl;
+			cout << endl;
+			cout << "Restaurant Staff Login" << endl;
+			string staffPassword;
 
-				// Step 1 : Prompt for email
-				guestEmail = getUserEmailInput();
-				// Step 2 : Prompt for password
-				cout << "Please enter your password : ";
-				cin >> guestPassword;
+			staffEmail = getUserEmailInput();
 
-				// Check if login is success 
-				if (login(guestEmail, guestPassword, userDatabase))
+			cout << "Please enter your password: ";
+			cin >> staffPassword;
+
+			// Check staff login
+			if (stafflogin(staffEmail, staffPassword, staffDatabase))
+			{
+				cout << "Restaurant staff login successful!" << endl;
+				restaurantStaffLoggedIn = true;
+				break;
+			}
+			else
+			{
+				cout << "Invalid email or password for restaurant staff." << endl;
+			}
+		case 4:	// 4. Staff Register
+			cout << "  ______ _______  ______ _____ _______ _______ _______  ______" << endl;
+			cout << " |_____/ |______ |  ____   |   |______    |    |______ |_____/" << endl;
+			cout << " |    L_ |______ |_____| __|__ ______|    |    |______ |    L_" << endl;
+			cout << endl;
+			// Restaurant staff registration
+			cout << "Restaurant Staff Registration" << endl;
+			string staffPassword;
+			Restaurant* restaurantChosen = nullptr;
+
+			staffEmail = getUserEmailInput();
+
+			cout << "Please enter your password: ";
+			cin >> staffPassword;
+
+			// Create an array of valid inputs
+			// Start at index zero, but value start at 1
+			string restaurantChoices[MAX_RESTAURANTS];
+			for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants(); i++)
+			{
+				restaurantChoices[i] = to_string(i + 1);
+			}
+
+			// Create exit condition
+			bool validRestaurantChoice = false;
+			string restaurantChoice;
+			///////printRestaurantsTitles(restaurantDatabase, numberOfRestaurants);
+
+			// Prompt user to select restaurant to order from
+			while (!validRestaurantChoice)
+			{
+
+				cout << "Please enter the restaurant you are assigned to: ";
+				cin >> restaurantChoice;
+				bool found = false;
+				// If it is not valid 
+
+				for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants(); i++)
 				{
-					// On log in success, 
-					customerLoggedIn = true;
-					userDatabase.retrieveUser(guestEmail, customer);
-					break;
+					if (restaurantChoice == restaurantChoices[i])
+					{
+						validRestaurantChoice = true;
+						restaurantChosen = &(restaurantDatabase.GetAllRestaurant())[stoi(restaurantChoice) - 1];
+						found = true;
+						break;
+					}
 				}
-
-			}
-
-			// 2. Register function
-			if (loginChoice == "2")
-			{	                             
-
-				cout << "  ______ _______  ______ _____ _______ _______ _______  ______" << endl;
-				cout << " |_____/ |______ |  ____   |   |______    |    |______ |_____/" << endl;
-				cout << " |    L_ |______ |_____| __|__ ______|    |    |______ |    L_" << endl;
-				cout << endl;
-				// Store guest Information
-				string guestEmail;
-				string guestPassword;
-				string guestName;
-				int guestPostalCode;
-
-				// Step 1 : Prompt for Details
-				guestEmail = getUserEmailInput();
-
-				cout << "Please set your password : " ;
-				cin >> guestPassword;
-
-				cout << "Please set your name : " ;
-				cin >> guestName;
-
-				guestPostalCode = getValidatedInt();
-
-				// Step 3: Prompt 
-				cout << "Registering..." << endl;
-				bool registrationSuccess = registerCustomerAccount(guestEmail, guestPassword, 
-					guestName, guestPostalCode, userDatabase);
-				
-				// If error show response
-				if (!registrationSuccess)
+				// Exit out of for loop
+				if (found)
 				{
-					cout << "Something went wrong, please try again" << endl;
-					cout << "--------------------------------------" << endl;
-					continue;
-					
-				}
-
-				// If success show message
-				cout << "Registration successful! Please proceed to log in" << endl;
-				cout << "-------------------------------------------------" << endl;
-
-				// Save the new user details to the text file
-				userDatabase.saveToFile();
-			}
-
-			// 3. 
-		}
-
-		if (loginChoice == "4" || loginChoice == "3")
-		{
-			if (loginChoice == "3")
-			{
-				// Restaurant staff login
-				cout << "Restaurant Staff Login" << endl;
-				string staffPassword;
-
-				staffEmail = getUserEmailInput();
-
-				cout << "Please enter your password: ";
-				cin >> staffPassword;
-
-				// Check staff login
-				if (stafflogin(staffEmail, staffPassword, staffDatabase))
-				{
-					cout << "Restaurant staff login successful!" << endl;
-					restaurantStaffLoggedIn = true;
 					break;
 				}
 				else
-				{
-					cout << "Invalid email or password for restaurant staff." << endl;
-				}
+					cout << "Please enter appropriate integer corresponding to restaurant" << endl;
 			}
-			if (loginChoice == "4")
+			if (registerStaffAccount(staffEmail, staffPassword, restaurantChosen, staffDatabase))
 			{
-				// Restaurant staff registration
-				cout << "Restaurant Staff Registration" << endl;
-				string staffPassword;
-				Restaurant* restaurantChosen = nullptr;
-
-				staffEmail = getUserEmailInput();
-
-				cout << "Please enter your password: ";
-				cin >> staffPassword;
-				
-				// Create an array of valid inputs
-				// Start at index zero, but value start at 1
-				string restaurantChoices[MAX_RESTAURANTS];
-				for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants(); i++)
-				{
-					restaurantChoices[i] = to_string(i + 1);
-				}
-				
-				// Create exit condition
-				bool validRestaurantChoice = false;
-				string restaurantChoice;
-				///////printRestaurantsTitles(restaurantDatabase, numberOfRestaurants);
-				
-				// Prompt user to select restaurant to order from
-				while (!validRestaurantChoice)
-				{
-
-					cout << "Please enter the restaurant you are assigned to: ";
-					cin >> restaurantChoice;
-					bool found = false;
-					// If it is not valid 
-
-					for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants(); i++)
-					{
-						if (restaurantChoice == restaurantChoices[i])
-						{
-							validRestaurantChoice = true;
-							restaurantChosen = &(restaurantDatabase.GetAllRestaurant())[stoi(restaurantChoice)-1];
-							found = true;
-							break;
-						}
-					}
-					// Exit out of for loop
-					if (found)
-					{
-						break;
-					}
-					else
-						cout << "Please enter appropriate integer corresponding to restaurant" << endl;
-
-				}
-
-
-				if (registerStaffAccount(staffEmail, staffPassword, restaurantChosen, staffDatabase))
-				{
-					cout << "You are now registered as restaurant staff!" << endl;
-				}
+				cout << "You are now registered as restaurant staff!" << endl;
 			}
-		}
-		// For any invalid menu options
-		else
-		{
-			cout << "Invalid input. Redirecting back to menu" << endl;
-			cout << "---------------------------------------" << endl;
+		default:// Input validation
+			cout << "Invalid choice, please enter a valid option" << endl;
+			continue;
 		}
 	}
 
@@ -488,7 +363,7 @@ int main()
 		// Pre - process lists of food
 		// Default is A-Z 
 		// If they want to  view in reverse order, use a stack 
-		const int MAX_FOOD_LIST_CAP = 10000;
+		//const int MAX_FOOD_LIST_CAP = 10000;
 		//FoodItem* ascendingNameFoodList[MAX_FOOD_LIST_CAP];
 		//FoodItem* ascendingCategoryFoodList[MAX_FOOD_LIST_CAP];
 		//FoodItem* ascendingPriceFoodList[MAX_FOOD_LIST_CAP];	

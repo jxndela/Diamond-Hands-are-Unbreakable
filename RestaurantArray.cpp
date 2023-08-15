@@ -8,7 +8,11 @@ RestaurantArray::RestaurantArray()
 }
 
 // Destructor
-RestaurantArray::~RestaurantArray(){}
+RestaurantArray::~RestaurantArray()
+{
+	// Save before destroying.
+	writeRestaurantFile();
+}
 
 // Get method - no. of restaurants
 int RestaurantArray::getNumberOfRestaurants()
