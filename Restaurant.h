@@ -42,6 +42,8 @@ public:
 	// Post: postalCode
 	int getPostalCode();
 
+
+
 	void printMenu();
 
 	void printMenuAll();
@@ -51,7 +53,7 @@ public:
 		return incomingOrder;
 	}
 
-	FoodItemAVL* restaurantMenuPointer()
+	FoodItemAVL* getRestaurantMenuPointer()
 	{
 		FoodItemAVL* aPointer = &restaurantMenu;
 		return aPointer;

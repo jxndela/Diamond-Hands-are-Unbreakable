@@ -12,6 +12,7 @@ Restaurant::Restaurant(string aRestaurantName, int aPostalCode)
 {
 	restaurantName = aRestaurantName;
 	postalCode = aPostalCode;
+	restaurantMenu;
 }
 
 // Destructor

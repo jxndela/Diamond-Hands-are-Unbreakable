@@ -124,10 +124,12 @@ void RestaurantStaff::addFoodItem(RestaurantStaff* restaurantStaff)
         }
     }
 
-    FoodItem newFoodItem(name, description, category, price);
+    // TODO: INPUT VALIDATION WTF.
+    bool isAvailable = true;
+    FoodItem newFoodItem(name, description, category, isAvailable, price);
 
     // Add the new food item to the restaurant's menu
-    restaurantStaff->getRestaurantPointer()->restaurantMenuPointer()->insertNode(newFoodItem);
+    restaurantStaff->getRestaurantPointer()->getRestaurantMenuPointer()->insertNode(newFoodItem);
 
     cout << "New food item added to the menu!" << endl;
 }

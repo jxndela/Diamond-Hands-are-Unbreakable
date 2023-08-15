@@ -13,13 +13,13 @@ FoodItem::FoodItem()
 
 // Parameterized constructor
 // isAvaiable is set to TRUE by default
-FoodItem::FoodItem(string& aName, string& aDescription, string& aCategory, double& aPrice)
+FoodItem::FoodItem(string& aName, string& aDescription, string& aCategory,bool& aAvailable, double& aPrice)
 {
 	foodItemName = aName;
 	foodItemDescription = aDescription;
 	category = aCategory;
+	isAvailable = aAvailable;
 	price = aPrice;
-	isAvailable = true;
 }
 
 // Destructor

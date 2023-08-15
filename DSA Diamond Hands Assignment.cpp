@@ -8,7 +8,6 @@
 #include <fstream>	// For reading writing files
 #include <sstream>	
 
-
 // Include all the header files
 #include "User.h"
 #include "CustomerDictionary.h"
@@ -23,9 +22,6 @@
 #include "RestaurantArray.h"
 
 using namespace std;
-
-
-
 
 // INPUT HELPERS
 string hashPassword(const string& aUnhashedPassword)
@@ -133,100 +129,6 @@ int getValidatedInt()
 	}
 	return 0;
 }
-
-//// Read the restaurant file
-//void readRestaurantFile(Restaurant restaurantDatabase[], int& numberOfRestaurants)
-//{
-//
-//	ifstream file("restaurant.txt");
-//	std::string line;
-//
-//	while (getline(file, line) && numberOfRestaurants < MAX_RESTAURANTS)
-//	{
-//		// store the first line
-//		istringstream iss(line);
-//		string firstWord; 
-//		// store first word
-//		iss >> firstWord;
-//
-//		if (firstWord == "Restaurant")
-//		{
-//			// Create temp storers
-//			string restaurantName;
-//			int postalCode;
-//			// After identifier sotre the restaurant name
-//						// Store next value into postal code
-//			iss >> restaurantName >> postalCode;
-//			restaurantDatabase[numberOfRestaurants] = Restaurant(restaurantName, postalCode);
-//			numberOfRestaurants++;
-//		}
-//		else if (firstWord == "FoodItem")
-//		{
-//			// create temp
-//			string name, description, category;
-//			double price;
-//			iss >> name >> description >> category >> price;
-//			FoodItem tempFoodItem(name, description, category, price);
-//			// -1 index start at0
-//			restaurantDatabase[numberOfRestaurants - 1].restaurantMenuPointer()->insertNode(tempFoodItem);
-//		}
-//
-//	}
-//	file.close();
-//}
-//
-//// Write Food items
-//void writeFoodItems(ofstream& file, AVLNode* root)
-//{
-//	if (root == nullptr)
-//		return;
-//
-//	// Write left subtree
-//	writeFoodItems(file, root->left);
-//
-//	// Write current food item
-//	file << "FoodItem " << root->foodItem.getName() << " " << root->foodItem.getFoodDescription()
-//		<< " " << root->foodItem.getCategory() << " " << root->foodItem.getPrice() << "\n";
-//
-//	// Write right subtree
-//	writeFoodItems(file, root->right);
-//}
-//
-//// Write Restaurant files
-//void writeRestaurantFile(Restaurant restaurantDatabase[], int numberOfRestaurants)
-//{
-//	ofstream file("restaurant.txt");
-//
-//	for (int i = 0; i < numberOfRestaurants; i++)
-//	{
-//		// Write restaurant details
-//		file << "Restaurant " << restaurantDatabase[i].getRestaurantName() << " " << restaurantDatabase[i].getPostalCode() << "\n";
-//
-//		// Write food items by traversing the AVL tree
-//		writeFoodItems(file, restaurantDatabase[i].restaurantMenuPointer()->getRoot());
-//	}
-//
-//	file.close();
-//}
-//
-//// print restaurants
-//void printRestaurants(Restaurant restaurantDatabase[], int numberOfRestaurants) {
-//	cout << "Restaurants in the database:\n";
-//	for (int i = 0; i < numberOfRestaurants; i++) {
-//		std::cout << i+1 << ". " << "Name: " << restaurantDatabase[i].getRestaurantName()
-//			<< " - Postal Code: " << restaurantDatabase[i].getPostalCode() << "\n";
-//		restaurantDatabase[i].printMenu();
-//	}
-//}
-//
-//// print restaurants titles
-//void printRestaurantsTitles(Restaurant restaurantDatabase[], int numberOfRestaurants) {
-//	cout << "Restaurants in the database:\n";
-//	for (int i = 0; i < numberOfRestaurants; i++) {
-//		std::cout << i + 1 << ". " << "Name: " << restaurantDatabase[i].getRestaurantName()
-//			<< " - Postal Code: " << restaurantDatabase[i].getPostalCode() << "\n";
-//	}
-//}
 
 // USERS
 // Functions 1 : Login
@@ -353,7 +255,7 @@ void editFoodItems(RestaurantStaff* restaurantStaff) {
 			break;
 		}
 
-		FoodItem* foodItemPointer = restaurantStaff->getRestaurantPointer()->restaurantMenuPointer()->searchNode(foodItemName);
+		FoodItem* foodItemPointer = restaurantStaff->getRestaurantPointer()->getRestaurantMenuPointer()->searchNode(foodItemName);
 		if (foodItemPointer == nullptr) {
 			cout << "Food item does not exist, please try again" << endl;
 		}
@@ -372,7 +274,15 @@ int main()
 
 	RestaurantArray testingArray;
 
+	
+
 	testingArray.printRestaurants();
+	for (int i = 0; i < 5 ; i++)
+	{
+		FoodItemAVL* aRestMenu = testingArray.getRestaurant(i)->getRestaurantMenuPointer();
+		cout << endl << endl;
+		aRestMenu->printInOrder();
+	}
 
 	int numberOfRestaurants = 0;
 	/////readRestaurantFile(restaurantDatabase, numberOfRestaurants);
@@ -410,7 +320,7 @@ int main()
 			// Temp for us to check anything fast
 			if (loginChoice == "0")
 			{
-				//////printRestaurants(restaurantDatabase, numberOfRestaurants);
+				testingArray.getRestaurant(0)->getRestaurantMenuPointer()->printAllInOrder();
 			}
 			// 1. Login Function
 			if (loginChoice == "1")
@@ -576,8 +486,6 @@ int main()
 				}
 			}
 		}
-
-		
 		// For any invalid menu options
 		else
 		{
@@ -688,7 +596,7 @@ int main()
 					cin >> foodItemName;
 
 					// search in the menu if it exists
-					foodItemPointer = restaurantChosen->restaurantMenuPointer()->searchNode(foodItemName);
+					foodItemPointer = restaurantChosen->getRestaurantMenuPointer()->searchNode(foodItemName);
 
 					if (foodItemPointer == nullptr)
 					{

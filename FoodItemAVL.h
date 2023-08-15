@@ -35,7 +35,10 @@ private:
     // Post: Gets the height of the left node - the right node
     int getBalanceFactor(AVLNode* aNode);
 
-
+    // Get the fooditem address so that we can retreive info
+    // Pre : Need a valid node
+    // Post: Returns addrress
+    FoodItem* getFoodItemPointer(AVLNode* aNode);
 
     // Rotate node right
     // Pre : pivot node
@@ -108,7 +111,6 @@ public:
     // Pre : Not a null AVL Tree
     // Post: Prints the full item menu of the restaurant in which the AVL tree belongs to
     void printAllInOrder();
-
 
     // Delete a node inside AVL Tree by searching for its name
     // Pre : Not a null AVL Tree 

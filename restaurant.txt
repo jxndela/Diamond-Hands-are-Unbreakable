@@ -1,29 +1,5 @@
-Restaurant,Kaya Toast Cafe,159753
-FoodItem,Kaya Toast,Breakfast,Toast,1.50
-FoodItem,Kopi,Traditional,Coffee,1.20
-FoodItem,Nasi Lemak,Lunch,Rice Dish,2.99
-FoodItem,Soft Boiled Eggs,Breakfast,Eggs,1.10
-FoodItem,Teh Tarik,Breakfast,Tea,1.30
-Restaurant,Hainanese Chicken,486072
-FoodItem,Bak Kut Teh,Dinner,Pork Soup,7.50
-FoodItem,Chicken Rice,Lunch,Rice Dish,5.99
-FoodItem,Chilli Crab,Dinner,Seafood,18.99
-FoodItem,Satay,Appetizer,Grilled Meat,0.75
-FoodItem,Tiger Beer,Beverage,Beer,6.99
-Restaurant,Laksa House,278989
-FoodItem,Barley Drink,Beverage,Cold Drink,1.80
-FoodItem,Char Kway Teow,Dinner,Fried Noodles,5.50
-FoodItem,Laksa,Lunch,Noodle Soup,7.50
-FoodItem,Otah,Appetizer,Fish Cake,1.00
-FoodItem,Popiah,Appetizer,Spring Roll,2.50
-Restaurant,Dim Sum Palace,623456
-FoodItem,Egg Tart,Dessert,Pastry,2.00
-FoodItem,Har Gow,Lunch,Shrimp Dumpling,3.50
-FoodItem,Siu Mai,Lunch,Pork Dumpling,3.00
-FoodItem,Xiao Long Bao,Dinner,Soup Dumpling,4.00
-Restaurant,Indian Curry House,492105
-FoodItem,Biryani,Dinner,Rice Dish,7.50
-FoodItem,Butter Chicken,Lunch,Curry Dish,6.50
-FoodItem,Mango Lassi,Beverage,Yogurt Drink,2.80
-FoodItem,Samosa,Appetizer,Fried Pastry,1.50
-FoodItem,Tandoori Naan,Bread,Flatbread,1.20
+Kaya Toast Cafe,159753
+Hainanese Chicken,486072
+Laksa House,278989
+Dim Sum Palace,623456
+Indian Curry House,492105

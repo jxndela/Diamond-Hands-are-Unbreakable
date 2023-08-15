@@ -38,6 +38,14 @@ int FoodItemAVL::getBalanceFactor(AVLNode* aNode)
     return getHeight(aNode->left) - getHeight(aNode->right);
 }
 
+FoodItem* FoodItemAVL::getFoodItemPointer(AVLNode* aNode)
+{
+    if (aNode == nullptr)
+        return nullptr;
+
+    return &(aNode->foodItem);
+}
+
 // Rotate node right
 // Pre : pivot node
 // Post: rotated right
@@ -143,12 +151,15 @@ AVLNode* FoodItemAVL::insertNodeRecursive(AVLNode* aNode, FoodItem& aFoodItem)
     if (aNode == nullptr)
     {
         // Create a new node and initialize its properties
-        AVLNode* newNode = new AVLNode;
+        AVLNode* newNode = (new AVLNode);
         newNode->foodItem = aFoodItem;
         newNode->left = nullptr;
         newNode->right = nullptr;
         newNode->height = 1; // Initialize height as 1 for the new node
+        cout << aFoodItem.getName() << " node has been created" << endl;
+        cout << root << endl;
         return newNode; // Return the newly created node
+        
     }
     
     // Compare the food item's name with the current node's food item's name
@@ -177,7 +188,7 @@ AVLNode* FoodItemAVL::searchNodeRecursive(AVLNode* aNode, string& itemName)
     // Check if the current node is null or has the desired item name
     if (aNode == nullptr || aNode->foodItem.getName() == itemName)
         return aNode; // Return the current node (nullptr if not found or matching)
-    
+
     // Compare the desired item name with the current node's food item's name
     if (itemName < aNode->foodItem.getName())
         // If the desired item name is smaller, search in the left subtree
@@ -196,7 +207,6 @@ AVLNode* FoodItemAVL::deleteNodeRecursive(AVLNode* aNode, const string& itemName
     // Check if the current node is null
     if (aNode == nullptr)
         return aNode; // Return nullptr since the item was not found
-    
     // Compare the item name with the current node's food item's name
     if (itemName < aNode->foodItem.getName())
         // If the desired item name is smaller, recursively search in the left subtree
@@ -221,7 +231,6 @@ AVLNode* FoodItemAVL::deleteNodeRecursive(AVLNode* aNode, const string& itemName
             }
             else
                 *aNode = *temp; // Copy the contents of the non-null child to current node
-
             delete temp; // Delete the temporary node
         }
         else
@@ -229,14 +238,11 @@ AVLNode* FoodItemAVL::deleteNodeRecursive(AVLNode* aNode, const string& itemName
             // Case: Node has two children
             // If the current node has both left and right children
             AVLNode* temp = aNode->right; 
-
             // Find the minimum value node in the right subtree
             while (temp->left != nullptr)
                 temp = temp->left;
-
             // Copy the data of the leftmost node to the current node
             aNode->foodItem = temp->foodItem;
-            
             // Recursively delete the leftmost node from the right subtree
             aNode->right = deleteNodeRecursive(aNode->right, temp->foodItem.getName());
         }
@@ -244,9 +250,7 @@ AVLNode* FoodItemAVL::deleteNodeRecursive(AVLNode* aNode, const string& itemName
     // Update the height of the current node after deletion
     if (aNode == nullptr)
         return aNode; // If the node was deleted, return nullptr
-
     aNode->height = 1 + max(getHeight(aNode->left), getHeight(aNode->right));
-    
     // Rebalance the tree if necessary and return the updated node
     return balanceNode(aNode);
 }

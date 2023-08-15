@@ -30,11 +30,16 @@ public:
 
 	RestaurantArray();
 	~RestaurantArray();
-	void addRestaurant(Restaurant& aRestaurant, int& aIndexPosition);
+
+
+	int getNumberOfRestaurants();
 	Restaurant* getRestaurant(int aIndexPosition);
-	void readRestaurantFile();
+	void addRestaurant(Restaurant& aRestaurant, int& aIndexPosition);
 	void printRestaurants();
+	void readRestaurantFile();
+	void writeFoodItemsAVL(ofstream& aOutFile, AVLNode* aNode);
+	void writeRestaurantFile();
 
-
+	
 };
 
