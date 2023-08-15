@@ -1,34 +1,54 @@
 #include "RestaurantArray.h"
 
+// Constructor
 RestaurantArray::RestaurantArray()
 {
 	// Read the text file.
 	readRestaurantFile();
 }
 
-
-
+// Destructor
 RestaurantArray::~RestaurantArray(){}
 
+// Get method - no. of restaurants
+int RestaurantArray::getNumberOfRestaurants()
+{
+	return numberOfRestaurants;
+}
+
+// Get method - Pointer of specific restaurant
+Restaurant* RestaurantArray::getRestaurant(int aIndexPosition)
+{
+	return &restaurants[aIndexPosition];
+}
+
+// Get method - Pointer to restaurants[MAX_RESTAURANTS]
+Restaurant* RestaurantArray::GetAllRestaurant()
+{
+
+	return restaurants;
+
+}
+
+// Add new restaurant add a specific index position
 void RestaurantArray::addRestaurant(Restaurant& aRestaurant, int& aIndexPosition)
 {
 	restaurants[aIndexPosition] = aRestaurant;
 	numberOfRestaurants++;
 }
 
-Restaurant* RestaurantArray::getRestaurant(int aIndexPosition)
+// Print Restaurant
+void RestaurantArray::printRestaurants()
 {
-	return &restaurants[aIndexPosition];
+	for (int i = 1; i < numberOfRestaurants + 1; i++)
+	{
+		cout << i << ". " << restaurants[i - 1].getRestaurantName() << "\t"
+			<< restaurants[i - 1].getPostalCode() << endl;
+	}
 }
 
-int RestaurantArray::getNumberOfRestaurants()
-{
-	return numberOfRestaurants;
-}
 
-
-
-
+// Read .txt file
 void RestaurantArray::readRestaurantFile()
 {
 	// Open file restaurant.txt
@@ -96,7 +116,7 @@ void RestaurantArray::readRestaurantFile()
 		getline(ss, indexPositionString, ',');
 		indexPosition = stoi(indexPositionString);
 		getline(ss, foodItemName, ',');
-		getline(ss, description, ',');
+		getline(ss, category, ',');
 		getline(ss, category, ',');
 		getline(ss, isAvailableString, ',');
 		if (isAvailableString == "true") isAvailable = true;
@@ -104,7 +124,7 @@ void RestaurantArray::readRestaurantFile()
 		getline(ss, priceString);
 		price = stod(priceString);
 		// Create the new foodItem
-		FoodItem newFoodItem(foodItemName, description, category, isAvailable, price);
+		FoodItem newFoodItem(foodItemName, category, category, isAvailable, price);
 		Restaurant* restaurantPointer = &restaurants[indexPosition];
 		restaurantPointer->getRestaurantMenuPointer()->insertNode(newFoodItem);
 	}
@@ -126,20 +146,12 @@ void RestaurantArray::writeRestaurantFile()
 	for (int i = 0; i < numberOfRestaurants - 1;i++ )
 	{
 		// Print out information about the restaurant with restaurant header
-		outFile << "Restaurant," << restaurants[i].getRestaurantName() << ","
+		outFile << restaurants[i].getRestaurantName() << ","
 		<< restaurants[i].getPostalCode() << endl;
 		// Access the menu of the restaurant above
 		FoodItemAVL* menu = restaurants[i].getRestaurantMenuPointer();
-		// 
-	}
-}
 
-void RestaurantArray::printRestaurants()
-{
-	for (int i = 1;i < numberOfRestaurants + 1; i++)
-	{
-		cout << i << ". " << restaurants[i-1].getRestaurantName() << "\t"
-		<< restaurants[i-1].getPostalCode() << endl;
+		writeFoodItemsAVL(outFile, menu->getRoot());
 	}
 }
 
@@ -151,8 +163,8 @@ void RestaurantArray::writeFoodItemsAVL(ofstream& aOutFile, AVLNode* aNode)
 
 	// Write food item recursively
 	aOutFile << "FoodItem," << aNode->foodItem.getName() << ","
-		<< aNode->foodItem.getFoodDescription() << ","
 		<< aNode->foodItem.getCategory() << ","
+		<< aNode->foodItem.getFoodDescription() << ","
 		<< aNode->foodItem.getPrice() << ","
 		<< aNode->foodItem.getAvailability() << endl;
 

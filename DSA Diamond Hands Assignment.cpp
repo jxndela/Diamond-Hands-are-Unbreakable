@@ -269,28 +269,15 @@ void editFoodItems(RestaurantStaff* restaurantStaff) {
 
 int main()
 {
-	// Initialize restaurants
-	Restaurant restaurantDatabase[MAX_RESTAURANTS];
-
-	RestaurantArray testingArray;
-
-	
-
-	testingArray.printRestaurants();
-	for (int i = 0; i < 5 ; i++)
-	{
-		FoodItemAVL* aRestMenu = testingArray.getRestaurant(i)->getRestaurantMenuPointer();
-		cout << endl << endl;
-		aRestMenu->printInOrder();
-	}
-
-	int numberOfRestaurants = 0;
+	// Initialize the Restaurant database
+	// Constructor automatically reads save file
+	RestaurantArray restaurantDatabase;
 	/////readRestaurantFile(restaurantDatabase, numberOfRestaurants);
 	// Initalize staff database
-	StaffDictionary staffDatabase = StaffDictionary();
-	staffDatabase.loadFromFile(restaurantDatabase, numberOfRestaurants);
+	StaffDictionary staffDatabase;
+	staffDatabase.loadFromFile(restaurantDatabase.GetAllRestaurant(), restaurantDatabase.getNumberOfRestaurants());
 	// Initaliaze user database
-	CustomerDictionary userDatabase = CustomerDictionary();
+	CustomerDictionary userDatabase;
 	
 
 	// Set-up and exit condition for UI
@@ -320,7 +307,9 @@ int main()
 			// Temp for us to check anything fast
 			if (loginChoice == "0")
 			{
-				testingArray.getRestaurant(0)->getRestaurantMenuPointer()->printAllInOrder();
+				Restaurant newRestaurant;
+				int i = 5;
+				restaurantDatabase.addRestaurant(newRestaurant, i);
 			}
 			// 1. Login Function
 			if (loginChoice == "1")
@@ -440,7 +429,7 @@ int main()
 				// Create an array of valid inputs
 				// Start at index zero, but value start at 1
 				string restaurantChoices[MAX_RESTAURANTS];
-				for (int i = 0; i < numberOfRestaurants; i++)
+				for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants(); i++)
 				{
 					restaurantChoices[i] = to_string(i + 1);
 				}
@@ -459,12 +448,12 @@ int main()
 					bool found = false;
 					// If it is not valid 
 
-					for (int i = 0; i < numberOfRestaurants; i++)
+					for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants(); i++)
 					{
 						if (restaurantChoice == restaurantChoices[i])
 						{
 							validRestaurantChoice = true;
-							restaurantChosen = &restaurantDatabase[stoi(restaurantChoice) - 1];
+							restaurantChosen = &(restaurantDatabase.GetAllRestaurant())[stoi(restaurantChoice)-1];
 							found = true;
 							break;
 						}
@@ -538,7 +527,7 @@ int main()
 				// Create an array of valid inputs
 				// Start at index zero, but value start at 1
 				string restaurantChoices[MAX_RESTAURANTS];
-				for (int i = 0; i < numberOfRestaurants; i++)
+				for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants(); i++)
 				{
 					restaurantChoices[i] = to_string(i + 1);
 				}
@@ -557,12 +546,12 @@ int main()
 					bool found = false;
 					// If it is not valid 
 
-					for (int i = 0; i < numberOfRestaurants; i++)
+					for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants(); i++)
 					{
 						if (restaurantChoice == restaurantChoices[i])
 						{
 							validRestaurantChoice = true;
-							restaurantChosen = &restaurantDatabase[stoi(restaurantChoice) - 1];
+							restaurantChosen = &(restaurantDatabase.GetAllRestaurant())[stoi(restaurantChoice) - 1];
 							temporaryOrder = customer.createNewOrder(restaurantChosen);
 							found = true;
 							break;

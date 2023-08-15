@@ -156,10 +156,7 @@ AVLNode* FoodItemAVL::insertNodeRecursive(AVLNode* aNode, FoodItem& aFoodItem)
         newNode->left = nullptr;
         newNode->right = nullptr;
         newNode->height = 1; // Initialize height as 1 for the new node
-        cout << aFoodItem.getName() << " node has been created" << endl;
-        cout << root << endl;
         return newNode; // Return the newly created node
-        
     }
     
     // Compare the food item's name with the current node's food item's name
