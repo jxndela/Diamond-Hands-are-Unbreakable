@@ -42,16 +42,16 @@ int main()
 	bool staffLoggedIn = false;
 	string staffEmail;
 
-	// Display message and prompt for choice
-	cout << " _  _  _ _______        _______  _____  _______ _______" << endl;
-	cout << " |  |  | |______ |      |       |     | |  |  | |______" << endl;
-	cout << " |__|__| |______ |_____ |_____  |_____| |  |  | |______" << endl;
-	cout << endl;
+
 
 	// User presented with two choices to log in or register
 	while (customerLoggedIn == false && staffLoggedIn == false)
 	{
-
+		// Display message and prompt for choice
+		cout << " _  _  _ _______        _______  _____  _______ _______" << endl;
+		cout << " |  |  | |______ |      |       |     | |  |  | |______" << endl;
+		cout << " |__|__| |______ |_____ |_____  |_____| |  |  | |______" << endl;
+		cout << endl;
 		cout << "1. User Login" << endl;
 		cout << "2. User Register" << endl;
 		cout << "3. Staff Login" << endl;
@@ -59,9 +59,6 @@ int main()
 		cout << "Your choice? (1 - 4) : ";
 		int loginChoice;
 		cin >> loginChoice;
-
-
-
 		switch (loginChoice)
 		{
 		case 1:	// 1. User Login
@@ -122,5 +119,45 @@ int main()
 			cin.ignore(INT_MAX, '\n');  
 			continue;
 		}
+	}
+	// If it is the customer who is logged in, show options only available to customer
+	while(customerLoggedIn)
+	{
+		//Present interface for the user
+		cout << "====================================================" << endl;
+		cout << "Welcome Back" << endl;
+		cout << "What would you like to do?" << endl;
+		cout << "1. Create new order" << endl;
+		cout << "2. Check order" << endl;
+		cout << "3. Cancel Order" << endl;
+		cout << "4. Log out" << endl;
+		cout << "Your choice ? ";
+		int loginChoice;
+		cin >> loginChoice;
+		switch (loginChoice)
+		{
+		case 1:
+			// Create order
+			cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
+			cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
+			cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
+			cout << "                                                                            " << endl;  
+		case 2:
+			// Check current in progress order
+		case 3:
+			// Cancel in progress order
+		case 4:
+			// Log out
+		default: // Else show an error
+			cout << "Invalid input. Please enter a valid option." << endl;
+			cout << "-------------------------------------------" << endl;
+			cin.clear();                 // Clear the failed state
+			cin.ignore(INT_MAX, '\n');
+			continue;
+		}
+	}
+	while(staffLoggedIn)
+	{
+		
 	}
 }
