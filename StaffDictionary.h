@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
+
+#include "RestaurantArray.h"
 #include "User.h"
 #include "RestaurantStaff.h"
 
@@ -32,11 +34,6 @@ public:
 	// Constructor for the Dictionary
 	StaffDictionary();
 	~StaffDictionary();
-
-	// TODO: Parameterized constructor for dictionary (used to initialize dictionary with existing data from .txt file)
-	// Pre : Valid URL file path
-	// Post: Constructs Dictionary with values stored
-	// UserDictionary(string txtfilepath)
 
 	// Hash the key that will be used to search
 	// Pre : ~
@@ -74,5 +71,29 @@ public:
 	// Pre  : aEmailKey must be in email format
 	// Post : returns true if user is found
 	RestaurantStaff* search(string email);
-	
+
+	// INPUT HELPERS
+	string hashPassword(string& aUnhashedPassword);
+
+	// Simple validator
+	string getValidEmail();
+
+	// Check if valid postal code
+	// Postal Codes in SG are all 6 digits long , any digit is OK
+	int getValidPostalCode();
+
+	// STAFF
+	// Functions 1 : Login
+	// Pre : Should only be when logged out
+	// Post: Return a true or false statement 
+	bool stafflogin(RestaurantStaff* aStaff);
+
+	// Function 2 : Register
+	// Register New staff
+	// Pre : Should only be when logged out
+	bool registerStaffAccount(RestaurantArray aRestaurantDatabase);
+
+	// D
+	// Function 3 : Edit Food Items
+	void editFoodItems(RestaurantStaff* restaurantStaff);
 };

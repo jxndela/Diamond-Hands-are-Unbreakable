@@ -253,7 +253,7 @@ bool CustomerDictionary::customerLogin(Customer* aCustomer)
 	if (comparedHash == hashedPassword && isExistingCustomer)
 	{
 		cout << "Authentication success" << endl;
-		aCustomer = *customers[indexLocation];
+		aCustomer = &(customers[indexLocation]->customer);
 		return true;
 	}
 	cout << "Something went wrong, please try logging in again" << endl;

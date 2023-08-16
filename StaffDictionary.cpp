@@ -14,6 +14,7 @@ StaffDictionary::StaffDictionary()
 
 }
 
+// Destructor
 StaffDictionary::~StaffDictionary()
 {
 	// Save user details to file before exiting
@@ -147,56 +148,12 @@ bool StaffDictionary::retrieveUser(string aEmailKey, RestaurantStaff& aStaff)
 	return false;
 }
 
-
-
 bool StaffDictionary::isEmpty()
 {
 	return size == 0;
 }
 
-
-//void StaffDictionary::loadFromFile()
-//{
-//	ifstream inFile("staff_details.txt");
-//	if (!inFile.is_open())
-//	{
-//
-//		// Create the file if it doesn't exist
-//		ofstream newFile("staff_details.txt");
-//		newFile.close();
-//		cout << "file has been created" << endl;
-//
-//		// Try opening the newly created file
-//		inFile.open("staff_details.txt");
-//		if (!inFile.is_open())
-//		{
-//			return; // Still unable to open the file
-//		}
-//	}
-//
-//	string emailKey, passwordHash;
-//	while (inFile >> emailKey >> passwordHash) {
-//		RestaurantStaffNode* newNode = new RestaurantStaffNode;
-//		newNode->emailKey = emailKey;
-//		newNode->staff.setPasswordHash(passwordHash);
-//		newNode->next = nullptr;
-//
-//		int index = getHashedKey(emailKey);
-//
-//		if (staffs[index] == nullptr) {
-//			staffs[index] = newNode;
-//		}
-//		else {
-//			RestaurantStaffNode* current = staffs[index];
-//			while (current->next != nullptr) {
-//				current = current->next;
-//			}
-//			current->next = newNode;
-//		}
-//	}
-//	inFile.close
-//}
-
+// Load from file
 void StaffDictionary::loadFromFile(Restaurant restaurantDatabase[], int numberOfRestaurants)
 {
 	ifstream inFile("staff_details.txt");
@@ -258,8 +215,7 @@ void StaffDictionary::loadFromFile(Restaurant restaurantDatabase[], int numberOf
 	inFile.close();
 }
 
-
-
+// Save details to the file
 void StaffDictionary::saveToFile()
 {
 	ofstream outFile("staff_details.txt");
@@ -272,10 +228,12 @@ void StaffDictionary::saveToFile()
 			current = current->next;
 		}
 	}
-
 	outFile.close();
 }
 
+// searches for a user in the dictionary, returns a pointer to the user if found
+// Pre  : aEmailKey must be in email format
+// Post : returns true if user is found
 RestaurantStaff* StaffDictionary::search(string email)
 {
 	int index = getHashedKey(email);
@@ -288,4 +246,174 @@ RestaurantStaff* StaffDictionary::search(string email)
 		current = current->next;
 	}
 	return nullptr;
+}
+
+string StaffDictionary::hashPassword(string& aUnhashedPassword)
+{
+	// TEMPORARY HASH FUNCTION
+	int sum = 0;
+	for (int i = 0; i < aUnhashedPassword.length(); i++)
+	{
+		sum += aUnhashedPassword[i];
+	}
+	string hashedPassword = to_string((sum % STAFF_MAX_SIZE));
+	return hashedPassword;
+}
+
+
+string StaffDictionary::getValidEmail()
+{
+	bool validEmail = false;
+	string staffInputEmail;
+	while (!validEmail)
+	{
+		cout << "Please enter your email : ";
+		cin >> staffInputEmail;
+		// Reject empty input
+		if (staffInputEmail.length() == 0)
+		{
+			cout << "Input cannot be empty. Please try again." << endl;
+			continue;
+		}
+		// Check for email format
+		int atSymbolIndex = staffInputEmail.find('@');
+		int dotSymbolIndex = staffInputEmail.rfind('.');
+		if (atSymbolIndex == -1 || dotSymbolIndex == -1 || atSymbolIndex > dotSymbolIndex)
+		{
+			cout << "Improper email format. Should look like example@gmail.com" << endl;
+			continue;
+		}
+		validEmail = true;
+	}
+	return staffInputEmail;
+}
+
+int StaffDictionary::getValidPostalCode()
+{
+	bool validPostal = false;
+	string staffInputPostalCode;
+	while (!validPostal)
+	{
+		bool isAllDigits = true;
+		cout << "Please enter postal code of the restaurant : ";
+		cin >> staffInputPostalCode;
+		// Check length
+		if (staffInputPostalCode.length() != 6) {
+			cout << "Please enter valid 6 digit postal code." << endl;
+			continue;
+		}
+		for (char aChar : staffInputPostalCode) {
+			if (!isdigit(aChar))
+			{
+				cout << "Please enter valid 6 digit postal code." << endl;
+				isAllDigits = false;
+			}
+		}
+		if (isAllDigits) break;
+		validPostal = true;
+	}
+	// string to int and return
+	return stoi(staffInputPostalCode);
+}
+
+// Pre : Should only be when logged out
+// Post: Return a true or false statement 
+bool StaffDictionary::stafflogin(RestaurantStaff* aStaff)
+{
+	bool isExistingStaff = false;
+	string staffInputEmail = getValidEmail();
+	string staffInputPassword;
+	cout << "Please enter a password : ";
+	cin >> staffInputPassword;
+	// Step 1: Hash the user input password
+	string hashedPassword = hashPassword(staffInputPassword);
+	// Step 2: Check if emailkey is inside the dictionary
+	if (search(staffInputEmail) != nullptr)
+	{
+		isExistingStaff = true;
+	}
+	// Step 3 check password
+	string comparedHash = retrievePassword(staffInputEmail);
+	if (comparedHash == hashedPassword && isExistingStaff)
+	{
+		cout << "Authentication success" << endl;
+		aStaff = search(staffInputEmail);
+		return true;
+	}
+	cout << "Something went wrong, please try logging in again" << endl;
+	cout << "-------------------------------------------------" << endl;
+	return false;
+}
+
+// Register New Staff
+// Pre : Should only be when logged out
+bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
+{
+	// Get necessary inputs
+	string staffInputEmail = getValidEmail();
+	string staffInputPassword;
+	cout << "Please enter a password : ";
+	cin >> staffInputPassword;
+	// Get restaurant pointer
+	bool validRestaurantChoice = false;
+	int staffInputRestaurant;
+	Restaurant* restaurantPointer = nullptr;
+	cout << "Please select restaurant that you belong to.";
+	for (int i = 0; i < aRestaurantDatabase.getNumberOfRestaurants() - 1; i++)
+	{
+		cout << i << ". " << aRestaurantDatabase.getRestaurant(i)->getRestaurantName() << endl;
+	}
+	while (!validRestaurantChoice)
+	{
+		cout << "Your choice? :	";
+		cin >> staffInputRestaurant;
+		if (-1 < staffInputRestaurant < aRestaurantDatabase.getNumberOfRestaurants())
+		{
+			restaurantPointer = aRestaurantDatabase.getRestaurant(staffInputRestaurant);
+			validRestaurantChoice = true;
+			break;
+		}
+		cout << "Invalid input, please select a number corresponding to restaurant you belong to" << endl;
+	}
+
+	// Step 1: Hash the user input password
+	string hashedPassword = hashPassword(staffInputPassword);
+	// Step 2: Create a temporary user 
+	RestaurantStaff tempStaff = RestaurantStaff(staffInputEmail, hashedPassword, restaurantPointer);
+	// STep 3: Add the user
+	bool addStaffSuccess = addStaff(staffInputEmail, tempStaff);
+	// Step 4 : Check if adding into dictionary is successful, return false if failed.
+	if (addStaffSuccess == false)
+	{
+		cout << "Staff already exists." << endl;
+		cout << "---------------------" << endl;
+		return false;
+	}
+	// Step 5 : Otherwise, adding is succesful return as true
+	cout << "Registration success. Please proceed to login" << endl;
+	saveToFile();
+	return true;
+}
+
+void StaffDictionary::editFoodItems(RestaurantStaff* restaurantStaff)
+{
+	while (true) {
+		restaurantStaff->getRestaurantPointer()->printMenuAll();
+		cout << "Which food item would you like to edit? (q to quit)" << endl;
+
+		string foodItemName;
+		cin >> foodItemName;
+
+		if (foodItemName == "q") {
+			break;
+		}
+
+		FoodItem* foodItemPointer = restaurantStaff->getRestaurantPointer()->getRestaurantMenuPointer()->searchNode(foodItemName);
+		if (foodItemPointer == nullptr) {
+			cout << "Food item does not exist, please try again" << endl;
+		}
+		else {
+			restaurantStaff->updateFoodItem(foodItemPointer);
+		}
+	}
 }

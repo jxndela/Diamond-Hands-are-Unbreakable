@@ -66,6 +66,13 @@ public:
 	// INPUT HELPERS
 	string hashPassword(string& aUnhashedPassword);
 
+	// Simple validator
+	string getValidEmail();
+
+	// Check if valid postal code
+	// Postal Codes in SG are all 6 digits long , any digit is OK
+	int getValidPostalCode();
+
 	// Pre : Should only be when logged out
 	// Post: Return a true or false statement 
 	bool customerLogin(Customer* aCustomer);
@@ -74,12 +81,6 @@ public:
 	// Pre : Should only be when logged out
 	bool registerCustomerAccount();
 
-	// Simple validator
-	string getValidEmail();
-
-	// Check if valid postal code
-	// Postal Codes in SG are all 6 digits long , any digit is OK
-	int getValidPostalCode();
 };
 
 	
