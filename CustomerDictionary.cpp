@@ -174,25 +174,25 @@ void CustomerDictionary::loadFromFile()
 		}
 	}
 
-	string emailKey, passwordHash;
-	while (inFile >> emailKey >> passwordHash) {
-		CustomerNode* newNode = new CustomerNode;
-		newNode->emailKey = emailKey;
-		newNode->customer.setPasswordHash(passwordHash);
-		newNode->next = nullptr;
+	string emailKey, passwordHash, name, postalCodeString;
+	int postalCode;
+	string aString;
+	string line;
+	string indexPositionString;
+	int indexPosition = 0;
 
-		int index = getHashedKey(emailKey);
+	while (getline(inFile, line))
+	{
+		stringstream ss(line);
+		getline(ss, emailKey, ',');
+		getline(ss, passwordHash, ',');
+		getline(ss, name, ',');
+		getline(ss, postalCodeString);
+		postalCode = stoi(postalCodeString);
 
-		if (customers[index] == nullptr) {
-			customers[index] = newNode;
-		}
-		else {
-			CustomerNode* current = customers[index];
-			while (current->next != nullptr) {
-				current = current->next;
-			}
-			current->next = newNode;
-		}
+		Customer newCustomer(emailKey, passwordHash, name, postalCode);
+		addCustomer(emailKey, newCustomer);
+		size++;
 	}
 	inFile.close();
 }
@@ -205,7 +205,10 @@ void CustomerDictionary::saveToFile()
 	for (int i = 0; i < CUSTOMER_MAX_SIZE; ++i) {
 		CustomerNode* current = customers[i];
 		while (current != nullptr) {
-			outFile << current->emailKey << " " << current->customer.getPasswordHash() << endl;
+			outFile << current->emailKey << ","
+				<< current->customer.getPasswordHash() << ","
+				<< current->customer.getCustomerName() << ","
+				<< current->customer.getCustomerPostalCode() << endl;
 			current = current->next;
 		}
 	}
@@ -231,7 +234,6 @@ string CustomerDictionary::hashPassword(string& aUnhashedPassword)
 bool CustomerDictionary::customerLogin(Customer* aCustomer)
 {
 	bool isExistingCustomer = false;
-	int indexLocation;
 	string userInputEmail = getValidEmail();
 	string userInputPassword;
 	cout << "Please enter a password : ";
@@ -239,21 +241,16 @@ bool CustomerDictionary::customerLogin(Customer* aCustomer)
 	// Step 1: Hash the user input password
 	string hashedPassword = hashPassword(userInputPassword);
 	// Step 2: Check if emailkey is inside the dictionary
-	for (int i = 0; i < size -1; i++)
+	if (search(userInputEmail)->getEmail()  == userInputEmail)
 	{
-		if (userInputEmail == customers[i]->emailKey)
-		{
-			isExistingCustomer = true;
-			indexLocation = i;
-			break;
-		}
+		isExistingCustomer = true;
 	}
 	// Step 3 check password
 	string comparedHash = retrievePassword(userInputEmail);
-	if (comparedHash == hashedPassword && isExistingCustomer)
+	if (hashedPassword == comparedHash && isExistingCustomer)
 	{
 		cout << "Authentication success" << endl;
-		aCustomer = &(customers[indexLocation]->customer);
+		aCustomer = search(userInputEmail);
 		return true;
 	}
 	cout << "Something went wrong, please try logging in again" << endl;
@@ -294,6 +291,20 @@ bool CustomerDictionary::registerCustomerAccount()
 	return true;
 }
 
+Customer* CustomerDictionary::search(string aEmail)
+{
+	int index = getHashedKey(aEmail);
+
+	CustomerNode* current = customers[index];
+	while (current != nullptr) {
+		if (current->customer.getEmail() == aEmail) {
+			return &current->customer;
+		}
+		current = current->next;
+	}
+	return nullptr;
+}
+
 // Simple validator
 string CustomerDictionary::getValidEmail()
 {
@@ -310,8 +321,8 @@ string CustomerDictionary::getValidEmail()
 			continue;
 		}
 		// Check for email format
-		int atSymbolIndex = userInputEmail.find('@');
-		int dotSymbolIndex = userInputEmail.rfind('.');
+		size_t atSymbolIndex = userInputEmail.find('@');
+		size_t dotSymbolIndex = userInputEmail.rfind('.');
 		if (atSymbolIndex == -1 || dotSymbolIndex == -1 || atSymbolIndex > dotSymbolIndex)
 		{
 			cout << "Improper email format. Should look like example@gmail.com" << endl;

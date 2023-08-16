@@ -1,5 +1,18 @@
 Kaya Toast Cafe,159753
+FoodItem,Kopi,Coffee,Coffee,1.2,1
+FoodItem,Kaya Toast,Toast,Toast,1.5,1
+FoodItem,Soft Boiled Eggs,Eggs,Eggs,1.1,1
+FoodItem,Nasi Lemak,Rice Dish,Rice Dish,2.99,1
+FoodItem,Teh Tarik,Tea,Tea,1.3,1
 Hainanese Chicken,486072
+FoodItem,Chicken Rice,Rice Dish,Rice Dish,5.99,1
+FoodItem,Bak Kut Teh,Pork Soup,Pork Soup,7.5,1
+FoodItem,Satay,Grilled Meat,Grilled Meat,0.75,1
+FoodItem,Chilli Crab,Seafood,Seafood,18.99,1
+FoodItem,Tiger Beer,Beer,Beer,6.99,1
 Laksa House,278989
-Dim Sum Palace,623456
-Indian Curry House,492105
+FoodItem,Char Kway Teow,Fried Noodles,Fried Noodles,5.5,1
+FoodItem,Barley Drink,Cold Drink,Cold Drink,1.8,1
+FoodItem,Otah,Fish Cake,Fish Cake,1,1
+FoodItem,Laksa,Noodle Soup,Noodle Soup,7.5,1
+FoodItem,Popiah,Spring Roll,Spring Roll,2.5,1

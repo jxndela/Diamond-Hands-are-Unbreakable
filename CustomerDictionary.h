@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "User.h"
 #include <fstream>
+#include <sstream>	
+#include "User.h"
 #include "Customer.h"
 
 // Forward declaration
@@ -81,6 +82,10 @@ public:
 	// Pre : Should only be when logged out
 	bool registerCustomerAccount();
 
+	// searches for a user in the dictionary, returns a pointer to the user if found
+// Pre  : aEmailKey must be in email format
+// Post : returns true if user is found
+	Customer* search(string aEmail);
 };
 
 	
