@@ -4,3 +4,4 @@ testing@gmail.com,2,Testing User,543211
 ongjie90@gmail.com,2,Ong Jie,987651
 jon@gmail.com,0,Jon Doe,234561
 jxndela@gmail.com,0,Janet Xndela,456781
+jojolion@gmail.com,2,johnny,132312

@@ -16,3 +16,8 @@ FoodItem,Barley Drink,Cold Drink,Cold Drink,1.8,1
 FoodItem,Otah,Fish Cake,Fish Cake,1,1
 FoodItem,Laksa,Noodle Soup,Noodle Soup,7.5,1
 FoodItem,Popiah,Spring Roll,Spring Roll,2.5,1
+Dim Sum Palace,623456
+FoodItem,Har Gow,Shrimp Dumpling,Shrimp Dumpling,3.5,1
+FoodItem,Egg Tart,Pastry,Pastry,2,1
+FoodItem,Siu Mai,Pork Dumpling,Pork Dumpling,3,1
+FoodItem,Xiao Long Bao,Soup Dumpling,Soup Dumpling,4,1

@@ -241,11 +241,15 @@ bool CustomerDictionary::customerLogin(Customer* aCustomer)
 	// Step 1: Hash the user input password
 	string hashedPassword = hashPassword(userInputPassword);
 	// Step 2: Check if emailkey is inside the dictionary
-	if (search(userInputEmail)->getEmail()  == userInputEmail)
+	if (search(userInputEmail) == nullptr)
 	{
-		isExistingCustomer = true;
+		cout << "Something went wrong, please try logging in again" << endl;
+		cout << "-------------------------------------------------" << endl;
+		return false;
 	}
+	isExistingCustomer = true;
 	// Step 3 check password
+
 	string comparedHash = retrievePassword(userInputEmail);
 	if (hashedPassword == comparedHash && isExistingCustomer)
 	{
