@@ -45,6 +45,7 @@ public:
 	void readRestaurantFile();
 	// Write to Food Items
 	void writeRestaurantFile();
-	void writeFoodItemsAVL(ofstream& aOutFile, AVLNode* aNode);
+	void writeFoodItemsRecursive(ofstream& aOutFile, AVLNode* aNode);
+	void writeFoodItemsAVL();
 };
 

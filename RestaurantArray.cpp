@@ -12,6 +12,7 @@ RestaurantArray::~RestaurantArray()
 {
 	// Save before destroying.
 	writeRestaurantFile();
+	writeFoodItemsAVL();
 }
 
 // Get method - no. of restaurants
@@ -152,14 +153,11 @@ void RestaurantArray::writeRestaurantFile()
 		// Print out information about the restaurant with restaurant header
 		outFile << restaurants[i].getRestaurantName() << ","
 		<< restaurants[i].getPostalCode() << endl;
-		// Access the menu of the restaurant above
-		FoodItemAVL* menu = restaurants[i].getRestaurantMenuPointer();
-
-		writeFoodItemsAVL(outFile, menu->getRoot());
 	}
+	outFile.close();
 }
 
-void RestaurantArray::writeFoodItemsAVL(ofstream& aOutFile, AVLNode* aNode)
+void RestaurantArray::writeFoodItemsRecursive(ofstream& aOutFile, AVLNode* aNode)
 {
 	// End if the restaurant does not have any food items
 	if (aNode == nullptr)
@@ -172,9 +170,29 @@ void RestaurantArray::writeFoodItemsAVL(ofstream& aOutFile, AVLNode* aNode)
 		<< aNode->foodItem.getPrice() << ","
 		<< aNode->foodItem.getAvailability() << endl;
 
-	writeFoodItemsAVL(aOutFile, aNode->left);
-	writeFoodItemsAVL(aOutFile, aNode->right);
+	writeFoodItemsRecursive(aOutFile, aNode->left);
+	writeFoodItemsRecursive(aOutFile, aNode->right);
 }
+
+void RestaurantArray::writeFoodItemsAVL()
+{
+	ofstream outFile("foodItem.txt");
+
+	// If no file exists, create a new restaurant.txt file
+	if (!outFile.is_open())
+	{
+		ofstream newFile("foodItem.txt");
+		newFile.close();
+		outFile.open("foodItem.txt");
+	}
+	for (int i = 0; i < numberOfRestaurants - 1; i++)
+	{
+		AVLNode* menuPointer = getRestaurant(i)->getRestaurantMenuPointer()->getRoot();
+		outFile << i << ",";
+		writeFoodItemsRecursive(outFile, menuPointer);
+	}
+}
+
 
 
 
