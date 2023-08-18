@@ -135,9 +135,9 @@ int main()
 		cin >> loginChoice;
 		switch (loginChoice)
 		{
-		case 1:
+		case 1: // Create order
 			{
-				// Create order
+				
 				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
 				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
 				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
@@ -211,12 +211,24 @@ int main()
 					break;
 				}
 			}
-		case 2:
-			// Check current in progress order
-			cout << "Case 2" << endl;
-		case 3:
-			// Cancel in progress order
-			cout << "Case 3" << endl;
+		case 2: // Check current in progress order
+			{
+				customerPointer->getCurrentOrder()->printOrderInformation();
+				break;
+			}
+		case 3: // Cancel in progress order
+			// Access the order queue of current order
+			Order * currentOrder = customerPointer->getCurrentOrder();
+			OrderQueue* restaurantQueue = currentOrder->getRestaurantPointer()->getIncomingOrder();
+			// Else not found, dequeue it and enqueue it into the temp queue
+			OrderNode* currentNode = nullptr;
+			// Dequeue when found
+
+			// Restore the original queue without the current order
+
+			// Set current order to none 
+
+			// no. of previous orders = 0 
 		case 4:
 			// Log out
 			cout << "Case 4" << endl;
