@@ -18,8 +18,7 @@
 #include "FoodItem.h"
 #include "FoodItemAVL.h"
 #include "Order.h"
-#include "OrderQueue.h"
-#include "RestaurantArray.h"
+
 
 using namespace std;
 
@@ -60,7 +59,6 @@ int main()
 		cin >> loginChoice;
 		switch (loginChoice)
 		{
-		case 0: restaurantDatabase.printRestaurants();
 		case 1:	// 1. User Login
 			{
 				cout << "         _____   ______ _____ __   _" << endl;

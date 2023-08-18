@@ -4,8 +4,6 @@
 #include "User.h"
 #include "Order.h"
 #include "Restaurant.h"
-#include "RestaurantArray.h"
-
 using namespace std;
 
 // Forward declaration
@@ -67,7 +65,6 @@ public:
     {
         return numberOfpreviousOrders;
     }
-
 
     // Can only order from 1 restaurant
     // Generate a temporary Order Variable

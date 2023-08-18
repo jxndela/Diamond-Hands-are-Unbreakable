@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 
-#include "RestaurantArray.h"
 #include "User.h"
 #include "RestaurantStaff.h"
 
