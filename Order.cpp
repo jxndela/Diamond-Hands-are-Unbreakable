@@ -177,16 +177,16 @@ void Order::printOrderInformation()
 			foodItemIndex = uniqueItemCounter;
 			// Update counter such that it points to the next index for next unique
 			uniqueItemCounter++;
+
 		}
 
-		// Regardless, add item count
 		foodItemCount[foodItemIndex]++;
 	}
 
 	// Iterate through unique items and item counts and print
-	cout << "Food Items in Order of First Occurence : " << endl << endl;
+	cout << "Food Items in Order of First Occurrence : " << endl << endl;
 	for (int k = 0; k < uniqueItemCounter; k++)
 	{
-		cout << foodItemCount[k] << "x " << tempFoodItemName[k] << endl;
+		cout << foodItemCount[k] << "x " << uniqueItemNames[k] << endl;
 	}
 }
