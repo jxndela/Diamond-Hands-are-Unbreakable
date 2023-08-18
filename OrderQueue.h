@@ -56,5 +56,9 @@ public:
 	// Post: Order at front is removed
 	bool dequeue();
 
+	OrderNode* getFrontOrderNode()
+	{
+		return frontNode;
+	}
 };
 

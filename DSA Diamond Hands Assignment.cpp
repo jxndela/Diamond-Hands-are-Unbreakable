@@ -28,8 +28,6 @@ int main()
 	// Initialize the Restaurant database, automatically creates fooditems previously stored
 	// Constructor automatically reads save file
 	RestaurantArray restaurantDatabase;
-
-
 	/////readRestaurantFile(restaurantDatabase, numberOfRestaurants);
 	// Initalize staff database
 	StaffDictionary staffDatabase;
@@ -63,56 +61,65 @@ int main()
 		switch (loginChoice)
 		{
 		case 1:	// 1. User Login
-			cout << "         _____   ______ _____ __   _" << endl;
-			cout << " |      |     | |  ____   |   | |  |" << endl;
-			cout << " |_____ |_____| |_____| __|__ |  |_|" << endl;
-			cout << endl;
-			cout << "Customer Login" << endl;
+			{
+				cout << "         _____   ______ _____ __   _" << endl;
+				cout << " |      |     | |  ____   |   | |  |" << endl;
+				cout << " |_____ |_____| |_____| __|__ |  |_|" << endl;
+				cout << endl;
+				cout << "Customer Login" << endl;
 
-			// If successful, break out of while loop
-			if (userDatabase.customerLogin(customerPointer))
-			{
-				customerLoggedIn = true;
+				// If successful, break out of while loop
+				if (userDatabase.customerLogin(customerPointer))
+				{
+					customerLoggedIn = true;
+					break;
+				}
 				break;
 			}
-			break;
+
 		case 2:	// 2. User Register
-			cout << "  ______ _______  ______ _____ _______ _______ _______  ______" << endl;
-			cout << " |_____/ |______ |  ____   |   |______    |    |______ |_____/" << endl;
-			cout << " |    L_ |______ |_____| __|__ ______|    |    |______ |    L_" << endl;
-			cout << endl;
-			cout << "Customer Registration" << endl;
-			// If successful, continue the while loop. 
-			if (userDatabase.registerCustomerAccount())
 			{
-				continue;
-			}
-			break;
-		case 3:	// 3. Staff Login
-			cout << "         _____   ______ _____ __   _" << endl;
-			cout << " |      |     | |  ____   |   | |  |" << endl;
-			cout << " |_____ |_____| |_____| __|__ |  |_|" << endl;
-			cout << endl;
-			cout << "Restaurant Staff Login" << endl;
-			// If successful break out of while loop
-			if (staffDatabase.stafflogin(staffPointer))
-			{
-				staffLoggedIn = true;
+				cout << "  ______ _______  ______ _____ _______ _______ _______  ______" << endl;
+				cout << " |_____/ |______ |  ____   |   |______    |    |______ |_____/" << endl;
+				cout << " |    L_ |______ |_____| __|__ ______|    |    |______ |    L_" << endl;
+				cout << endl;
+				cout << "Customer Registration" << endl;
+				// If successful, continue the while loop. 
+				if (userDatabase.registerCustomerAccount())
+				{
+					continue;
+				}
 				break;
 			}
-			break;
-		case 4:	// 4. Staff Register
-			cout << "  ______ _______  ______ _____ _______ _______ _______  ______" << endl;
-			cout << " |_____/ |______ |  ____   |   |______    |    |______ |_____/" << endl;
-			cout << " |    L_ |______ |_____| __|__ ______|    |    |______ |    L_" << endl;
-			cout << endl;
-			// Restaurant staff registration
-			cout << "Restaurant Staff Registration" << endl;
-			if (staffDatabase.registerStaffAccount(restaurantDatabase))
+		case 3:	// 3. Staff Login
 			{
-				continue;
+				cout << "         _____   ______ _____ __   _" << endl;
+				cout << " |      |     | |  ____   |   | |  |" << endl;
+				cout << " |_____ |_____| |_____| __|__ |  |_|" << endl;
+				cout << endl;
+				cout << "Restaurant Staff Login" << endl;
+				// If successful break out of while loop
+				if (staffDatabase.stafflogin(staffPointer))
+				{
+					staffLoggedIn = true;
+					break;
+				}
+				break;
 			}
-			break;
+		case 4:	// 4. Staff Register
+			{
+				cout << "  ______ _______  ______ _____ _______ _______ _______  ______" << endl;
+				cout << " |_____/ |______ |  ____   |   |______    |    |______ |_____/" << endl;
+				cout << " |    L_ |______ |_____| __|__ ______|    |    |______ |    L_" << endl;
+				cout << endl;
+				// Restaurant staff registration
+				cout << "Restaurant Staff Registration" << endl;
+				if (staffDatabase.registerStaffAccount(restaurantDatabase))
+				{
+					continue;
+				}
+				break;
+			}
 		default:// Input validation
 			cout << "Invalid input. Please enter a valid option." << endl;
 			cout << "-------------------------------------------" << endl;
@@ -139,7 +146,9 @@ int main()
 		{
 		case 1: // Create order
 			{
-				
+			if (customerPointer->getCurrentOrder() == nullptr)
+				continue;
+
 				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
 				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
 				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
@@ -219,21 +228,58 @@ int main()
 				break;
 			}
 		case 3: // Cancel in progress order
-			// Access the order queue of current order
-			Order * currentOrder = customerPointer->getCurrentOrder();
-			OrderQueue* restaurantQueue = currentOrder->getRestaurantPointer()->getIncomingOrder();
-			// Else not found, dequeue it and enqueue it into the temp queue
-			OrderNode* currentNode = nullptr;
-			// Dequeue when found
-
-			// Restore the original queue without the current order
-
-			// Set current order to none 
-
-			// no. of previous orders = 0 
-		case 4:
-			// Log out
-			cout << "Case 4" << endl;
+			{
+				// Access the order queue of current order
+				Order* currentOrder = customerPointer->getCurrentOrder();
+				OrderQueue* restaurantQueue = currentOrder->getRestaurantPointer()->getIncomingOrder();
+				// Else not found, dequeue it and enqueue it into the temp queue
+				OrderNode* currentNode = restaurantQueue->getFrontOrderNode();
+				OrderQueue* tempQueue = new OrderQueue;
+				while (currentNode != nullptr)
+				{
+					// Case 1 found
+					if (currentNode->orderPointer->getCustomerName() == currentOrder->getCustomerName())
+					{
+						cout << "Found" << endl;
+						restaurantQueue->dequeue(); // cancel the order
+						// push the rest of the orders into the temporary queue
+						currentNode = currentNode->next;
+						while (currentNode != nullptr)
+						{
+							Order* transferPointer = currentNode->orderPointer;
+							tempQueue->enqueue(transferPointer);
+							currentNode = currentNode->next;
+							restaurantQueue->dequeue();
+						}
+						// Push everything back to the original queue, but now without customer order
+						currentNode = tempQueue->getFrontOrderNode();
+						while (currentNode != nullptr)
+						{
+							Order* transferPointer = currentNode->orderPointer;
+							restaurantQueue->enqueue(transferPointer);
+							currentNode = currentNode->next;
+							tempQueue->dequeue();
+						}
+						delete tempQueue;
+						break;
+					}
+					// Case 2 not found
+					Order* tempOrderPointer = currentNode->orderPointer;
+					tempQueue->enqueue(tempOrderPointer);
+					currentNode = currentNode->next;
+					restaurantQueue->dequeue();
+				}
+				// Set current order to none 
+				customerPointer->removeCurrentOrder();
+				// no. of previous orders
+			}
+		case 4: // Log out
+			{
+				cout << "Case 4" << endl;
+				customerPointer = nullptr;
+				customerLoggedIn = false;
+				break;
+			}
 		default: // Else show an error
 			cout << "Invalid input. Please enter a valid option." << endl;
 			cout << "-------------------------------------------" << endl;
@@ -244,6 +290,6 @@ int main()
 	}
 	while(staffLoggedIn)
 	{
-		
+		// hello where is staff function
 	}
 }

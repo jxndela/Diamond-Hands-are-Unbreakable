@@ -48,7 +48,7 @@ string Customer::getEmail()
 
 Order* Customer::getCurrentOrder()
 {
-	return currentOrder;
+	return nullptr;
 }
 
 

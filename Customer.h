@@ -66,7 +66,7 @@ public:
     int getNumberOfPreviousOrders()
     {
         return numberOfpreviousOrders;
-    };
+    }
 
 
     // Can only order from 1 restaurant
@@ -77,11 +77,10 @@ public:
     // Post: Create a temporary order to store foodItems in 
     bool createNewOrder(Order* aNewOrder,RestaurantArray* aRestaurantDatabase);
 
-    FoodItem* selectFoodItem(Order* aOrder)
+    void removeCurrentOrder()
     {
-
+        currentOrder = nullptr;
     }
-
 
     // Confirm the order and send it to Restaurant
     // Pre : Order is not empty
