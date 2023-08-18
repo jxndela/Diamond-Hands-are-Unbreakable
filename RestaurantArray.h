@@ -23,7 +23,7 @@ class RestaurantArray
 {
 private:
 	// Restaurant item array
-	Restaurant allRestaurants[MAX_RESTAURANTS];
+	Restaurant* allRestaurants[MAX_RESTAURANTS];
 	// Number of restaurants
 	int numberOfRestaurants = 0;
 

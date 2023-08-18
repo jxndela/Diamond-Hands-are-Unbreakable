@@ -28,6 +28,8 @@ int main()
 	// Initialize the Restaurant database, automatically creates fooditems previously stored
 	// Constructor automatically reads save file
 	RestaurantArray restaurantDatabase;
+
+
 	/////readRestaurantFile(restaurantDatabase, numberOfRestaurants);
 	// Initalize staff database
 	StaffDictionary staffDatabase;

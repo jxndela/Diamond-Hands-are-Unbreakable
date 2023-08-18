@@ -26,21 +26,21 @@ int RestaurantArray::getNumberOfRestaurants()
 // Get method - Pointer of specific restaurant
 Restaurant* RestaurantArray::getRestaurant(int aIndexPosition)
 {
-	return &allRestaurants[aIndexPosition];
+	return allRestaurants[aIndexPosition];
 }
 
 // Get method - Pointer to restaurants[MAX_RESTAURANTS]
 Restaurant* RestaurantArray::GetAllRestaurant()
 {
 
-	return allRestaurants;
+	return *allRestaurants;
 
 }
 
 // Add new restaurant add a specific index position
 void RestaurantArray::addRestaurant(Restaurant& aRestaurant, int& aIndexPosition)
 {
-	allRestaurants[aIndexPosition] = aRestaurant;
+	allRestaurants[aIndexPosition] = &aRestaurant;
 	numberOfRestaurants++;
 }
 
@@ -49,8 +49,8 @@ void RestaurantArray::printRestaurants()
 {
 	for (int i = 1; i < numberOfRestaurants + 1; i++)
 	{
-		cout << i << ". " << allRestaurants[i - 1].getRestaurantName() << "\t"
-			<< allRestaurants[i - 1].getPostalCode() << endl;
+		cout << i << ". " << allRestaurants[i - 1]->getRestaurantName() << "\t"
+			<< allRestaurants[i - 1]->getPostalCode() << endl;
 	}
 }
 
@@ -132,7 +132,7 @@ void RestaurantArray::readRestaurantFile()
 		price = stod(priceString);
 		// Create the new foodItem
 		FoodItem newFoodItem(foodItemName, category, category, isAvailable, price);
-		Restaurant* restaurantPointer = &allRestaurants[indexPosition];
+		Restaurant* restaurantPointer = allRestaurants[indexPosition];
 		restaurantPointer->getRestaurantMenuPointer()->insertNode(newFoodItem);
 	}
 }
@@ -153,8 +153,8 @@ void RestaurantArray::writeRestaurantFile()
 	for (int i = 0; i < numberOfRestaurants - 1;i++ )
 	{
 		// Print out information about the restaurant with restaurant header
-		outFile << allRestaurants[i].getRestaurantName() << ","
-		<< allRestaurants[i].getPostalCode() << endl;
+		outFile << allRestaurants[i]->getRestaurantName() << ","
+		<< allRestaurants[i]->getPostalCode() << endl;
 	}
 	outFile.close();
 }
