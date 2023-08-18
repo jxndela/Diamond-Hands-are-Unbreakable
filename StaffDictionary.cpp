@@ -276,8 +276,8 @@ string StaffDictionary::getValidEmail()
 			continue;
 		}
 		// Check for email format
-		int atSymbolIndex = staffInputEmail.find('@');
-		int dotSymbolIndex = staffInputEmail.rfind('.');
+		size_t atSymbolIndex = staffInputEmail.find('@');
+		size_t dotSymbolIndex = staffInputEmail.rfind('.');
 		if (atSymbolIndex == -1 || dotSymbolIndex == -1 || atSymbolIndex > dotSymbolIndex)
 		{
 			cout << "Improper email format. Should look like example@gmail.com" << endl;
@@ -367,7 +367,7 @@ bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
 	{
 		cout << "Your choice? :	";
 		cin >> staffInputRestaurant;
-		if (-1 < staffInputRestaurant < aRestaurantDatabase.getNumberOfRestaurants())
+		if (-1 < staffInputRestaurant && staffInputRestaurant < aRestaurantDatabase.getNumberOfRestaurants())
 		{
 			restaurantPointer = aRestaurantDatabase.getRestaurant(staffInputRestaurant);
 			validRestaurantChoice = true;
