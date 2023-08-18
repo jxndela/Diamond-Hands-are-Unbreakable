@@ -4,7 +4,6 @@
 // Constructor
 RestaurantArray::RestaurantArray()
 {
-	
 	// Read the text file.
 	readRestaurantFile();
 }
@@ -49,7 +48,7 @@ void RestaurantArray::printRestaurants()
 {
 	for (int i = 1; i < numberOfRestaurants + 1; i++)
 	{
-		cout << i << ". " << allRestaurants[i - 1]->getRestaurantName() << "\t"
+		std::cout << i << ". " << allRestaurants[i - 1]->getRestaurantName() << "\t"
 			<< allRestaurants[i - 1]->getPostalCode() << endl;
 	}
 }
@@ -123,7 +122,7 @@ void RestaurantArray::readRestaurantFile()
 		getline(ss, indexPositionString, ',');
 		indexPosition = stoi(indexPositionString);
 		getline(ss, foodItemName, ',');
-		getline(ss, category, ',');
+		getline(ss, description, ',');
 		getline(ss, category, ',');
 		getline(ss, isAvailableString, ',');
 		if (isAvailableString == "true") isAvailable = true;
@@ -131,7 +130,7 @@ void RestaurantArray::readRestaurantFile()
 		getline(ss, priceString);
 		price = stod(priceString);
 		// Create the new foodItem
-		FoodItem newFoodItem(foodItemName, category, category, isAvailable, price);
+		FoodItem newFoodItem(foodItemName, description, category, isAvailable, price);
 		Restaurant* restaurantPointer = allRestaurants[indexPosition];
 		restaurantPointer->getRestaurantMenuPointer()->insertNode(newFoodItem);
 	}

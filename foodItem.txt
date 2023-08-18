@@ -1,24 +1,24 @@
-0,Kaya Toast,Breakfast,Toast,true,1.50
-0,Kopi,Traditional,Coffee,true,1.20
-0,Nasi Lemak,Lunch,Rice Dish,true,2.99
-0,Soft Boiled Eggs,Breakfast,Eggs,true,1.10
-0,Teh Tarik,Breakfast,Tea,true,1.30
-1,Bak Kut Teh,Dinner,Pork Soup,true,7.50
-1,Chicken Rice,Lunch,Rice Dish,true,5.99
-1,Chilli Crab,Dinner,Seafood,true,18.99
-1,Satay,Appetizer,Grilled Meat,true,0.75
-1,Tiger Beer,Beverage,Beer,true,6.99
-2,Barley Drink,Beverage,Cold Drink,true,1.80
-2,Char Kway Teow,Dinner,Fried Noodles,true,5.50
-2,Laksa,Lunch,Noodle Soup,true,7.50
-2,Otah,Appetizer,Fish Cake,true,1.00
-2,Popiah,Appetizer,Spring Roll,true,2.50
-3,Egg Tart,Dessert,Pastry,true,2.00
-3,Har Gow,Lunch,Shrimp Dumpling,true,3.50
-3,Siu Mai,Lunch,Pork Dumpling,true,3.00
-3,Xiao Long Bao,Dinner,Soup Dumpling,true,4.00
-4,Biryani,Dinner,Rice Dish,true,7.50
-4,Butter Chicken,Lunch,Curry Dish,true,6.50
-4,Mango Lassi,Beverage,Yogurt Drink,true,2.80
-4,Samosa,Appetizer,Fried Pastry,true,1.50
-4,Tandoori Naan,Bread,Flatbread,true,1.20
+0,Kaya Toast,Toast,Breakfast,true,1.50
+0,Kopi,Coffee,Traditional,true,1.20
+0,Soft Boiled Eggs,Eggs,Breakfast,true,1.10
+0,Teh Tarik,Tea,Breakfast,true,1.30
+0,Nasi Lemak,Rice Dish,Lunch,true,2.99
+1,Bak Kut Teh,Pork Soup,Dinner,true,7.50
+1,Chicken Rice,Rice Dish,Lunch,true,5.99
+1,Satay,Grilled Meat,Appetizer,true,0.75
+1,Chilli Crab,Seafood,Dinner,true,18.99
+1,Tiger Beer,Beer,Beverage,true,6.99
+2,Barley Drink,Cold Drink,Beverage,true,1.80
+2,Char Kway Teow,Fried Noodles,Dinner,true,5.50
+2,Laksa,Noodle Soup,Lunch,true,7.50
+2,Popiah,Spring Roll,Appetizer,true,2.50
+2,Otah,Fish Cake,Appetizer,true,1.00
+3,Egg Tart,Pastry,Dessert,true,2.00
+3,Har Gow,Shrimp Dumpling,Lunch,true,3.50
+3,Siu Mai,Pork Dumpling,Lunch,true,3.00
+3,Xiao Long Bao,Soup Dumpling,Dinner,true,4.00
+4,Biryani,Rice Dish,Dinner,true,7.50
+4,Butter Chicken,Curry Dish,Lunch,true,6.50
+4,Mango Lassi,Yogurt Drink,Beverage,true,2.80
+4,Samosa,Fried Pastry,Appetizer,true,1.50
+4,Tandoori Naan,Flatbread,Bread,true,1.20

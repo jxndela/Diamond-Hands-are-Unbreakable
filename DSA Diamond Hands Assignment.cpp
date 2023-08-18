@@ -60,6 +60,7 @@ int main()
 		cin >> loginChoice;
 		switch (loginChoice)
 		{
+		case 0: restaurantDatabase.printRestaurants();
 		case 1:	// 1. User Login
 			{
 				cout << "         _____   ______ _____ __   _" << endl;
