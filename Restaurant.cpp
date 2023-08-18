@@ -5,6 +5,8 @@ Restaurant::Restaurant()
 {
 	restaurantName = "SUCK MY COCK";
 	postalCode = 123456;
+	incomingOrder = nullptr;
+	restaurantMenu;
 }
 
 // Parameterized Constructor
@@ -44,11 +46,4 @@ void Restaurant::printMenu()
 	cout <<"=============" << endl; 
 }
 
-void Restaurant::printMenuAll()
-{
-	cout << "PRINTING MENU" << endl
-		<< "=============" << endl;
-	restaurantMenu.printAllInOrder();
-	cout << "=============" << endl;
-}
 

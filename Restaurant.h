@@ -11,7 +11,6 @@ using namespace std;
 // Forward declaration
 class Order;
 class OrderQueue;
-class restaurantMenu;
 
 class Restaurant
 {
@@ -25,28 +24,20 @@ private:
 public:
 	// Default Constructor
 	Restaurant();
-
 	// Parameterized Constructor
 	Restaurant(string aRestaurantName, int aPostalCode);
-
 	// Destructor
 	~Restaurant();
-
 	// Returns restaurant name
 	// Pre : ~
 	// Post: Restaurant name
 	string getRestaurantName();
-
 	// Returns postalCode
 	// Pre : ~
 	// Post: postalCode
 	int getPostalCode();
 
-
-
 	void printMenu();
-
-	void printMenuAll();
 
 	OrderQueue* getIncomingOrder()
 	{

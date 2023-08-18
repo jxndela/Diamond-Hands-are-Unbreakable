@@ -64,8 +64,7 @@ void OrderQueue::printQueue()
 	// Iterate throught the queue
 	while (current != nullptr)
 	{
-		string orderIdDisplay = (current->orderPointer)->getOrderId();
-		cout << counter << ". " << orderIdDisplay << endl;
+		cout << "HAAHAH" << endl;
 	}
 }
 

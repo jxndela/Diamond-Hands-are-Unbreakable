@@ -16,13 +16,12 @@ class Restaurant;
 class Order
 {
 private:
-
-    string orderId;                         // Id serves as primary key
     Customer* customerPointer = nullptr;    // Stores pointer to customer rather than copying object
     Restaurant* restaurantPointer = nullptr;// Stores pointer to restaurant rather than copying object
     FoodItem* orderedItems[ORDER_MAX_SIZE]; // Stores array of pointer to food objects that is to be prepared
     string orderStatus = "In Progress";     // Stores information about the state of the order
     string customerName;                    // Stores customer name
+    string restaurantName;
     int customerPostalCode;                 // Stores customer postal code
     int size = 0;                            // Stores size of the order
 
@@ -32,15 +31,10 @@ public:
     Order();
 
     // Parameterized Constructor
-    Order(string aOrderId, Customer* aCustomerPointer, Restaurant* aRestaurant);
+    Order(Customer* aCustomerPointer, Restaurant* aRestaurant);
 
     // Destructor
     ~Order();
-
-    // Get order id
-    // Pre : ~
-    // Post: order id
-    string getOrderId();
 
     // Get ordered items || more for report generation
     // Pre : ~
@@ -62,6 +56,31 @@ public:
     // Post: Get customer postalcode
     int getCustomerPostalCode();
 
+    Restaurant* getRestaurantPointer()
+    {
+        return restaurantPointer;
+    }
+
+    void setPartyInformation(Customer* aCustomer,Restaurant* aRestaurant)
+    {
+        customerPointer = aCustomer;
+        restaurantPointer = aRestaurant;
+    }
+
+    void setCustomerPostalCode(int aPostalCode)
+    {
+        customerPostalCode = aPostalCode;
+    }
+
+    void setCustomerName(string aName)
+    {
+        customerName = aName;
+    }
+
+    void setRestaurantName(string aName)
+    {
+        restaurantName = aName;
+    }
     // Get size of the 
 
 

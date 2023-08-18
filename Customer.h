@@ -11,6 +11,7 @@ using namespace std;
 // Forward declaration
 class Order;
 class Restaurant;
+class RestaurantArray;
 
 // Customer class is derived from user
 // This means that it inherits email + password
@@ -57,13 +58,25 @@ public:
     // Post: Returns email string
     string getEmail();
 
+    // Get current order
+    // Pre : ~
+    // Post: Get pointer to the current order of the customer
+    Order* getCurrentOrder();
+
+    int getNumberOfPreviousOrders()
+    {
+        return numberOfpreviousOrders;
+    };
+
+    bool addItemToOrder();
+
     // Can only order from 1 restaurant
     // Generate a temporary Order Variable
     // Pre : No orders in progress
     //       We also need restaurant that you are ordering from
     //       As well as 
     // Post: Create a temporary order to store foodItems in 
-    bool createNewOrder(Order* aNewOrder, RestaurantArray aRestaurantDatabase);
+    bool createNewOrder(Order* aNewOrder,RestaurantArray* aRestaurantDatabase);
 
     // Confirm the order and send it to Restaurant
     // Pre : Order is not empty

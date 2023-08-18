@@ -23,7 +23,6 @@
 
 using namespace std;
 
-
 int main()
 {
 	// Initialize the Restaurant database, automatically creates fooditems previously stored
@@ -137,26 +136,36 @@ int main()
 		switch (loginChoice)
 		{
 		case 1:
-			// Create order
-			cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
-			cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
-			cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
-			cout << "                                                                            " << endl;
-			// Create temproary new order
-			Order* newOrder = new Order; 
-			// Step 1: Select which restaurant
-			// Step 2: Get all the necessary pointers for order + fooditems + restaurant
-			// Step 3: set all the values to be correct
-			// Step 4: check for points
-			// Step 5: return user to the menu
-
+			{
+				// Create order
+				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
+				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
+				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
+				cout << "                                                                            " << endl;
+				if (customerPointer->getCurrentOrder() != nullptr)
+				{
+					cout << "You can only have 1 order at a time. " << endl;
+					cout << "Check your order status and confirm its arrival before starting new order." << endl;
+				}
+				Order* newOrder = new Order;
+				// If successfully created return true
+				if (customerPointer->createNewOrder(newOrder, &restaurantDatabase))
+					cout << "Order Successfully created" << endl;
+				else
+					break;
+				// Add items into basket
+				newOrder->getRestaurantPointer()->printMenu();
+				bool isDoneSelectingItem = false;
+			}
 		case 2:
 			// Check current in progress order
-			
+			cout << "Case 2" << endl;
 		case 3:
 			// Cancel in progress order
+			cout << "Case 3" << endl;
 		case 4:
 			// Log out
+			cout << "Case 4" << endl;
 		default: // Else show an error
 			cout << "Invalid input. Please enter a valid option." << endl;
 			cout << "-------------------------------------------" << endl;

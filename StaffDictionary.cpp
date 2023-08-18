@@ -398,7 +398,7 @@ bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
 void StaffDictionary::editFoodItems(RestaurantStaff* restaurantStaff)
 {
 	while (true) {
-		restaurantStaff->getRestaurantPointer()->printMenuAll();
+		restaurantStaff->getRestaurantPointer()->printMenu();
 		cout << "Which food item would you like to edit? (q to quit)" << endl;
 
 		string foodItemName;

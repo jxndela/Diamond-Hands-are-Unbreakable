@@ -3,7 +3,6 @@
 // Default constructor
 Order::Order()
 {
-	orderId = "Default order";
 	customerPointer = nullptr;
 	restaurantPointer = nullptr;
 	for (int i = 0; i < ORDER_MAX_SIZE; i++)
@@ -11,14 +10,14 @@ Order::Order()
 		orderedItems[i] = nullptr;
 	}
 	customerName = "";
+	restaurantName = "";
 	customerPostalCode = 650367;
 	int size = 0;
 }
 
 // Parameterized Constructor
-Order::Order(string aOrderId, Customer* aCustomerPointer, Restaurant* aRestaurant)
+Order::Order(Customer* aCustomerPointer, Restaurant* aRestaurant)
 {
-	orderId = aOrderId;
 	customerPointer = aCustomerPointer;
 	restaurantPointer = aRestaurant;
 	// Initalize blank array full of null pointers
@@ -30,7 +29,7 @@ Order::Order(string aOrderId, Customer* aCustomerPointer, Restaurant* aRestauran
 	// dereference pointer
 	customerName = aCustomerPointer->getCustomerName();
 	customerPostalCode = aCustomerPointer->getCustomerPostalCode();
-	
+	restaurantName = aRestaurant->getRestaurantName();
 	// 
 	size = 0;
 }
@@ -38,14 +37,6 @@ Order::Order(string aOrderId, Customer* aCustomerPointer, Restaurant* aRestauran
 // Destructor
 Order::~Order()
 {
-}
-
-// Get order id
-// Pre : ~
-// Post: order id
-string Order::getOrderId()
-{
-	return orderId;
 }
 
 // Get ordered items
@@ -146,8 +137,8 @@ void Order::printOrderInformation()
 {
 	// Step 1: View information
 	cout << "Showing Order and Customer Information..." << endl;
-	cout << "Order ID : " << orderId << endl;
 	cout << "Order Status : " << orderStatus << endl;
+	cout << "Restaurant Name : " << restaurantName << endl;
 	cout << "Customer Name : " << customerName << endl;
 	cout << "Customer Location : " << customerPostalCode << endl;
 

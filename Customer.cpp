@@ -46,24 +46,54 @@ string Customer::getEmail()
 	return email;
 }
 
+Order* Customer::getCurrentOrder()
+{
+	return currentOrder;
+}
+
 
 // Generate a temporary Order Variable
 // Pre : No orders in progress 
 // Post: Create a temporary order to store foodItems in 
 // Can only order from 1 restaurant
-bool Customer::createNewOrder(Order* aNewOrder, RestaurantArray aRestaurantDatabase)
+bool Customer::createNewOrder(Order* aNewOrder, RestaurantArray* aRestaurantDatabase)
 {
-	// Creat the order ID
-	string aOrderId = customerName + to_string(numberOfpreviousOrders + 1);
 	// Get customer pointer, restaurant pointer
 	bool isRestaurantSelected = false;
+	int restaurantNumber = -1;
+	Customer* customerPointer = this;
 	while (!isRestaurantSelected)
 	{
 		// Print all available restaurants
-
+		aRestaurantDatabase->printRestaurants();
+		cout << "Please select the restaurant you wish to order from : " << endl;
+		cin >> restaurantNumber;
+		if (restaurantNumber < aRestaurantDatabase->getNumberOfRestaurants() &&
+			0 < restaurantNumber)
+		{
+			// it is a valid option
+			isRestaurantSelected = true;
+			break;
+		}
+		if (restaurantNumber == 0) return false;
+		else
+		{
+			cout << "Invalid input. Please enter a valid option." << endl;
+			cout << "-------------------------------------------" << endl;
+			cin.clear();                 // Clear the failed state
+			cin.ignore(INT_MAX, '\n');
+			continue;
+		}
 	}
-
-	
+	if (isRestaurantSelected == true)
+	{
+		// Set all relevant information
+		Restaurant* restaurantChosen = aRestaurantDatabase->getRestaurant(restaurantNumber - 1);
+		aNewOrder->setPartyInformation(customerPointer, restaurantChosen);
+		aNewOrder->setCustomerName(this->getCustomerName());
+		aNewOrder->setCustomerPostalCode(getCustomerPostalCode());
+		aNewOrder->setRestaurantName(restaurantChosen->getRestaurantName());
+	}
 	return true;
 }
 

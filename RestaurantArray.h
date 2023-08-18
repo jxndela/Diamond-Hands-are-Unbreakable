@@ -3,16 +3,18 @@
 #include <fstream>	// For reading writing files
 #include <sstream>	
 #include <string>
+#include "Restaurant.h"
 #include "OrderQueue.h"
 #include "RestaurantStaff.h"
 #include "Order.h"
 #include "FoodItemAVL.h"
-#include "Restaurant.h"
 
 using namespace std;
 
-// ForwardDeclaration
+// Forward Declaration
 class Restaurant;
+class FoodItemAVL;
+
 // Constants
 const int STACK_MAX_SIZE = 100;
 const int MAX_RESTAURANTS = 100;
@@ -21,9 +23,10 @@ class RestaurantArray
 {
 private:
 	// Restaurant item array
-	Restaurant restaurants[MAX_RESTAURANTS];
+	Restaurant allRestaurants[MAX_RESTAURANTS];
 	// Number of restaurants
 	int numberOfRestaurants = 0;
+
 
 public:
 
