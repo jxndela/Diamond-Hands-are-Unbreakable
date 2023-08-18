@@ -165,13 +165,14 @@ int main()
 				Restaurant selectedRestaurant = *newOrder->getRestaurantPointer();
 				FoodItemAVL selectedMenu = *selectedRestaurant.getRestaurantMenuPointer();
 				string customerFoodChoice;
+				// Print menu of restaurant
+				selectedRestaurant.printMenu();
+				bool isFirstItemSelected = false;
 				while (true)
 				{
-					// Print menu of restaurant
-					selectedRestaurant.printMenu();
 					// Prompt user for input
 					cout << "Please enter the exact name of dish you wish to order (Type 'exit' to exit) : ";
-					cin >> customerFoodChoice;
+					getline(cin, customerFoodChoice);
 					// Check if input matches any of the name
 					if (customerFoodChoice == "exit")
 						break;
@@ -189,7 +190,8 @@ int main()
 						cout << "Addition of food item unsuccessful. Something went wrong" << endl;
 						cout << "--------------------------------------------------------" << endl;
 					}
-					cout << "Successfully added " << tempFoodItem->getName() << " into the order.";
+					// Print success message
+					cout << "Successfully added " << tempFoodItem->getName() << " into the order." << endl;
 				}
 				// confirm the order and send over to the order queue
 				char customerResponse;
@@ -221,11 +223,21 @@ int main()
 			}
 		case 2: // Check current in progress order
 			{
+				if (customerPointer->getCurrentOrder() == nullptr)
+				{
+					cout << "No Current Orders ongoing" << endl;
+					continue;
+				}
 				customerPointer->getCurrentOrder()->printOrderInformation();
-				break;
+				continue;
 			}
 		case 3: // Cancel in progress order
 			{
+				if (customerPointer->getCurrentOrder() == nullptr)
+				{
+					cout << "No orders to cancel" << endl;
+					continue;
+				}
 				// Access the order queue of current order
 				Order* currentOrder = customerPointer->getCurrentOrder();
 				OrderQueue* restaurantQueue = currentOrder->getRestaurantPointer()->getIncomingOrder();
