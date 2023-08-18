@@ -118,8 +118,7 @@ public:
     //       Returns false if unable to find node
     bool deleteNode(string& foodItemName);
     
-    // Delete whole tree
-    void deleteTree(AVLNode* aNode);
+
 
     AVLNode* getRoot()
     {

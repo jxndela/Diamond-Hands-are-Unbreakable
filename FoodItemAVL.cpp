@@ -12,7 +12,7 @@ FoodItemAVL::FoodItemAVL()
 FoodItemAVL::~FoodItemAVL()
 {
     // Recursively delete everything
-    deleteTree(root);
+    //deleteTree(root);
 }
 
 // Get the height of the node in the AVL Tree
@@ -356,15 +356,15 @@ bool FoodItemAVL::deleteNode(string& itemName)
     return false; // Node with itemName not found or tree is now empty
 }
 
-
-// Function to delete the entire AVL Tree
-void FoodItemAVL::deleteTree(AVLNode* aNode) {
-    
-	// Base case: If the current node is null, return
-    if (aNode != nullptr) {
-		// Recursively delete the left and right subtrees
-        deleteTree(aNode->left);
-        deleteTree(aNode->right);
-        delete aNode; // Delete the current node
-    }
-}
+//
+//// Function to delete the entire AVL Tree
+//void FoodItemAVL::deleteTree(AVLNode* aNode) {
+//    
+//	// Base case: If the current node is null, return
+//    if (aNode != nullptr) {
+//		// Recursively delete the left and right subtrees
+//        deleteTree(aNode->left);
+//        deleteTree(aNode->right);
+//        delete aNode; // Delete the current node
+//    }
+//}
