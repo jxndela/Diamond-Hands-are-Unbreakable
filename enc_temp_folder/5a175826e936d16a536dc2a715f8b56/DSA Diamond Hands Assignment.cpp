@@ -290,7 +290,6 @@ int main()
 	while(staffLoggedIn)
 	{
 		// hello where is staff function
-		// this is hardcoded as fuck. but to show that it works.
 		cout << "gamer girl bath water" << endl;
 		RestaurantStaff* test = staffDatabase.search("on@gmail.com");
 		cout << test->getRestaurantPointer()->getRestaurantName() << endl;

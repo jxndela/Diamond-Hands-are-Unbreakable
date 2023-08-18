@@ -181,6 +181,7 @@ void RestaurantArray::readRestaurantFile()
 		Restaurant* restaurantPointer = &allRestaurants[indexPosition];
 		restaurantPointer->getRestaurantMenuPointer()->insertNode(newFoodItem);
 	}
+
 }
 
 void RestaurantArray::writeRestaurantFile()

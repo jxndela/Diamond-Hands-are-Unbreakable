@@ -61,7 +61,7 @@ public:
 
 
 	// loads data from file
-	void loadFromFile(Restaurant restaurantDatabase[], int numberOfRestaurants);
+	void loadFromFile(RestaurantArray restaurantDatabase[]);
 	/*void loadFromFile();*/
 	// saves data to file
 	void saveToFile();
@@ -95,4 +95,5 @@ public:
 	// D
 	// Function 3 : Edit Food Items
 	void editFoodItems(RestaurantStaff* restaurantStaff);
+
 };

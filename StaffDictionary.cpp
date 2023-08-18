@@ -1,4 +1,6 @@
 #include "StaffDictionary.h"
+#include "Restaurant.h"
+
 #include <fstream>
 
 // Constructor for the Dictionary
@@ -154,7 +156,7 @@ bool StaffDictionary::isEmpty()
 }
 
 // Load from file
-void StaffDictionary::loadFromFile(Restaurant restaurantDatabase[], int numberOfRestaurants)
+void StaffDictionary::loadFromFile(RestaurantArray restaurantDatabase[])
 {
 	ifstream inFile("staff_details.txt");
 	if (!inFile.is_open())
@@ -162,7 +164,6 @@ void StaffDictionary::loadFromFile(Restaurant restaurantDatabase[], int numberOf
 		// Create the file if it doesn't exist
 		ofstream newFile("staff_details.txt");
 		newFile.close();
-		cout << "File has been created" << endl;
 
 		// Try opening the newly created file
 		inFile.open("staff_details.txt");
@@ -173,46 +174,25 @@ void StaffDictionary::loadFromFile(Restaurant restaurantDatabase[], int numberOf
 	}
 
 	string emailKey, passwordHash, restaurantName;
-	while (inFile >> emailKey >> passwordHash >> restaurantName) {
-		RestaurantStaffNode* newNode = new RestaurantStaffNode;
-		newNode->emailKey = emailKey;
-		newNode->staff.setPasswordHash(passwordHash);
+	Restaurant* restaurantPtr = nullptr;
 
-		// Find the corresponding restaurant in the restaurantDatabase
-		Restaurant* associatedRestaurant = nullptr;
-		for (int i = 0; i < numberOfRestaurants; ++i) {
-			if (restaurantDatabase[i].getRestaurantName() == restaurantName) {
-				associatedRestaurant = &restaurantDatabase[i];
+	while (getline(inFile, emailKey, ','))
+	{
+		getline(inFile, passwordHash, ',');
+		getline(inFile, restaurantName);
+
+		// Find the restaurant object in the database
+
+		for (int i = 0; i < restaurantDatabase->getNumberOfRestaurants(); ++i) {
+			if (restaurantDatabase->getRestaurant(i)->getRestaurantName() == restaurantName) {
+				restaurantPtr = restaurantDatabase->getRestaurant(i);
 				break;
 			}
 		}
 
-		if (associatedRestaurant) {
-			newNode->staff.setRestaurantName(restaurantName); // Set the restaurant name
-			newNode->staff.setRestaurantPointer(associatedRestaurant); // Set the restaurant pointer
-		}
-		else {
-			cout << "Associated restaurant not found for staff with email: " << emailKey << endl;
-			delete newNode;
-			continue;
-		}
-
-		newNode->next = nullptr;
-
-		int index = getHashedKey(emailKey);
-
-		if (staffs[index] == nullptr) {
-			staffs[index] = newNode;
-		}
-		else {
-			RestaurantStaffNode* current = staffs[index];
-			while (current->next != nullptr) {
-				current = current->next;
-			}
-			current->next = newNode;
-		}
+		RestaurantStaff staff(emailKey, passwordHash, restaurantPtr);
+		addStaff(emailKey, staff);
 	}
-	inFile.close();
 }
 
 // Save details to the file
@@ -223,11 +203,13 @@ void StaffDictionary::saveToFile()
 	for (int i = 0; i < STAFF_MAX_SIZE; ++i) {
 		RestaurantStaffNode* current = staffs[i];
 		while (current != nullptr) {
-			outFile << current->emailKey << " " << current->staff.getPasswordHash()
-				<< " " << current->staff.getRestaurantName() << endl;
+			outFile << current->emailKey << ","
+				<< current->staff.getPasswordHash() << ","
+				<< current->staff.getRestaurantName() << endl;
 			current = current->next;
 		}
 	}
+
 	outFile.close();
 }
 
@@ -338,6 +320,7 @@ bool StaffDictionary::stafflogin(RestaurantStaff* aStaff)
 	{
 		cout << "Authentication success" << endl;
 		aStaff = search(staffInputEmail);
+
 		return true;
 	}
 	cout << "Something went wrong, please try logging in again" << endl;
@@ -348,7 +331,7 @@ bool StaffDictionary::stafflogin(RestaurantStaff* aStaff)
 // Register New Staff
 // Pre : Should only be when logged out
 bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
-{
+{											
 	// Get necessary inputs
 	string staffInputEmail = getValidEmail();
 	string staffInputPassword;
@@ -358,16 +341,15 @@ bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
 	bool validRestaurantChoice = false;
 	int staffInputRestaurant;
 	Restaurant* restaurantPointer = nullptr;
-	cout << "Please select restaurant that you belong to.";
-	for (int i = 0; i < aRestaurantDatabase.getNumberOfRestaurants() - 1; i++)
-	{
-		cout << i << ". " << aRestaurantDatabase.getRestaurant(i)->getRestaurantName() << endl;
-	}
+	cout << "Please select restaurant that you belong to." << endl;
+
+	aRestaurantDatabase.printRestaurants();
+
 	while (!validRestaurantChoice)
 	{
 		cout << "Your choice? :	";
 		cin >> staffInputRestaurant;
-		if (-1 < staffInputRestaurant && staffInputRestaurant < aRestaurantDatabase.getNumberOfRestaurants())
+		if (-1 < staffInputRestaurant && staffInputRestaurant <= aRestaurantDatabase.getNumberOfRestaurants())
 		{
 			restaurantPointer = aRestaurantDatabase.getRestaurant(staffInputRestaurant);
 			validRestaurantChoice = true;
@@ -380,6 +362,7 @@ bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
 	string hashedPassword = hashPassword(staffInputPassword);
 	// Step 2: Create a temporary user 
 	RestaurantStaff tempStaff = RestaurantStaff(staffInputEmail, hashedPassword, restaurantPointer);
+	tempStaff.setRestaurantName(restaurantPointer->getRestaurantName());
 	// STep 3: Add the user
 	bool addStaffSuccess = addStaff(staffInputEmail, tempStaff);
 	// Step 4 : Check if adding into dictionary is successful, return false if failed.
@@ -417,3 +400,4 @@ void StaffDictionary::editFoodItems(RestaurantStaff* restaurantStaff)
 		}
 	}
 }
+
