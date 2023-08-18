@@ -154,8 +154,62 @@ int main()
 				else
 					break;
 				// Add items into basket
-				newOrder->getRestaurantPointer()->printMenu();
-				bool isDoneSelectingItem = false;
+				Restaurant selectedRestaurant = *newOrder->getRestaurantPointer();
+				FoodItemAVL selectedMenu = *selectedRestaurant.getRestaurantMenuPointer();
+				string customerFoodChoice;
+				while (true)
+				{
+					// Print menu of restaurant
+					selectedRestaurant.printMenu();
+					// Prompt user for input
+					cout << "Please enter the exact name of dish you wish to order (Type 'exit' to exit) : ";
+					cin >> customerFoodChoice;
+					// Check if input matches any of the name
+					if (customerFoodChoice == "exit")
+						break;
+					// Create temporary pointer to store
+					FoodItem* tempFoodItem = selectedMenu.searchNode(customerFoodChoice);
+					if (tempFoodItem == nullptr)
+					{
+						cout << "Please enter a valid food item name which you wish to order." << endl;
+						cout << "------------------------------------------------------------" << endl;
+						continue;
+					}
+					// Else it is successful it finding a food item, add into the order
+					if (newOrder->addFoodItem(tempFoodItem) == false)
+					{
+						cout << "Addition of food item unsuccessful. Something went wrong" << endl;
+						cout << "--------------------------------------------------------" << endl;
+					}
+					cout << "Successfully added " << tempFoodItem->getName() << " into the order.";
+				}
+				// confirm the order and send over to the order queue
+				char customerResponse;
+				while (true)
+				{
+					newOrder->printOrderInformation();
+					cout << "Would you like to confirm your order? (Order will be cancelled otherwise) Y/N : ";
+					cin >> customerResponse;
+					if (tolower(customerResponse) == 'n')
+					{
+						cout << "Order cancelled" << endl;
+						break;
+					}
+					if (tolower(customerResponse) == 'n')
+					{
+						cout << "Order confirmed" << endl;
+						break;
+					}
+					cout << "Invalid response, please try again.";
+					cout << "-----------------------------------";
+				}
+				if (customerResponse == 'n') break;
+				if (customerResponse == 'y')
+				{
+					selectedRestaurant.getIncomingOrder()->enqueue(newOrder);
+					cout << "Order has been sent to the restaurant" << endl;
+					break;
+				}
 			}
 		case 2:
 			// Check current in progress order

@@ -68,7 +68,6 @@ public:
         return numberOfpreviousOrders;
     };
 
-    bool addItemToOrder();
 
     // Can only order from 1 restaurant
     // Generate a temporary Order Variable
@@ -77,6 +76,12 @@ public:
     //       As well as 
     // Post: Create a temporary order to store foodItems in 
     bool createNewOrder(Order* aNewOrder,RestaurantArray* aRestaurantDatabase);
+
+    FoodItem* selectFoodItem(Order* aOrder)
+    {
+
+    }
+
 
     // Confirm the order and send it to Restaurant
     // Pre : Order is not empty
@@ -91,7 +96,7 @@ public:
     // set password hash
 	// pre : ~
 	// post : password hash is set
-	void setPasswordHash(string aPasswordHash);
+	void setPasswordHash(string aPasswordaHash);
     
 };
 
