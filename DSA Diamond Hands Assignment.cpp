@@ -67,11 +67,12 @@ int main()
 				cout << " |_____ |_____| |_____| __|__ |  |_|" << endl;
 				cout << endl;
 				cout << "Customer Login" << endl;
-
+				
 				// If successful, break out of while loop
 				if (userDatabase.customerLogin(customerPointer))
 				{
 					customerLoggedIn = true;
+					cout << "customer pointer " << customerPointer << endl;
 					break;
 				}
 				break;
@@ -146,9 +147,6 @@ int main()
 		{
 		case 1: // Create order
 			{
-			if (customerPointer->getCurrentOrder() == nullptr)
-				continue;
-
 				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
 				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
 				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;

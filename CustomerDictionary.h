@@ -76,7 +76,7 @@ public:
 
 	// Pre : Should only be when logged out
 	// Post: Return a true or false statement 
-	bool customerLogin(Customer* aCustomer);
+	bool customerLogin(Customer*& aCustomer);
 
 	// Register New Customer
 	// Pre : Should only be when logged out
