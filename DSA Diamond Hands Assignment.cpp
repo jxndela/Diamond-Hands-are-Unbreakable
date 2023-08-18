@@ -141,9 +141,18 @@ int main()
 			cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
 			cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
 			cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
-			cout << "                                                                            " << endl;  
+			cout << "                                                                            " << endl;
+			// Create temproary new order
+			Order* newOrder = new Order; 
+			// Step 1: Select which restaurant
+			// Step 2: Get all the necessary pointers for order + fooditems + restaurant
+			// Step 3: set all the values to be correct
+			// Step 4: check for points
+			// Step 5: return user to the menu
+
 		case 2:
 			// Check current in progress order
+			
 		case 3:
 			// Cancel in progress order
 		case 4:

@@ -51,14 +51,20 @@ string Customer::getEmail()
 // Pre : No orders in progress 
 // Post: Create a temporary order to store foodItems in 
 // Can only order from 1 restaurant
-Order* Customer::createNewOrder(Restaurant* aRestaurantPointer)
+bool Customer::createNewOrder(Order* aNewOrder, RestaurantArray aRestaurantDatabase)
 {
-	Customer* customerOrdering = this;
+	// Creat the order ID
 	string aOrderId = customerName + to_string(numberOfpreviousOrders + 1);
-	Order newOrder(aOrderId, customerOrdering, aRestaurantPointer);
-	Order* newOrderPointer = &newOrder;
+	// Get customer pointer, restaurant pointer
+	bool isRestaurantSelected = false;
+	while (!isRestaurantSelected)
+	{
+		// Print all available restaurants
+
+	}
+
 	
-	return newOrderPointer;
+	return true;
 }
 
 // Confirm the order and send it to Restaurant
@@ -66,7 +72,7 @@ Order* Customer::createNewOrder(Restaurant* aRestaurantPointer)
 // Post: Send the order to the Restaurant orders queue
 void Customer::confirmOrder()
 {
-	 
+	numberOfpreviousOrders++;
 }
 
 // Cancel an order 

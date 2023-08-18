@@ -4,6 +4,7 @@
 #include "User.h"
 #include "Order.h"
 #include "Restaurant.h"
+#include "RestaurantArray.h"
 
 using namespace std;
 
@@ -62,7 +63,7 @@ public:
     //       We also need restaurant that you are ordering from
     //       As well as 
     // Post: Create a temporary order to store foodItems in 
-    Order* createNewOrder(Restaurant* aRestaurantPointer);
+    bool createNewOrder(Order* aNewOrder, RestaurantArray aRestaurantDatabase);
 
     // Confirm the order and send it to Restaurant
     // Pre : Order is not empty
