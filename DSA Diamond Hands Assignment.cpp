@@ -302,9 +302,70 @@ int main()
 	while(staffLoggedIn)
 	{
 		// hello where is staff function
+		// 
 		// this is hardcoded as fuck. but to show that it works.
-		cout << "gamer girl bath water" << endl;
-		RestaurantStaff* test = staffDatabase.search("on@gmail.com");
-		cout << test->getRestaurantPointer()->getRestaurantName() << endl;
+		//cout << "gamer girl bath water" << endl;
+		//RestaurantStaff* test = staffDatabase.search("on@gmail.com");
+		//cout << test->getRestaurantPointer()->getRestaurantName() << endl;
+		//break;
+		
+		cout << "====================================================" << endl;
+		cout << "Welcome Back, " << staffPointer->getRestaurantPointer()->getRestaurantName() << endl;
+		cout << "What would you like to do?" << endl;
+		cout << "1. View All Orders" << endl;
+		cout << "2. Edit Orders" << endl;
+		cout << "3. View Menu" << endl;
+		cout << "4. Add Food Item" << endl;
+		cout << "5. Update Food Item" << endl;
+		cout << "0. Logout" << endl;
+		cout << "Your choice ? ";
+		int loginChoice;
+		cin >> loginChoice;
+		switch (loginChoice)
+		{
+		case 1: // View All Orders
+		{
+			staffPointer->viewAllOrders();
+			break;
+		}
+		
+		case 2: // Edit Orders
+		{
+			cout << "i'm gna kms please dont try to edit orders yet" << endl;
+			break;
+		}
+		
+		case 3: // View Menu
+		{
+			staffPointer->getRestaurantPointer()->getRestaurantMenuPointer()->printAllInOrder();
+			break;
+		}
+
+		case 4: // Add Food Item
+		{
+			staffPointer->addFoodItem();
+			break;
+		}
+		
+		case 5: // Update Food Item
+		{
+			//FoodItem* foodItemPointer = nullptr;
+			staffPointer->updateFoodItem();
+			break;
+		}
+		
+		case 0: // Log out
+		{
+			staffPointer = nullptr;
+			staffLoggedIn = false;
+			break;
+		}
+		default: // Else show an error
+			cout << "Invalid input. Please enter a valid option." << endl;
+			cout << "-------------------------------------------" << endl;
+			cin.clear();                 // Clear the failed state
+			cin.ignore(INT_MAX, '\n');
+			continue;
+		}
 	}
 }

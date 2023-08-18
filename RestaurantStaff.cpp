@@ -37,13 +37,38 @@ void RestaurantStaff::updateOrderStatus(Order aOrder)
     aOrder.setOrderStatusComplete();
 }
 
-void RestaurantStaff::updateFoodItem(FoodItem* foodItemPointer)
+void RestaurantStaff::updateFoodItem(/*FoodItem* foodItemPointer*/)
 {
-    while (true) {
+    FoodItem* foodItemPointer = nullptr;
+    while (true)
+    {
+		string choice;
+		
+        restaurantPointer->getRestaurantMenuPointer()->printAllInOrder();
+		cout << "What Food Item would you like to update?" << endl;
+        cin.ignore(); // Clear any remaining newline character
+        getline(cin, choice);
+		try
+        {
+			foodItemPointer = restaurantPointer->getRestaurantMenuPointer()->searchNode(choice);
+            if (foodItemPointer == nullptr)
+				throw "Invalid Choice!";
+			break;
+		}
+        catch (const char* msg)
+        {
+            cout << "Invalid Choice!" << endl;
+            continue;
+        }
+        
+    }
+    
+    while (true)
+    {
         cout << "What would you like to update?" << endl;
         cout << "1. Price" << endl;
         cout << "2. Availability" << endl;
-        cout << "3. Exit" << endl;
+        cout << "0. Exit" << endl;
 
         int choice;
         if (!(cin >> choice)) {
@@ -84,7 +109,7 @@ void RestaurantStaff::updateFoodItem(FoodItem* foodItemPointer)
             break;
         }
 
-        case 3:
+        case 0:
             return;
 
         default:
@@ -94,7 +119,7 @@ void RestaurantStaff::updateFoodItem(FoodItem* foodItemPointer)
     }
 }
 
-void RestaurantStaff::addFoodItem(RestaurantStaff* restaurantStaff)
+void RestaurantStaff::addFoodItem()
 {
     string name, description, category;
     double price;
@@ -129,7 +154,7 @@ void RestaurantStaff::addFoodItem(RestaurantStaff* restaurantStaff)
     FoodItem newFoodItem(name, description, category, isAvailable, price);
 
     // Add the new food item to the restaurant's menu
-    restaurantStaff->getRestaurantPointer()->getRestaurantMenuPointer()->insertNode(newFoodItem);
+    restaurantPointer->getRestaurantMenuPointer()->insertNode(newFoodItem);
 
     cout << "New food item added to the menu!" << endl;
 }
@@ -146,8 +171,6 @@ string RestaurantStaff::getPasswordHash()
 {
     return passwordHash;
 }
-
-
 
 void RestaurantStaff::setPasswordHash(string newPasswordHash)
 {

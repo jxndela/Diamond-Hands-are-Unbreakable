@@ -300,7 +300,7 @@ int StaffDictionary::getValidPostalCode()
 
 // Pre : Should only be when logged out
 // Post: Return a true or false statement 
-bool StaffDictionary::stafflogin(RestaurantStaff* aStaff)
+bool StaffDictionary::stafflogin(RestaurantStaff*& aStaff)
 {
 	bool isExistingStaff = false;
 	string staffInputEmail = getValidEmail();
@@ -319,8 +319,9 @@ bool StaffDictionary::stafflogin(RestaurantStaff* aStaff)
 	if (comparedHash == hashedPassword && isExistingStaff)
 	{
 		cout << "Authentication success" << endl;
+		cout << "address of user in dictionary : " << search(staffInputEmail) << endl;
 		aStaff = search(staffInputEmail);
-
+		cout << "Customer actual pointer : " << aStaff << endl;
 		return true;
 	}
 	cout << "Something went wrong, please try logging in again" << endl;
@@ -378,26 +379,26 @@ bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
 	return true;
 }
 
-void StaffDictionary::editFoodItems(RestaurantStaff* restaurantStaff)
-{
-	while (true) {
-		restaurantStaff->getRestaurantPointer()->printMenu();
-		cout << "Which food item would you like to edit? (q to quit)" << endl;
-
-		string foodItemName;
-		cin >> foodItemName;
-
-		if (foodItemName == "q") {
-			break;
-		}
-
-		FoodItem* foodItemPointer = restaurantStaff->getRestaurantPointer()->getRestaurantMenuPointer()->searchNode(foodItemName);
-		if (foodItemPointer == nullptr) {
-			cout << "Food item does not exist, please try again" << endl;
-		}
-		else {
-			restaurantStaff->updateFoodItem(foodItemPointer);
-		}
-	}
-}
+//void StaffDictionary::editFoodItems(RestaurantStaff* restaurantStaff)
+//{
+//	while (true) {
+//		restaurantStaff->getRestaurantPointer()->printMenu();
+//		cout << "Which food item would you like to edit? (q to quit)" << endl;
+//
+//		string foodItemName;
+//		cin >> foodItemName;
+//
+//		if (foodItemName == "q") {
+//			break;
+//		}
+//
+//		FoodItem* foodItemPointer = restaurantStaff->getRestaurantPointer()->getRestaurantMenuPointer()->searchNode(foodItemName);
+//		if (foodItemPointer == nullptr) {
+//			cout << "Food item does not exist, please try again" << endl;
+//		}
+//		else {
+//			restaurantStaff->updateFoodItem(foodItemPointer);
+//		}
+//	}
+//}
 

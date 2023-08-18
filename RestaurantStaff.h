@@ -47,12 +47,12 @@ public:
 	// Update the food item attributes
 	// Pre : Food Item must exist
 	// Post: Success or failure 
-	void updateFoodItem(FoodItem* foodItem);
+	void updateFoodItem(/*FoodItem* foodItem*/);
 
 	// add a new food item to the menu
 	// pre : ~
 	// post : food item is added to the menu
-	void addFoodItem(RestaurantStaff* restaurantStaff);
+	void addFoodItem();
 
 
 	// Check the email of a user object

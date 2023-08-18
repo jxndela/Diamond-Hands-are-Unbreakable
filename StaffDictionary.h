@@ -85,7 +85,7 @@ public:
 	// Functions 1 : Login
 	// Pre : Should only be when logged out
 	// Post: Return a true or false statement 
-	bool stafflogin(RestaurantStaff* aStaff);
+	bool stafflogin(RestaurantStaff*& aStaff);
 
 	// Function 2 : Register
 	// Register New staff
