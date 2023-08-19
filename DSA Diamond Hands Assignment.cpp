@@ -41,37 +41,38 @@ int main()
 	string staffEmail;
 
 
-
-	// User presented with two choices to log in or register
-	while (customerLoggedIn == false && staffLoggedIn == false)
+	while(true)
 	{
-		// Display message and prompt for choice
-		cout << " _  _  _ _______        _______  _____  _______ _______" << endl;
-		cout << " |  |  | |______ |      |       |     | |  |  | |______" << endl;
-		cout << " |__|__| |______ |_____ |_____  |_____| |  |  | |______" << endl;
-		cout << endl;
-		cout << "1. User Login" << endl;
-		cout << "2. User Register" << endl;
-		cout << "3. Staff Login" << endl;
-		cout << "4. Staff Register" << endl;
-		cout << "Your choice? (1 - 4) : ";
-		
-
-		int loginChoice;
-		cin >> loginChoice;
-		switch (loginChoice)
+		// User presented with two choices to log in or register
+		while (customerLoggedIn == false && staffLoggedIn == false)
 		{
-		case 1:	// 1. User Login
+			// Display message and prompt for choice
+			cout << " _  _  _ _______        _______  _____  _______ _______" << endl;
+			cout << " |  |  | |______ |      |       |     | |  |  | |______" << endl;
+			cout << " |__|__| |______ |_____ |_____  |_____| |  |  | |______" << endl;
+			cout << endl;
+			cout << "1. User Login" << endl;
+			cout << "2. User Register" << endl;
+			cout << "3. Staff Login" << endl;
+			cout << "4. Staff Register" << endl;
+			cout << "Your choice? (1 - 4) : ";
+
+
+			int loginChoice;
+			cin >> loginChoice;
+			switch (loginChoice)
+			{
+			case 1:	// 1. User Login
 			{
 				cout << "         _____   ______ _____ __   _" << endl;
 				cout << " |      |     | |  ____   |   | |  |" << endl;
 				cout << " |_____ |_____| |_____| __|__ |  |_|" << endl;
 				cout << endl;
 				cout << "Customer Login" << endl;
-				
+
 				// If successful, break out of while loop
 				if (userDatabase.customerLogin(customerPointer))
-				{	
+				{
 					customerLoggedIn = true;
 					cout << "customer pointer " << customerPointer << endl;
 					break;
@@ -79,7 +80,7 @@ int main()
 				break;
 			}
 
-		case 2:	// 2. User Register
+			case 2:	// 2. User Register
 			{
 				cout << "  ______ _______  ______ _____ _______ _______ _______  ______" << endl;
 				cout << " |_____/ |______ |  ____   |   |______    |    |______ |_____/" << endl;
@@ -93,7 +94,7 @@ int main()
 				}
 				break;
 			}
-		case 3:	// 3. Staff Login
+			case 3:	// 3. Staff Login
 			{
 				cout << "         _____   ______ _____ __   _" << endl;
 				cout << " |      |     | |  ____   |   | |  |" << endl;
@@ -108,7 +109,7 @@ int main()
 				}
 				break;
 			}
-		case 4:	// 4. Staff Register
+			case 4:	// 4. Staff Register
 			{
 				cout << "  ______ _______  ______ _____ _______ _______ _______  ______" << endl;
 				cout << " |_____/ |______ |  ____   |   |______    |    |______ |_____/" << endl;
@@ -122,31 +123,31 @@ int main()
 				}
 				break;
 			}
-		default:// Input validation
-			cout << "Invalid input. Please enter a valid option." << endl;
-			cout << "-------------------------------------------" << endl;
-			cin.clear();                 // Clear the failed state
-			cin.ignore(INT_MAX, '\n');  
-			continue;
+			default:// Input validation
+				cout << "Invalid input. Please enter a valid option." << endl;
+				cout << "-------------------------------------------" << endl;
+				cin.clear();                 // Clear the failed state
+				cin.ignore(INT_MAX, '\n');
+				continue;
+			}
 		}
-	}
-	// If it is the customer who is logged in, show options only available to customer
-	while(customerLoggedIn)
-	{
-		//Present interface for the user
-		cout << "====================================================" << endl;
-		cout << "Welcome Back" << endl;
-		cout << "What would you like to do?" << endl;
-		cout << "1. Create new order" << endl;
-		cout << "2. Check order" << endl;
-		cout << "3. Cancel Order" << endl;
-		cout << "4. Log out" << endl;
-		cout << "Your choice ? ";
-		int loginChoice;
-		cin >> loginChoice;
-		switch (loginChoice)
+		// If it is the customer who is logged in, show options only available to customer
+		while (customerLoggedIn)
 		{
-		case 1: // Create order
+			//Present interface for the user
+			cout << "====================================================" << endl;
+			cout << "Welcome Back" << endl;
+			cout << "What would you like to do?" << endl;
+			cout << "1. Create new order" << endl;
+			cout << "2. Check order" << endl;
+			cout << "3. Cancel Order" << endl;
+			cout << "4. Log out" << endl;
+			cout << "Your choice ? ";
+			int loginChoice;
+			cin >> loginChoice;
+			switch (loginChoice)
+			{
+			case 1: // Create order
 			{
 				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
 				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
@@ -223,7 +224,7 @@ int main()
 					break;
 				}
 			}
-		case 2: // Check current in progress order
+			case 2: // Check current in progress order
 			{
 				if (customerPointer->getCurrentOrder() == nullptr)
 				{
@@ -233,7 +234,7 @@ int main()
 				customerPointer->getCurrentOrder()->printOrderInformation();
 				continue;
 			}
-		case 3: // Cancel in progress order
+			case 3: // Cancel in progress order
 			{
 				if (customerPointer->getCurrentOrder() == nullptr)
 				{
@@ -284,88 +285,93 @@ int main()
 				customerPointer->removeCurrentOrder();
 				// no. of previous orders
 			}
-		case 4: // Log out
+			case 4: // Log out
 			{
 				cout << "Case 4" << endl;
 				customerPointer = nullptr;
 				customerLoggedIn = false;
 				break;
 			}
-		default: // Else show an error
-			cout << "Invalid input. Please enter a valid option." << endl;
-			cout << "-------------------------------------------" << endl;
-			cin.clear();                 // Clear the failed state
-			cin.ignore(INT_MAX, '\n');
-			continue;
+			default: // Else show an error
+				cout << "Invalid input. Please enter a valid option." << endl;
+				cout << "-------------------------------------------" << endl;
+				cin.clear();                 // Clear the failed state
+				cin.ignore(INT_MAX, '\n');
+				continue;
+			}
 		}
-	}
-	while(staffLoggedIn)
-	{
-		// hello where is staff function
-		// 
-		// this is hardcoded as fuck. but to show that it works.
-		//cout << "gamer girl bath water" << endl;
-		//RestaurantStaff* test = staffDatabase.search("on@gmail.com");
-		//cout << test->getRestaurantPointer()->getRestaurantName() << endl;
-		//break;
-		
-		cout << "====================================================" << endl;
-		cout << "Welcome Back, " << staffPointer->getRestaurantPointer()->getRestaurantName() << endl;
-		cout << "What would you like to do?" << endl;
-		cout << "1. View All Orders" << endl;
-		cout << "2. Edit Orders" << endl;
-		cout << "3. View Menu" << endl;
-		cout << "4. Add Food Item" << endl;
-		cout << "5. Update Food Item" << endl;
-		cout << "0. Logout" << endl;
-		cout << "Your choice ? ";
-		int loginChoice;
-		cin >> loginChoice;
-		switch (loginChoice)
+		// If it is the staff who is logged in, show options only available to staff
+		while (staffLoggedIn)
 		{
-		case 1: // View All Orders
-		{
-			staffPointer->viewAllOrders();
-			break;
-		}
-		
-		case 2: // Edit Orders
-		{
-			cout << "i'm gna kms please dont try to edit orders yet" << endl;
-			break;
-		}
-		
-		case 3: // View Menu
-		{
-			staffPointer->getRestaurantPointer()->getRestaurantMenuPointer()->printAllInOrder();
-			break;
-		}
+			// hello where is staff function
+			// 
+			// this is hardcoded as fuck. but to show that it works.
+			//cout << "gamer girl bath water" << endl;
+			//RestaurantStaff* test = staffDatabase.search("on@gmail.com");
+			//cout << test->getRestaurantPointer()->getRestaurantName() << endl;
+			//break;
 
-		case 4: // Add Food Item
-		{
-			staffPointer->addFoodItem();
-			break;
-		}
-		
-		case 5: // Update Food Item
-		{
-			//FoodItem* foodItemPointer = nullptr;
-			staffPointer->updateFoodItem();
-			break;
-		}
-		
-		case 0: // Log out
-		{
-			staffPointer = nullptr;
-			staffLoggedIn = false;
-			break;
-		}
-		default: // Else show an error
-			cout << "Invalid input. Please enter a valid option." << endl;
-			cout << "-------------------------------------------" << endl;
-			cin.clear();                 // Clear the failed state
-			cin.ignore(INT_MAX, '\n');
-			continue;
+			cout << "====================================================" << endl;
+			cout << "Welcome Back, " << staffPointer->getRestaurantPointer()->getRestaurantName() << endl;
+			cout << "What would you like to do?" << endl;
+			cout << "1. View All Orders" << endl;
+			cout << "2. Edit Orders" << endl;
+			cout << "3. View Menu" << endl;
+			cout << "4. Add Food Item" << endl;
+			cout << "5. Update Food Item" << endl;
+			cout << "0. Logout" << endl;
+			cout << "Your choice ? ";
+			int loginChoice;
+			cin >> loginChoice;
+			switch (loginChoice)
+			{
+			case 1: // View All Orders
+			{
+				staffPointer->viewAllOrders();
+				break;
+			}
+
+			case 2: // Edit Orders
+			{
+				cout << "i'm gna kms please dont try to edit orders yet" << endl;
+				break;
+			}
+
+			case 3: // View Menu
+			{
+				staffPointer->getRestaurantPointer()->getRestaurantMenuPointer()->printAllInOrder();
+				break;
+			}
+
+			case 4: // Add Food Item
+			{
+				staffPointer->addFoodItem();
+				break;
+			}
+
+			case 5: // Update Food Item
+			{
+				//FoodItem* foodItemPointer = nullptr;
+				staffPointer->updateFoodItem();
+				break;
+			}
+
+			case 0: // Log out
+			{
+				staffPointer = nullptr;
+				staffLoggedIn = false;
+				break;
+			}
+			default: // Else show an error
+				cout << "Invalid input. Please enter a valid option." << endl;
+				cout << "-------------------------------------------" << endl;
+				cin.clear();                 // Clear the failed state
+				cin.ignore(INT_MAX, '\n');
+				continue;
+			}
 		}
 	}
+
+	
+
 }
