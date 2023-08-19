@@ -3,6 +3,8 @@
 
 #include <fstream>
 
+using namespace std;
+
 // Constructor for the Dictionary
 StaffDictionary::StaffDictionary()
 {
@@ -21,7 +23,6 @@ StaffDictionary::~StaffDictionary()
 {
 	// Save user details to file before exiting
 	saveToFile();
-
 	// Iterate through each bucket
 	for (int i = 0; i < STAFF_MAX_SIZE; ++i) {
 		// Delete linked list nodes in the current bucket
@@ -55,7 +56,7 @@ int StaffDictionary::getHashedKey(string aEmailKey)
 bool StaffDictionary::addStaff(string aEmailKey, RestaurantStaff& aStaff)
 {
 	// Hash the email key to obtain index of the user
-	int index = StaffDictionary::getHashedKey(aEmailKey);
+	int index = getHashedKey(aEmailKey);
 
 	// If space contains a nullptr, start new linked list 
 	if (staffs[index] == nullptr)
@@ -70,14 +71,9 @@ bool StaffDictionary::addStaff(string aEmailKey, RestaurantStaff& aStaff)
 	else
 	{
 		RestaurantStaffNode* current = staffs[index];
-
 		// Duplicate key on first in chain (User is already registered)
 		if (current->emailKey == aEmailKey)
-		{
 			return false;
-		}
-
-
 		// Iterate through the chain as long next is not nullptr
 		while (current->next != nullptr)
 		{
@@ -89,9 +85,7 @@ bool StaffDictionary::addStaff(string aEmailKey, RestaurantStaff& aStaff)
 				// If matched, it means that user exists at some point of the chain
 				return false;
 			}
-
 		}
-
 		// Exited while loop, no users matched
 		RestaurantStaffNode* newUserNode = new RestaurantStaffNode;
 		newUserNode->emailKey = aEmailKey;
@@ -99,10 +93,8 @@ bool StaffDictionary::addStaff(string aEmailKey, RestaurantStaff& aStaff)
 		newUserNode->next = nullptr;
 		current->next = newUserNode;
 	}
-
 	// Increment size
 	size++;
-
 	// Return true as user has been added.
 	return true;
 }
