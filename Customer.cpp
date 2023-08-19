@@ -68,7 +68,7 @@ bool Customer::createNewOrder(Order* aNewOrder, RestaurantArray* aRestaurantData
 		aRestaurantDatabase->printRestaurants();
 		cout << "Please select the restaurant you wish to order from : ";
 		cin >> restaurantNumber;
-		if (restaurantNumber < aRestaurantDatabase->getNumberOfRestaurants() &&
+		if (restaurantNumber <= aRestaurantDatabase->getNumberOfRestaurants() &&
 			0 < restaurantNumber)
 		{
 			// it is a valid option

@@ -208,7 +208,7 @@ int main()
 						cout << "Order cancelled" << endl;
 						break;
 					}
-					if (tolower(customerResponse) == 'n')
+					if (tolower(customerResponse) == 'y')
 					{
 						cout << "Order confirmed" << endl;
 						break;
