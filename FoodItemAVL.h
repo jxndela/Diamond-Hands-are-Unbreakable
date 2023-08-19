@@ -83,6 +83,23 @@ private:
     // recurisive print function (all items)
 	void printAllInOrderRecursive(AVLNode* aNode);
 
+    // recursive add fooditem into array (all items)
+    void addFoodIntoArrayRecursive(AVLNode* aNode, FoodItem* aFoodItemArray[], int& aIndexPosition)
+    {
+        // base case
+        if (aNode == nullptr)
+            return;
+        // Recusively add the left child
+        addFoodIntoArrayRecursive(aNode->left, aFoodItemArray, aIndexPosition);
+
+        // Add the foodItem pointer in the current node into the array based on index position
+        aFoodItemArray[aIndexPosition] = &aNode->foodItem;
+        aIndexPosition++;
+
+        // Recusively add the right child
+        addFoodIntoArrayRecursive(aNode->right, aFoodItemArray, aIndexPosition);
+    }
+
 
 public:
     // Constructor
@@ -117,12 +134,15 @@ public:
     // Post: Returns true if the Node has been successfully delted & tree auto balances
     //       Returns false if unable to find node
     bool deleteNode(string& foodItemName);
-    
-
 
     AVLNode* getRoot()
     {
         return root;
+    }
+
+    void addFoodIntoArray(FoodItem* aFoodItemArray[], int& aIndexPosition)
+    {
+        addFoodIntoArrayRecursive(root, aFoodItemArray, aIndexPosition);
     }
 };
 

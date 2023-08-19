@@ -21,6 +21,94 @@
 
 
 using namespace std;
+const int MAX_FOOD_ITEMS = 1000;
+
+// Make a function that adds all the restaurant food item pointer the food item array
+int addAllFoodItems(FoodItem* aFoodItemArray[], RestaurantArray& aRestaurantDatabase)
+{
+	int currentIndex = 0;
+	// Iterate through all the restaurants
+	for (int i = 0; i < aRestaurantDatabase.getNumberOfRestaurants(); i++)
+	{
+		Restaurant* restaurantPointer = aRestaurantDatabase.getRestaurant(i);
+		FoodItemAVL* menuPointer = restaurantPointer->getRestaurantMenuPointer();
+		//Call recursive function
+		menuPointer->addFoodIntoArray(aFoodItemArray, currentIndex);
+	}
+	return currentIndex;
+}
+
+// Merges two subarrays of array[].
+// First subarray is arr[begin..mid]
+// Second subarray is arr[mid+1..end]
+void merge(FoodItem* array[], int const left, int const mid, int const right)
+{
+	int const subArrayOne = mid - left + 1;
+	int const subArrayTwo = right - mid;
+
+	// Create temp fooditem pointer array and asign pointers called left array and right array
+	FoodItem** leftArray = new FoodItem*[subArrayOne];
+	FoodItem** rightArray = new FoodItem*[subArrayTwo];
+
+	// Copy data to temp arrays leftArray[] and rightArray[]
+	for (auto i = 0; i < subArrayOne; i++)
+		leftArray[i] = array[left + i];
+	for (auto j = 0; j < subArrayTwo; j++)
+		rightArray[j] = array[mid + 1 + j];
+
+	auto indexOfSubArrayOne = 0, indexOfSubArrayTwo = 0;
+	int indexOfMergedArray = left;
+
+	// Merge the temp arrays back into array[left..right]
+	while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) 
+	{
+		// If item in left array is less than item in right array
+		if (leftArray[indexOfSubArrayOne]->getName() <= rightArray[indexOfSubArrayTwo]->getName()) 
+		{
+			array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+			indexOfSubArrayOne++;
+		}
+		else // Else the item in left array is more than right array
+		{
+			array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+			indexOfSubArrayTwo++;
+		}
+		indexOfMergedArray++;
+	}
+
+	// Copy the remaining elements of
+	// left[], if there are any
+	while (indexOfSubArrayOne < subArrayOne) 
+	{
+		array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+		indexOfSubArrayOne++;
+		indexOfMergedArray++;
+	}
+	// Copy the remaining elements of
+	// right[], if there are any
+	while (indexOfSubArrayTwo < subArrayTwo) 
+	{
+		array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+		indexOfSubArrayTwo++;
+		indexOfMergedArray++;
+	}
+	delete[] leftArray;
+	delete[] rightArray;
+}
+
+void mergeSort(FoodItem* array[], int const begin, int const end)
+{
+	// base case.
+	if (begin >= end)
+		return;
+
+	// Idea is to break down the pointer list into singular comparisons
+	// Then reconstruct after comparisons are finsihed
+	int mid = begin + (end - begin) / 2;
+	mergeSort(array, begin, mid); // For sub array 1
+	mergeSort(array, mid + 1, end); // For sub array 2
+	merge(array, begin, mid, end);
+}
 
 int main()
 {
@@ -39,6 +127,17 @@ int main()
 	bool customerLoggedIn = false;
 	bool staffLoggedIn = false;
 	string staffEmail;
+
+	// Store pre-sorted items
+	FoodItem* foodItemsUnsorted[MAX_FOOD_ITEMS];
+	int numberOfAllFood = addAllFoodItems(foodItemsUnsorted, restaurantDatabase);
+	mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1);
+	FoodItem* foodItemsAlphabetically[MAX_FOOD_ITEMS];
+
+	for (int i = 0; i < numberOfAllFood; i++)
+	{
+		cout << foodItemsUnsorted[i]->getName() << endl;
+	}
 
 
 	while(true)
