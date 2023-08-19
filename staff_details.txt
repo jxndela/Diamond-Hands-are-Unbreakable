@@ -1,3 +1,5 @@
 ong@gmail.com,4,India
+dsjafkl@gmail.com,0,Kaya Toast Cafe
 on@gmail.com,1,Kaya Toast Cafe
 jxndela@gmail.com,0,Dim Sum Palace
+test@gmail.com,3,Kaya Toast Cafe

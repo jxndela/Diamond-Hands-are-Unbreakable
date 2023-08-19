@@ -62,11 +62,20 @@ void OrderQueue::printQueue()
 	int counter = 1;
 
 	// Iterate throught the queue
-	while (current != nullptr)
+	/*while (current != nullptr)
 	{
 		current->orderPointer->printOrderInformation();
 		current = current->next;
+	}*/
+
+	for (int i = 1; current != nullptr; i++)
+	{
+		cout << "Order Number: " << i << endl;
+		current->orderPointer->printOrderInformation();
+		current = current->next;
+		counter++;
 	}
+	
 }
 
 // Enqueue (add) item to back of q

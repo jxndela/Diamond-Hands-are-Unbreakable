@@ -42,9 +42,7 @@ public:
 	// Update the order status 
 	// Pre : Order must exist
 	// Post: Success or failure 
-	void updateOrderStatus(Order aOrder);
-
-	void editOrder();
+	void updateOrderStatus(Order& aOrder);
 
 	// Update the food item attributes
 	// Pre : Food Item must exist
