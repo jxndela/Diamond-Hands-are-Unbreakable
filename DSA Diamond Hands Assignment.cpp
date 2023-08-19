@@ -210,19 +210,14 @@ int main()
 					}
 					if (tolower(customerResponse) == 'y')
 					{
-						cout << "Order confirmed" << endl;
+						selectedRestaurant.getIncomingOrder()->enqueue(newOrder);
+						cout << "Order is confirmed and has been sent to the restaurant" << endl;
+						customerPointer->setCurrentOrder(newOrder);
+						customerPointer->confirmOrder();
 						break;
 					}
 					cout << "Invalid response, please try again.";
 					cout << "-----------------------------------";
-				}
-				if (customerResponse == 'n') break;
-				if (customerResponse == 'y')
-				{
-					selectedRestaurant.getIncomingOrder()->enqueue(newOrder);
-					cout << "Order has been sent to the restaurant" << endl;
-					selectedRestaurant.getIncomingOrder()->printQueue();
-					break;
 				}
 			}
 			case 2: // Check current in progress order
@@ -236,56 +231,57 @@ int main()
 				continue;
 			}
 			case 3: // Cancel in progress order
-			{
-				if (customerPointer->getCurrentOrder() == nullptr)
 				{
-					cout << "No orders to cancel" << endl;
-					continue;
-				}
-				// Access the order queue of current order
-				Order* currentOrder = customerPointer->getCurrentOrder();
-				OrderQueue* restaurantQueue = currentOrder->getRestaurantPointer()->getIncomingOrder();
-				// Else not found, dequeue it and enqueue it into the temp queue
-				OrderNode* currentNode = restaurantQueue->getFrontOrderNode();
-				OrderQueue* tempQueue = new OrderQueue;
-				while (currentNode != nullptr)
-				{
-					// Case 1 found
-					if (currentNode->orderPointer->getCustomerName() == currentOrder->getCustomerName())
+					// If no Orders we just return no orders to cancel
+					if (customerPointer->getCurrentOrder() == nullptr)
 					{
-						cout << "Found" << endl;
-						restaurantQueue->dequeue(); // cancel the order
-						// push the rest of the orders into the temporary queue
-						currentNode = currentNode->next;
-						while (currentNode != nullptr)
-						{
-							Order* transferPointer = currentNode->orderPointer;
-							tempQueue->enqueue(transferPointer);
-							currentNode = currentNode->next;
-							restaurantQueue->dequeue();
-						}
-						// Push everything back to the original queue, but now without customer order
-						currentNode = tempQueue->getFrontOrderNode();
-						while (currentNode != nullptr)
-						{
-							Order* transferPointer = currentNode->orderPointer;
-							restaurantQueue->enqueue(transferPointer);
-							currentNode = currentNode->next;
-							tempQueue->dequeue();
-						}
-						delete tempQueue;
-						break;
+						cout << "No orders to cancel" << endl;
+						continue;
 					}
-					// Case 2 not found
-					Order* tempOrderPointer = currentNode->orderPointer;
-					tempQueue->enqueue(tempOrderPointer);
-					currentNode = currentNode->next;
-					restaurantQueue->dequeue();
+					// Access the order queue of current order
+					Order* currentOrder = customerPointer->getCurrentOrder();
+					OrderQueue* restaurantQueue = currentOrder->getRestaurantPointer()->getIncomingOrder();
+					// Else not found, dequeue it and enqueue it into the temp queue
+					OrderNode* currentNode = restaurantQueue->getFrontOrderNode();
+					OrderQueue* tempQueue = new OrderQueue;
+					while (currentNode != nullptr)
+					{
+						// Case 1 found
+						if (currentNode->orderPointer->getCustomerName() == currentOrder->getCustomerName())
+						{
+							cout << "Order found and dequeued" << endl;
+							restaurantQueue->dequeue(); // cancel the order
+							// Check if any items left in the queue
+							if (restaurantQueue->getFrontOrderNode() != nullptr)
+							{
+								// Make current node the front node of the restaurant queue
+								currentNode = restaurantQueue->getFrontOrderNode();
+								// Push all the leftover nodes into the tempQueue
+								while (currentNode != nullptr)
+								{
+									tempQueue->enqueue(currentNode->orderPointer);
+									currentNode = currentNode->next;
+									restaurantQueue->dequeue();
+								}
+							}
+							// Push everything back to the original queue, but now without customer order
+							currentNode = tempQueue->getFrontOrderNode();
+							while (currentNode != nullptr)
+							{
+								restaurantQueue->enqueue(currentNode->orderPointer);
+								currentNode = currentNode->next;
+								tempQueue->dequeue();
+							}
+							break;
+						}
+						// Case 2 not found, push the current order pointer into the temp queue
+						tempQueue->enqueue(currentNode->orderPointer);
+						currentNode = currentNode->next;
+						restaurantQueue->dequeue();
+					}
+					// Set current order to none 
+					customerPointer->removeCurrentOrder();
 				}
-				// Set current order to none 
-				customerPointer->removeCurrentOrder();
-				// no. of previous orders
-			}
 			case 4: // Log out
 			{
 				cout << "Case 4" << endl;

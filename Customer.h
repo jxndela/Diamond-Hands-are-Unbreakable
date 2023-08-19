@@ -93,6 +93,11 @@ public:
 	// pre : ~
 	// post : password hash is set
 	void setPasswordHash(string aPasswordaHash);
+
+    void setCurrentOrder(Order* aNewOrder)
+    {
+        currentOrder = aNewOrder;
+    }
     
 };
 
