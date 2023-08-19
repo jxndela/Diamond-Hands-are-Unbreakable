@@ -96,13 +96,14 @@ bool Order::addFoodItem(FoodItem* aFoodItemPointer)
 	if (isFull())
 		return false;
 
-	// Else, there should be space proceed to add to list
+	// Else, there should be space proceed to add to list, find next empty space
 	for (int i = 0; i < ORDER_MAX_SIZE; i++)
 	{
 		// If index in orderedItems is empty, add it
 		if (orderedItems[i] == nullptr)
 		{
 			orderedItems[i] = aFoodItemPointer;
+			return true;
 		}
 		// Else, it is full do not add - go next
 	}
@@ -184,7 +185,7 @@ void Order::printOrderInformation()
 	}
 
 	// Iterate through unique items and item counts and print
-	cout << "Food Items in Order of First Occurrence : " << endl << endl;
+	cout << "Food Items in Order of First Occurrence : " << endl;
 	for (int k = 0; k < uniqueItemCounter; k++)
 	{
 		cout << foodItemCount[k] << "x " << uniqueItemNames[k] << endl;
