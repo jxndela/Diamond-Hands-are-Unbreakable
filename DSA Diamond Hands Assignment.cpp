@@ -390,6 +390,31 @@ int main()
 					cout << "No Current Orders ongoing" << endl;
 					continue;
 				}
+					if (customerPointer->getCurrentOrder()->getOrderStatus() == "Completed")
+					{
+						bool isOrderConfirmed = false;
+
+						while (!isOrderConfirmed)
+						{
+							char confirmOrderReceived;
+							cout << "Confirm that order is received ? (Y/N) : ";
+							cin >> confirmOrderReceived;
+							if (tolower(confirmOrderReceived) == 'n')
+							{
+								cout << "Order has not been delivered yet, returning to menu." << endl;
+								break;
+							}
+							if (tolower(confirmOrderReceived) == 'y')
+							{
+								cout << "Order has been received." << endl;
+								// INSERT POINTS???????????????????????
+								customerPointer->getCurrentOrder()->getRestaurantPointer()->getIncomingOrder()->dequeue();
+								customerPointer->setCurrentOrder(nullptr);
+								break;
+							}
+						}
+						continue;
+					}
 				customerPointer->getCurrentOrder()->printOrderInformation();
 				continue;
 			}

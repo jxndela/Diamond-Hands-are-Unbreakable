@@ -103,6 +103,7 @@ bool Order::addFoodItem(FoodItem* aFoodItemPointer)
 		if (orderedItems[i] == nullptr)
 		{
 			orderedItems[i] = aFoodItemPointer;
+			size++;
 			return true;
 		}
 		// Else, it is full do not add - go next
