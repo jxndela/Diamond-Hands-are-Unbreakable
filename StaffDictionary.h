@@ -61,7 +61,7 @@ public:
 
 
 	// loads data from file
-	void loadFromFile(RestaurantArray restaurantDatabase[]);
+	void loadFromFile(RestaurantArray* restaurantDatabase);
 	/*void loadFromFile();*/
 	// saves data to file
 	void saveToFile();

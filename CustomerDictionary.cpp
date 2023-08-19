@@ -178,8 +178,6 @@ void CustomerDictionary::loadFromFile()
 	int postalCode;
 	string aString;
 	string line;
-	string indexPositionString;
-	int indexPosition = 0;
 
 	while (getline(inFile, line))
 	{
@@ -202,7 +200,7 @@ void CustomerDictionary::saveToFile()
 {
 	ofstream outFile("user_details.txt");
 
-	for (int i = 0; i < CUSTOMER_MAX_SIZE; ++i) {
+	for (int i = 0; i < CUSTOMER_MAX_SIZE; i++) {
 		CustomerNode* current = customers[i];
 		while (current != nullptr) {
 			outFile << current->emailKey << ","

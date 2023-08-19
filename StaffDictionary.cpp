@@ -148,7 +148,7 @@ bool StaffDictionary::isEmpty()
 }
 
 // Load from file
-void StaffDictionary::loadFromFile(RestaurantArray restaurantDatabase[])
+void StaffDictionary::loadFromFile(RestaurantArray* restaurantDatabase)
 {
 	ifstream inFile("staff_details.txt");
 	if (!inFile.is_open())
@@ -167,24 +167,44 @@ void StaffDictionary::loadFromFile(RestaurantArray restaurantDatabase[])
 
 	string emailKey, passwordHash, restaurantName;
 	Restaurant* restaurantPtr = nullptr;
+	string aString;
+	string line;
 
-	while (getline(inFile, emailKey, ','))
+	while (getline(inFile, line))
 	{
-		getline(inFile, passwordHash, ',');
-		getline(inFile, restaurantName);
-
-		// Find the restaurant object in the database
-
-		for (int i = 0; i < restaurantDatabase->getNumberOfRestaurants(); ++i) {
-			if (restaurantDatabase->getRestaurant(i)->getRestaurantName() == restaurantName) {
+		stringstream ss(line);
+		getline(ss, emailKey, ',');
+		getline(ss, passwordHash, ',');
+		getline(ss, restaurantName);
+		// Find the the restaurant object
+		for (int i = 0; i < restaurantDatabase->getNumberOfRestaurants(); i++)
+		{
+			if (restaurantDatabase->getRestaurant(i)->getRestaurantName() == restaurantName)
+			{
 				restaurantPtr = restaurantDatabase->getRestaurant(i);
 				break;
 			}
 		}
-
 		RestaurantStaff staff(emailKey, passwordHash, restaurantPtr);
 		addStaff(emailKey, staff);
 	}
+	//while (getline(inFile, emailKey, ','))
+	//{
+	//	getline(inFile, passwordHash, ',');
+	//	getline(inFile, restaurantName);
+
+	//	// Find the restaurant object in the database
+
+	//	for (int i = 0; i < restaurantDatabase->getNumberOfRestaurants(); ++i) {
+	//		if (restaurantDatabase->getRestaurant(i)->getRestaurantName() == restaurantName) {
+	//			restaurantPtr = restaurantDatabase->getRestaurant(i);
+	//			break;
+	//		}
+	//	}
+
+	//	RestaurantStaff staff(emailKey, passwordHash, restaurantPtr);
+	//	addStaff(emailKey, staff);
+	//}
 }
 
 // Save details to the file
@@ -192,7 +212,7 @@ void StaffDictionary::saveToFile()
 {
 	ofstream outFile("staff_details.txt");
 
-	for (int i = 0; i < STAFF_MAX_SIZE; ++i) {
+	for (int i = 0; i < STAFF_MAX_SIZE; i++) {
 		RestaurantStaffNode* current = staffs[i];
 		while (current != nullptr) {
 			outFile << current->emailKey << ","
@@ -201,7 +221,6 @@ void StaffDictionary::saveToFile()
 			current = current->next;
 		}
 	}
-
 	outFile.close();
 }
 
@@ -367,7 +386,7 @@ bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
 	}
 	// Step 5 : Otherwise, adding is succesful return as true
 	cout << "Registration success. Please proceed to login" << endl;
-	saveToFile();
+	StaffDictionary::saveToFile();
 	return true;
 }
 
