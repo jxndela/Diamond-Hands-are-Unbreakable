@@ -59,8 +59,8 @@ RestaurantArray::RestaurantArray()
 RestaurantArray::~RestaurantArray()
 {
 	// Save before destroying.
-	//writeRestaurantFile();
-	//writeFoodItemsAVL();
+	writeRestaurantFile();
+	writeFoodItemsAVL();
 }
 
 // Get method - no. of restaurants
@@ -198,7 +198,7 @@ void RestaurantArray::writeRestaurantFile()
 	}
 
 	// File exists, lets write for each restaurant
-	for (int i = 0; i < numberOfRestaurants - 1; i++)
+	for (int i = 0; i < numberOfRestaurants; i++)
 	{
 		// Print out information about the restaurant with restaurant header
 		outFile << allRestaurants[i].getRestaurantName() << ","
@@ -242,7 +242,7 @@ void RestaurantArray::writeFoodItemsAVL()
 		newFile.close();
 		outFile.open("foodItem.txt");
 	}
-	for (int i = 0; i < numberOfRestaurants - 1; i++)
+	for (int i = 0; i < numberOfRestaurants; i++)
 	{
 		AVLNode* menuPointer = getRestaurant(i)->getRestaurantMenuPointer()->getRoot();
 		writeFoodItemsRecursive(outFile, menuPointer, i);
