@@ -19,9 +19,155 @@
 #include "FoodItemAVL.h"
 #include "Order.h"
 
-
+// Name Space Standard
 using namespace std;
+
+// Declare Constants
 const int MAX_FOOD_ITEMS = 1000;
+const int INF = 9999999; // Large value used to symbolise infinity
+
+// Declaring Constants for Dijkstra Algorithm and MRT Map
+const int numberOfMRTStations = 10; // For demonstration purposes, we only have 7 MRT Stations
+const string stationNames[numberOfMRTStations] = {
+	"Bishan",
+	"Bukit Panjang",
+	"Botanic Gardens",
+	"Buona Vista",
+	"Choa Chu Kang",
+	"Jurong East",
+	"Orchard",
+	"Outram Park",
+	"Raffles Place",
+	"Woodlands"
+};
+// Define the graph using travel time between stations in minutes, assume two way travel is same
+// Assume that all deliveries use the MRT hahahah, assume no waiting time for train. 
+// Each row represents thes the stations above JE -> BV
+// Each column represents the travel time to each station in the same order JE -> BV
+int travelTimes[numberOfMRTStations][numberOfMRTStations] = {
+	{0, 0, 24, 0, 0, 0, 20, 0, 0, 12},
+	{0, 0, 8, 0, 19, 0, 0, 0, 0, 0},
+	{24, 8, 0, 16, 0, 0, 0, 0, 0, 0},
+	{0, 0, 16, 0, 0, 14, 0, 9, 0, 0},
+	{0, 19, 0, 0, 0, 15, 0, 0, 0, 12},
+	{0, 0, 0, 14, 15, 0, 0, 0, 0, 0},
+	{20, 0, 0, 0, 0, 0, 0, 10, 6, 23},
+	{0, 0, 0, 9, 0, 0, 10, 0, 5, 0},
+	{0, 0, 0, 0, 0, 0, 6, 5, 0, 0},
+	{12, 0, 0, 0, 12, 0, 23, 0, 0, 0}
+};
+// Function to find index of tthe station with lowest travel time
+int minTravelTime(int times[],bool visited[])
+{
+	int min = INF;	// Assume worst case scenario and that min travel time is INF
+	int min_index;	// Initalize the index
+	// Iterate through all the stations
+	for (int i = 0; i < numberOfMRTStations; i++)
+	{
+		// Check if the station we are currently at has been visited
+		// AND that the time it takes is equal or less than current lowest time
+		if (!visited[i] && times[i] <= min)
+		{
+			// Replace values to update new best time
+			min = times[i];	
+			min_index = i;
+		}
+	}
+	return min_index;
+}
+// Function to recursively print the shortest path from origin to destination
+void printPathRecursively(int aParent[], int aIndex)
+{
+	// When index is -1, it means that we have reached the source station
+	if (aParent[aIndex] == -1)
+	{
+		return;
+	}
+	// Origin -> ... -> Destination
+	// We keep calling the function until we hit the origin station
+	printPathRecursively(aParent, aParent[aIndex]);
+	cout << " -> " << stationNames[aIndex];	// Once we hit origin this function plays 
+}
+
+// Magic function
+void dijkstra(int aSource, int aDestination)
+{
+	int times[numberOfMRTStations];		// Stores the shortest travel time to each station
+	bool visited[numberOfMRTStations];	// Checks if a station has been visited before
+	int parent[numberOfMRTStations];	// Stores the parent path. i.e from A to C, A is parent of B
+	// Initalize arrays
+	for (int i = 0; i < numberOfMRTStations; i++)
+	{
+		times[i] = INF;			// Assume worst case
+		visited[i] = false;		// Assume never traveled b4
+		parent[i] = -1;			// Assume orphan
+	}
+	times[aSource] = 0; // Travel time from A to A is 0
+	for (int counter = 0; counter < numberOfMRTStations - 1; counter++)
+	{
+		int x = minTravelTime(times, visited);	//Gets the station with the minimum travel time
+		visited[x] = true; // Mark as visited
+
+		// Update travel times for neighbours
+		for (int j = 0; j < numberOfMRTStations; j++)
+		{
+			if (!visited[j] // If never visited, else visited and skip
+				&& travelTimes[x][j] // If there are edges from current station x to station j, else no edge skip
+				&& times[x] != INF // if time to current station x is not INF, else it means that x is unreachable
+				&& times[x] + travelTimes[x][j] < times[j]) // Check if updating would result in a lower time, else no point
+				// ^^ if current route from station j to station x is less than prev lowest time
+			{
+				times[j] = times[x] + travelTimes[x][j];
+				parent[j] = x;
+			}
+		}
+	}
+	// Print the shortest travel path and total time
+	cout << "Shortest travel time from " << stationNames[aSource] << " to " << stationNames[aDestination] << " is: " << stationNames[aSource];
+	printPathRecursively(parent, aDestination);
+	cout << "\nTotal travel time: " << times[aDestination] << " minutes" << std::endl;
+}
+
+int getNearestZone(int const aPostalCode)
+{
+	// Extract first two digits
+	int postalCodePrefix = stoi(to_string(aPostalCode).substr(0, 2));
+
+	if (postalCodePrefix >= 0 && postalCodePrefix <= 9) {
+		return 0;
+	}
+	else if (postalCodePrefix >= 10 && postalCodePrefix <= 19) {
+		return 1;
+	}
+	else if (postalCodePrefix >= 20 && postalCodePrefix <= 29) {
+		return 2;
+	}
+	else if (postalCodePrefix >= 30 && postalCodePrefix <= 39) {
+		return 3;
+	}
+	else if (postalCodePrefix >= 40 && postalCodePrefix <= 49) {
+		return 4;
+	}
+	else if (postalCodePrefix >= 50 && postalCodePrefix <= 59) {
+		return 5;
+	}
+	else if (postalCodePrefix >= 60 && postalCodePrefix <= 69) {
+		return 6;
+	}
+	else if (postalCodePrefix >= 70 && postalCodePrefix <= 79) {
+		return 7;
+	}
+	else if (postalCodePrefix >= 80 && postalCodePrefix <= 89) {
+		return 8;
+	}
+	else if (postalCodePrefix >= 90 && postalCodePrefix <= 99) {
+		return 9;
+	}
+	else {
+		return -1; // Return this for invalid input
+	}
+}
+
 
 // Make a function that adds all the restaurant food item pointer the food item array
 int addAllFoodItems(FoodItem* aFoodItemArray[], RestaurantArray& aRestaurantDatabase)
@@ -150,7 +296,6 @@ void mergeSort(FoodItem* array[], int const begin, int const end, string const f
 }
 
 
-
 int main()
 {
 	// Initialize the Restaurant database, automatically creates fooditems previously stored
@@ -168,6 +313,7 @@ int main()
 	bool customerLoggedIn = false;
 	bool staffLoggedIn = false;
 	string staffEmail;
+
 
 	// Store pre-sorted items
 	FoodItem* foodItemsUnsorted[MAX_FOOD_ITEMS];
@@ -194,6 +340,10 @@ int main()
 	{
 		foodItemSortedCategory[i] = foodItemsUnsorted[i];
 	}
+
+	int source = 4;
+	int destination =8 ;
+	dijkstra(source, destination);
 
 
 	while(true)
@@ -391,31 +541,36 @@ int main()
 					cout << "No Current Orders ongoing" << endl;
 					continue;
 				}
-					if (customerPointer->getCurrentOrder()->getOrderStatus() == "Completed")
+				if (customerPointer->getCurrentOrder()->getOrderStatus() == "Completed")
+				{
+					bool isOrderConfirmed = false;
+					customerPointer->getCurrentOrder()->printOrderInformation();
+					while (!isOrderConfirmed)
 					{
-						bool isOrderConfirmed = false;
-						customerPointer->getCurrentOrder()->printOrderInformation();
-						while (!isOrderConfirmed)
+						char confirmOrderReceived;
+						cout << "Confirm that order is received ? (Y/N) : ";
+						cin >> confirmOrderReceived;
+						if (tolower(confirmOrderReceived) == 'n')
 						{
-							char confirmOrderReceived;
-							cout << "Confirm that order is received ? (Y/N) : ";
-							cin >> confirmOrderReceived;
-							if (tolower(confirmOrderReceived) == 'n')
-							{
-								cout << "Order has not been delivered yet, returning to menu." << endl;
-								break;
-							}
-							if (tolower(confirmOrderReceived) == 'y')
-							{
-								cout << "Order has been received." << endl;
-								// INSERT POINTS???????????????????????
-								customerPointer->getCurrentOrder()->getRestaurantPointer()->getIncomingOrder()->dequeue();
-								customerPointer->setCurrentOrder(nullptr);
-								break;
-							}
+							cout << "Order has not been delivered yet, returning to menu." << endl;
+							break;
 						}
-						continue;
+						if (tolower(confirmOrderReceived) == 'y')
+						{
+							cout << "Order has been received." << endl;
+							// INSERT POINTS???????????????????????
+							customerPointer->getCurrentOrder()->getRestaurantPointer()->getIncomingOrder()->dequeue();
+							customerPointer->setCurrentOrder(nullptr);
+							break;
+						}
 					}
+					continue;
+				}
+				int customerPostalCode = customerPointer->getCustomerPostalCode();
+				int restaurantPostalCode = customerPointer->getCurrentOrder()->getRestaurantPointer()->getPostalCode();
+				int customerNearestMRT = getNearestZone(customerPostalCode);
+				int restaurantNearestMRT = getNearestZone(restaurantPostalCode);
+				dijkstra(customerNearestMRT, restaurantNearestMRT);
 				customerPointer->getCurrentOrder()->printOrderInformation();
 				continue;
 			}
