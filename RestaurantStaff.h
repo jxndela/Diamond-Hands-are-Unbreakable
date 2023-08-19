@@ -44,6 +44,8 @@ public:
 	// Post: Success or failure 
 	void updateOrderStatus(Order aOrder);
 
+	void editOrder();
+
 	// Update the food item attributes
 	// Pre : Food Item must exist
 	// Post: Success or failure 
@@ -74,6 +76,7 @@ public:
 	// Pre : Must have completed orders in a given time period
 	// Post: Shows monthly report of total earnings and statistics.
 	void generateReport();
+
 
 	// restaurant name
 	// pre : ~

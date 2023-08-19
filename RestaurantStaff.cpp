@@ -37,15 +37,74 @@ void RestaurantStaff::updateOrderStatus(Order aOrder)
     aOrder.setOrderStatusComplete();
 }
 
+void RestaurantStaff::editOrder()
+{
+	//Order* orderPointer = nullptr;
+	//while (true)
+	//{
+	//	string choice;
+
+	//	cout << "What Order would you like to update?";
+	//	restaurantPointer->getIncomingOrder()->printQueue();
+	//	cout << "Your choice ? ";
+	//	cin.ignore(); // Clear any remaining newline character
+	//	getline(cin, choice);
+	//	try
+	//	{
+	//		orderPointer = restaurantPointer->getIncomingOrder()->searchOrder(choice);
+	//		if (orderPointer == nullptr)
+	//			throw "Invalid Choice!";
+	//		break;
+	//	}
+	//	catch (const char* msg)
+	//	{
+	//		cout << "Invalid Choice!" << endl;
+	//		return;
+	//	}
+
+	//}
+
+	//while (true)
+	//{
+	//	cout << "What would you like to update?" << endl;
+	//	cout << "1. Order Status" << endl;
+	//	cout << "2. Food Item" << endl;
+	//	cout << "0. Exit" << endl;
+	//	cout << "Your choice ? ";
+	//	string choice;
+	//	cin.ignore(); // Clear any remaining newline character
+	//	getline(cin, choice);
+	//	if (choice == "1")
+	//	{
+	//		updateOrderStatus(*orderPointer);
+	//		break;
+	//	}
+	//	else if (choice == "2")
+	//	{
+	//		updateFoodItem();
+	//		break;
+	//	}
+	//	else if (choice == "0")
+	//	{
+	//		break;
+	//	}
+	//	else
+	//	{
+	//		cout << "Invalid Choice!" << endl;
+	//	}
+	//}
+}
+
 void RestaurantStaff::updateFoodItem(/*FoodItem* foodItemPointer*/)
 {
     FoodItem* foodItemPointer = nullptr;
     while (true)
     {
 		string choice;
-		
+
+		cout << "What Food Item would you like to update?";
         restaurantPointer->getRestaurantMenuPointer()->printAllInOrder();
-		cout << "What Food Item would you like to update?" << endl;
+        cout << "Your choice ? ";
         cin.ignore(); // Clear any remaining newline character
         getline(cin, choice);
 		try
@@ -58,7 +117,7 @@ void RestaurantStaff::updateFoodItem(/*FoodItem* foodItemPointer*/)
         catch (const char* msg)
         {
             cout << "Invalid Choice!" << endl;
-            continue;
+            return;
         }
         
     }
@@ -69,7 +128,7 @@ void RestaurantStaff::updateFoodItem(/*FoodItem* foodItemPointer*/)
         cout << "1. Price" << endl;
         cout << "2. Availability" << endl;
         cout << "0. Exit" << endl;
-
+        cout << "Your choice ? ";
         int choice;
         if (!(cin >> choice)) {
             cout << "Invalid input. Please enter a valid number." << endl;
@@ -78,11 +137,14 @@ void RestaurantStaff::updateFoodItem(/*FoodItem* foodItemPointer*/)
             continue; // Restart the loop
         }
 
-        switch (choice) {
-        case 1: {
+        switch (choice)
+        {
+        case 1:
+        {
             cout << "Enter new price: ";
             double newPrice;
-            if (!(cin >> newPrice)) {
+            if (!(cin >> newPrice) || newPrice < 0) 
+            {
                 cout << "Invalid input for price. Please enter a valid number." << endl;
                 cin.clear(); // Clear error state
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
@@ -93,17 +155,20 @@ void RestaurantStaff::updateFoodItem(/*FoodItem* foodItemPointer*/)
             break;
         }
 
-        case 2: {
+        case 2:
+        {
             cout << "Enter new availability (True for available, False for not available): ";
             string newAvailabilityStr;
-            cin >> newAvailabilityStr;
+            getline(cin, newAvailabilityStr);
 
-            if (newAvailabilityStr == "True" || newAvailabilityStr == "False") {
+            if (newAvailabilityStr == "True" || newAvailabilityStr == "False")
+            {
                 bool newAvailability = (newAvailabilityStr == "True");
                 foodItemPointer->setAvailability(newAvailability);
                 cout << "Availability updated successfully!" << endl;
             }
-            else {
+            else
+            {
                 cout << "Invalid input for availability. Please enter 'True' or 'False'." << endl;
             }
             break;
@@ -137,13 +202,13 @@ void RestaurantStaff::addFoodItem()
     while (true) 
     {
         cout << "Enter the price of the new food item: ";
-        if (cin >> price) 
+        if (cin >> price && price >= 0)
         {
             break; // Input is valid, exit the loop
         }
         else 
         {
-            cout << "Invalid input for price. Please enter a valid number." << endl;
+            cout << "Invalid input for price. Please enter a valid positive number." << endl;
             cin.clear(); // Clear error state
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear input buffer
         }
