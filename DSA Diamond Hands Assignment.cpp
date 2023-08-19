@@ -41,7 +41,7 @@ int addAllFoodItems(FoodItem* aFoodItemArray[], RestaurantArray& aRestaurantData
 // Merges two subarrays of array[].
 // First subarray is arr[begin..mid]
 // Second subarray is arr[mid+1..end]
-void merge(FoodItem* array[], int const left, int const mid, int const right)
+void merge(FoodItem* array[], int const left, int const mid, int const right, string const filter)
 {
 	int const subArrayOne = mid - left + 1;
 	int const subArrayTwo = right - mid;
@@ -59,23 +59,62 @@ void merge(FoodItem* array[], int const left, int const mid, int const right)
 	auto indexOfSubArrayOne = 0, indexOfSubArrayTwo = 0;
 	int indexOfMergedArray = left;
 
-	// Merge the temp arrays back into array[left..right]
-	while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) 
+	if (filter == "alpha")
 	{
-		// If item in left array is less than item in right array
-		if (leftArray[indexOfSubArrayOne]->getName() <= rightArray[indexOfSubArrayTwo]->getName()) 
+		// Merge the temp arrays back into array[left..right]
+		while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo)
 		{
-			array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-			indexOfSubArrayOne++;
+			// If item in left array is less than item in right array
+			if (leftArray[indexOfSubArrayOne]->getName() <= rightArray[indexOfSubArrayTwo]->getName())
+			{
+				array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+				indexOfSubArrayOne++;
+			}
+			else // Else the item in left array is more than right array
+			{
+				array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+				indexOfSubArrayTwo++;
+			}
+			indexOfMergedArray++;
 		}
-		else // Else the item in left array is more than right array
-		{
-			array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-			indexOfSubArrayTwo++;
-		}
-		indexOfMergedArray++;
 	}
-
+	if (filter == "price")
+	{
+		// Merge the temp arrays back into array[left..right]
+		while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo)
+		{
+			// If item in left array is less than item in right array
+			if (leftArray[indexOfSubArrayOne]->getPrice() <= rightArray[indexOfSubArrayTwo]->getPrice())
+			{
+				array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+				indexOfSubArrayOne++;
+			}
+			else // Else the item in left array is more than right array
+			{
+				array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+				indexOfSubArrayTwo++;
+			}
+			indexOfMergedArray++;
+		}
+	}
+	if (filter == "category")
+	{
+		// Merge the temp arrays back into array[left..right]
+		while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
+			// If item in left array is less than or equal to item in right array
+			if (leftArray[indexOfSubArrayOne]->getCategory().compare(rightArray[indexOfSubArrayTwo]->getCategory()) <= 0) 
+			{
+				array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+				indexOfSubArrayOne++;
+			}
+			else // Else the item in left array is more than right array
+			{
+				array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+				indexOfSubArrayTwo++;
+			}
+			indexOfMergedArray++;
+		}
+	}
 	// Copy the remaining elements of
 	// left[], if there are any
 	while (indexOfSubArrayOne < subArrayOne) 
@@ -96,7 +135,7 @@ void merge(FoodItem* array[], int const left, int const mid, int const right)
 	delete[] rightArray;
 }
 
-void mergeSort(FoodItem* array[], int const begin, int const end)
+void mergeSort(FoodItem* array[], int const begin, int const end, string const filter)
 {
 	// base case.
 	if (begin >= end)
@@ -105,10 +144,12 @@ void mergeSort(FoodItem* array[], int const begin, int const end)
 	// Idea is to break down the pointer list into singular comparisons
 	// Then reconstruct after comparisons are finsihed
 	int mid = begin + (end - begin) / 2;
-	mergeSort(array, begin, mid); // For sub array 1
-	mergeSort(array, mid + 1, end); // For sub array 2
-	merge(array, begin, mid, end);
+	mergeSort(array, begin, mid, filter); // For sub array 1
+	mergeSort(array, mid + 1, end, filter); // For sub array 2
+	merge(array, begin, mid, end, filter);
 }
+
+
 
 int main()
 {
@@ -131,12 +172,27 @@ int main()
 	// Store pre-sorted items
 	FoodItem* foodItemsUnsorted[MAX_FOOD_ITEMS];
 	int numberOfAllFood = addAllFoodItems(foodItemsUnsorted, restaurantDatabase);
-	mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1);
-	FoodItem* foodItemsAlphabetically[MAX_FOOD_ITEMS];
-
+	
+	// Pre Sort the items (Alphabetically)
+	mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1, "alpha");
+	FoodItem* foodItemSortedAlpha[MAX_FOOD_ITEMS];
 	for (int i = 0; i < numberOfAllFood; i++)
 	{
-		cout << foodItemsUnsorted[i]->getName() << endl;
+		foodItemSortedAlpha[i] = foodItemsUnsorted[i];
+	}
+	// Pre Sort the items (Price)
+	mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1, "price");
+	FoodItem* foodItemSortedPrice[MAX_FOOD_ITEMS];
+	for (int i = 0; i < numberOfAllFood; i++)
+	{
+		foodItemSortedPrice[i] = foodItemsUnsorted[i];
+	}
+	// Pre Sort the items (Category)
+	mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1, "category");
+	FoodItem* foodItemSortedCategory[MAX_FOOD_ITEMS];
+	for (int i = 0; i < numberOfAllFood; i++)
+	{
+		foodItemSortedCategory[i] = foodItemsUnsorted[i];
 	}
 
 
@@ -225,7 +281,7 @@ int main()
 			default:// Input validation
 				cout << "Invalid input. Please enter a valid option." << endl;
 				cout << "-------------------------------------------" << endl;
-				cin.clear();                 // Clear the failed state
+				std::cin.clear();                 // Clear the failed state
 				cin.ignore(INT_MAX, '\n');
 				continue;
 			}
@@ -241,6 +297,7 @@ int main()
 			cout << "2. Check order" << endl;
 			cout << "3. Cancel Order" << endl;
 			cout << "4. Log out" << endl;
+			cout << "5. View all food" << endl;
 			cout << "Your choice ? ";
 			int loginChoice;
 			cin >> loginChoice;
@@ -305,14 +362,21 @@ int main()
 					if (tolower(customerResponse) == 'n')
 					{
 						cout << "Order cancelled" << endl;
+						delete newOrder;
 						break;
 					}
-					if (tolower(customerResponse) == 'y')
+					if (tolower(customerResponse) == 'y' && newOrder->getSize() > 0)
 					{
 						selectedRestaurant.getIncomingOrder()->enqueue(newOrder);
 						cout << "Order is confirmed and has been sent to the restaurant" << endl;
 						customerPointer->setCurrentOrder(newOrder);
 						customerPointer->confirmOrder();
+						break;
+					}
+					if (tolower(customerResponse) == 'y' && newOrder->getSize() == 0)
+					{
+						cout << "Empty order cannot be submitted, it will now be voided." << endl;
+						delete newOrder;
 						break;
 					}
 					cout << "Invalid response, please try again.";
@@ -387,6 +451,91 @@ int main()
 				customerPointer = nullptr;
 				customerLoggedIn = false;
 				break;
+			}
+			case 5:
+			{
+				bool isDoneViewing = false;
+				string customerViewChoice;
+				FoodItem** foodItemViewMode = foodItemSortedAlpha;
+					while(!isDoneViewing)
+					{
+						for (int i = 0; i < numberOfAllFood; i++)
+						{
+							cout << i + 1 << ". " << "Name: " << foodItemViewMode[i]->getName() << endl
+								<< "   Price: " << foodItemViewMode[i]->getPrice() << endl
+								<< "   Category: " << foodItemViewMode[i]->getCategory() << endl
+								<< "   Description: " << foodItemViewMode[i]->getFoodDescription() << endl
+								<< "----------------------------------------" << endl;
+						}
+						cout << "1. Return back to menu" << endl;
+						cout << "2. Sort by Alphabetical Order" << endl;
+						cout << "3. Sort by Price" << endl;
+						cout << "4. Sort by Category" << endl;
+						cout << "5. Search for item" << endl;
+						cout << "Your choice ? : ";
+						getline(cin, customerViewChoice);
+						if (customerViewChoice == "1")
+							break;
+						if (customerViewChoice == "2")
+						{
+							cout << "Now sorting by alphabetical order" << endl;
+							foodItemViewMode = foodItemSortedAlpha;
+							continue;
+						}
+						if (customerViewChoice == "3")
+						{
+							cout << "Now sorting by price in ascending order" << endl;
+							foodItemViewMode = foodItemSortedPrice;
+							continue;
+						}
+						if (customerViewChoice == "4")
+						{
+							cout << "Now sorting by category alphabetically" << endl;
+							foodItemViewMode = foodItemSortedCategory;
+							continue;
+						}
+						if (customerViewChoice == "5")
+						{
+							// Prompt user to search
+							FoodItem* itemSearched = nullptr;
+							string customerSearch;
+							cout << "Please enter the exact name of dish you wish to find more info (Type 'exit' to exit) : ";
+							getline(cin, customerSearch);
+							// Find which item has been searched for
+							for (int i = 0; i < numberOfAllFood; i++)
+							{
+								if (customerSearch == foodItemsUnsorted[i]->getName())
+								{
+									itemSearched = foodItemsUnsorted[i];
+								}
+							}
+							// no match = nullptr
+							if (itemSearched == nullptr)
+							{
+								cout << "Invalid item name, please try again." << endl;
+								continue;
+							}
+							// Find more info
+							for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants();i++)
+							{
+								// If found inside the restaurant, show the restaurant information
+								if (itemSearched ==
+									restaurantDatabase.getRestaurant(i)->getRestaurantMenuPointer()->searchNode(customerSearch))
+								{
+
+									cout << itemSearched->getName() << " is an item found in "
+										<< restaurantDatabase.getRestaurant(i)->getRestaurantName() << endl;
+									isDoneViewing = true;
+									break;
+								}
+							}
+							continue;
+						}
+						cout << "Invalid input. Please enter a valid option." << endl;
+						cout << "-------------------------------------------" << endl;
+						continue;
+					}
+					break;
 			}
 			default: // Else show an error
 				cout << "Invalid input. Please enter a valid option." << endl;

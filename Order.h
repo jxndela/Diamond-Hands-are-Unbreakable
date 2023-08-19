@@ -56,6 +56,11 @@ public:
     // Post: Get customer postalcode
     int getCustomerPostalCode();
 
+    int getSize()
+    {
+        return size;
+    }
+
     Restaurant* getRestaurantPointer()
     {
         return restaurantPointer;
