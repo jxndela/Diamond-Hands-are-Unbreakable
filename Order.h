@@ -113,5 +113,7 @@ public:
     // Pre : ~
     // Post: ~
     void printOrderInformation();
+
+	double totalCost();
 };
 

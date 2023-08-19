@@ -1,5 +1,5 @@
 #include "OrderQueue.h"
-
+#include <chrono>
 // Default constructor
 OrderQueue::OrderQueue()
 {
@@ -117,6 +117,8 @@ bool OrderQueue::dequeue()
 		return false;
 	}
 
+	saveOrderToFile();
+	
 	// Create a temporary pointer
 	OrderNode* tempPointer = frontNode;
 
@@ -140,4 +142,26 @@ bool OrderQueue::dequeue()
 	// Reduce size and return true
 	size--;
 	return true;
+}
+
+void OrderQueue::saveOrderToFile()
+{
+    // get current time and date
+    auto currentTime = chrono::system_clock::now();
+    time_t currentTimeT = chrono::system_clock::to_time_t(currentTime);
+
+    char currentTimeStr[100];
+    tm timeInfo;
+    localtime_s(&timeInfo, &currentTimeT);
+    strftime(currentTimeStr, sizeof(currentTimeStr), "%Y-%m-%d %H:%M:%S", &timeInfo);
+
+    // append to file
+    ofstream outFile("pastorders.txt", ios_base::app); // Open in append mode
+    outFile << currentTimeStr << ","
+        << frontNode->orderPointer->getRestaurantPointer()->getRestaurantName() << ","
+        << frontNode->orderPointer->getCustomerName() << ","
+        << frontNode->orderPointer->totalCost()
+        << endl;
+
+    outFile.close();
 }

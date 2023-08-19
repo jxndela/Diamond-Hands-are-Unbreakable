@@ -56,6 +56,8 @@ public:
 	// Post: Order at front is removed
 	bool dequeue();
 
+	void saveOrderToFile();
+
 	OrderNode* getFrontOrderNode()
 	{
 		return frontNode;

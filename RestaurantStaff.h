@@ -75,6 +75,7 @@ public:
 	// Post: Shows monthly report of total earnings and statistics.
 	void generateReport();
 
+	void loadPastOrders(string date);
 
 	// restaurant name
 	// pre : ~

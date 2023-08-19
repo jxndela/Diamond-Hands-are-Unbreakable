@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>	// For reading writing files
 #include <sstream>	
+#include <chrono>
 
 // Include all the header files
 #include "User.h"
@@ -742,6 +743,7 @@ int main()
 			cout << "3. View Menu" << endl;
 			cout << "4. Add Food Item" << endl;
 			cout << "5. Update Food Item" << endl;
+			cout << "6. Generate Report" << endl;
 			cout << "0. Logout" << endl;
 			cout << "Your choice ? ";
 			int loginChoice;
@@ -775,6 +777,11 @@ int main()
 			{
 				//FoodItem* foodItemPointer = nullptr;
 				staffPointer->updateFoodItem();
+				break;
+			}
+			case 6: // generate report
+			{
+				staffPointer->generateReport();
 				break;
 			}
 			case 0: // Log out

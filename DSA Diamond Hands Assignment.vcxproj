@@ -152,6 +152,7 @@
     <ClInclude Include="CustomerDictionary.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="pastorders.txt" />
     <Text Include="restaurant.txt" />
     <Text Include="staff_details.txt" />
     <Text Include="foodItem.txt" />
