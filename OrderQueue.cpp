@@ -64,7 +64,8 @@ void OrderQueue::printQueue()
 	// Iterate throught the queue
 	while (current != nullptr)
 	{
-		cout << "HAAHAH" << endl;
+		current->orderPointer->printOrderInformation();
+		current = current->next;
 	}
 }
 

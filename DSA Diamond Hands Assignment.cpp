@@ -221,6 +221,7 @@ int main()
 				{
 					selectedRestaurant.getIncomingOrder()->enqueue(newOrder);
 					cout << "Order has been sent to the restaurant" << endl;
+					selectedRestaurant.getIncomingOrder()->printQueue();
 					break;
 				}
 			}
