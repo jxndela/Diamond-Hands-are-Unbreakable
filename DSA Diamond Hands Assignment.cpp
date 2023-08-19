@@ -309,6 +309,7 @@ int main()
 				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
 				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
 				cout << "                                                                            " << endl;
+				// Check if there are existing orders
 				if (customerPointer->getCurrentOrder() != nullptr)
 				{
 					cout << "You can only have 1 order at a time. " << endl;
@@ -393,7 +394,7 @@ int main()
 					if (customerPointer->getCurrentOrder()->getOrderStatus() == "Completed")
 					{
 						bool isOrderConfirmed = false;
-
+						customerPointer->getCurrentOrder()->printOrderInformation();
 						while (!isOrderConfirmed)
 						{
 							char confirmOrderReceived;
@@ -477,90 +478,93 @@ int main()
 				customerLoggedIn = false;
 				break;
 			}
-			case 5:
+			case 5: // View All food items
 			{
 				bool isDoneViewing = false;
 				string customerViewChoice;
-				FoodItem** foodItemViewMode = foodItemSortedAlpha;
-					while(!isDoneViewing)
+				FoodItem** foodItemViewMode = foodItemSortedAlpha;	// Default view is alphabetical order
+				while(!isDoneViewing)
+				{
+					for (int i = 0; i < numberOfAllFood; i++)
 					{
-						for (int i = 0; i < numberOfAllFood; i++)
-						{
-							cout << i + 1 << ". " << "Name: " << foodItemViewMode[i]->getName() << endl
-								<< "   Price: " << foodItemViewMode[i]->getPrice() << endl
-								<< "   Category: " << foodItemViewMode[i]->getCategory() << endl
-								<< "   Description: " << foodItemViewMode[i]->getFoodDescription() << endl
-								<< "----------------------------------------" << endl;
-						}
-						cout << "1. Return back to menu" << endl;
-						cout << "2. Sort by Alphabetical Order" << endl;
-						cout << "3. Sort by Price" << endl;
-						cout << "4. Sort by Category" << endl;
-						cout << "5. Search for item" << endl;
-						cout << "Your choice ? : ";
-						getline(cin, customerViewChoice);
-						if (customerViewChoice == "1")
-							break;
-						if (customerViewChoice == "2")
-						{
-							cout << "Now sorting by alphabetical order" << endl;
-							foodItemViewMode = foodItemSortedAlpha;
-							continue;
-						}
-						if (customerViewChoice == "3")
-						{
-							cout << "Now sorting by price in ascending order" << endl;
-							foodItemViewMode = foodItemSortedPrice;
-							continue;
-						}
-						if (customerViewChoice == "4")
-						{
-							cout << "Now sorting by category alphabetically" << endl;
-							foodItemViewMode = foodItemSortedCategory;
-							continue;
-						}
-						if (customerViewChoice == "5")
-						{
-							// Prompt user to search
-							FoodItem* itemSearched = nullptr;
-							string customerSearch;
-							cout << "Please enter the exact name of dish you wish to find more info (Type 'exit' to exit) : ";
-							getline(cin, customerSearch);
-							// Find which item has been searched for
-							for (int i = 0; i < numberOfAllFood; i++)
-							{
-								if (customerSearch == foodItemsUnsorted[i]->getName())
-								{
-									itemSearched = foodItemsUnsorted[i];
-								}
-							}
-							// no match = nullptr
-							if (itemSearched == nullptr)
-							{
-								cout << "Invalid item name, please try again." << endl;
-								continue;
-							}
-							// Find more info
-							for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants();i++)
-							{
-								// If found inside the restaurant, show the restaurant information
-								if (itemSearched ==
-									restaurantDatabase.getRestaurant(i)->getRestaurantMenuPointer()->searchNode(customerSearch))
-								{
-
-									cout << itemSearched->getName() << " is an item found in "
-										<< restaurantDatabase.getRestaurant(i)->getRestaurantName() << endl;
-									isDoneViewing = true;
-									break;
-								}
-							}
-							continue;
-						}
-						cout << "Invalid input. Please enter a valid option." << endl;
-						cout << "-------------------------------------------" << endl;
+						// Print UI for each other
+						cout << i + 1 << ". " << "Name: " << foodItemViewMode[i]->getName() << endl
+							<< "   Price: " << foodItemViewMode[i]->getPrice() << endl
+							<< "   Category: " << foodItemViewMode[i]->getCategory() << endl
+							<< "   Description: " << foodItemViewMode[i]->getFoodDescription() << endl
+							<< "----------------------------------------" << endl;
+					}
+					// Prompt customer for response
+					cout << "1. Return back to menu" << endl;
+					cout << "2. Sort by Alphabetical Order" << endl;
+					cout << "3. Sort by Price" << endl;
+					cout << "4. Sort by Category" << endl;
+					cout << "5. Search for item" << endl;
+					cout << "Your choice ? : ";
+					getline(cin, customerViewChoice);
+					if (customerViewChoice == "1") // Return back to menu
+						break;
+					if (customerViewChoice == "2")	// Alphabetical order
+					{
+						cout << "Now sorting by alphabetical order" << endl;
+						foodItemViewMode = foodItemSortedAlpha;
 						continue;
 					}
-					break;
+					if (customerViewChoice == "3")	// Price order
+					{
+						cout << "Now sorting by price in ascending order" << endl;
+						foodItemViewMode = foodItemSortedPrice;
+						continue;
+					}
+					if (customerViewChoice == "4")	// Category order
+					{
+						cout << "Now sorting by category alphabetically" << endl;
+						foodItemViewMode = foodItemSortedCategory;
+						continue;
+					}
+					if (customerViewChoice == "5")	// Search to find out where the food item is from
+					{
+						// Prompt user to search
+						FoodItem* itemSearched = nullptr;
+						string customerSearch;	
+						cout << "Please enter the exact name of dish you wish to find more info (Type 'exit' to exit) : ";
+						getline(cin, customerSearch);
+						// Find which item has been searched for
+						for (int i = 0; i < numberOfAllFood; i++)
+						{
+							if (customerSearch == foodItemsUnsorted[i]->getName())
+							{
+								// if the name mathces, item searched is stored
+								itemSearched = foodItemsUnsorted[i];
+							}
+						}
+						// no match = nullptr
+						if (itemSearched == nullptr)
+						{
+							cout << "Invalid item name, please try again." << endl;
+							continue;
+						}
+						// Find more info
+						for (int i = 0; i < restaurantDatabase.getNumberOfRestaurants();i++)
+						{
+							// If found inside the restaurant, show the restaurant information
+							if (itemSearched ==
+								restaurantDatabase.getRestaurant(i)->getRestaurantMenuPointer()->searchNode(customerSearch))
+							{
+								// Display infomartion about where to order it from
+								cout << itemSearched->getName() << " is an item found in "
+									<< restaurantDatabase.getRestaurant(i)->getRestaurantName() << endl;
+								isDoneViewing = true;
+								break;
+							}
+						}
+						continue;
+					}
+					cout << "Invalid input. Please enter a valid option." << endl;
+					cout << "-------------------------------------------" << endl;
+					continue;
+				}
+				break;
 			}
 			default: // Else show an error
 				cout << "Invalid input. Please enter a valid option." << endl;
@@ -573,14 +577,8 @@ int main()
 		// If it is the staff who is logged in, show options only available to staff
 		while (staffLoggedIn)
 		{
-			// hello where is staff function
-			// 
-			// this is hardcoded as fuck. but to show that it works.
-			//cout << "gamer girl bath water" << endl;
-			//RestaurantStaff* test = staffDatabase.search("on@gmail.com");
-			//cout << test->getRestaurantPointer()->getRestaurantName() << endl;
-			//break;
 
+			//cout << "gamer girl bath water" << endl;
 			cout << "====================================================" << endl;
 			cout << "Welcome Back, " << staffPointer->getRestaurantName() << endl;
 			cout << "What would you like to do?" << endl;
@@ -600,15 +598,12 @@ int main()
 				staffPointer->viewAllOrders();
 				break;
 			}
-
 			case 2: // update Order Status
 			{
 				Order* aOrder = staffPointer->getRestaurantPointer()->getIncomingOrder()->getFrontOrderNode()->orderPointer;
 				staffPointer->updateOrderStatus(*aOrder);
 				break;
 			}
-
-
 			case 3: // View Menu
 			{
 				staffPointer->getRestaurantPointer()->getRestaurantMenuPointer()->printAllInOrder();
@@ -627,7 +622,6 @@ int main()
 				staffPointer->updateFoodItem();
 				break;
 			}
-
 			case 0: // Log out
 			{
 				staffPointer = nullptr;
@@ -643,7 +637,4 @@ int main()
 			}
 		}
 	}
-
-	
-
 }

@@ -33,7 +33,8 @@ void RestaurantStaff::viewOrderAndCustomerInfo(Order aOrder)
 
 void RestaurantStaff::updateOrderStatus(Order& aOrder)
 {
-    cout << "Order has been set to completed" << endl;
+    aOrder.printOrderInformation();
+    cout << "First Order has been set to completed" << endl;
     aOrder.setOrderStatusComplete();
 }
 

@@ -1,4 +1,6 @@
 #include "FoodItemAVL.h"
+
+#include <locale>
 using namespace std;
 
 // Constructor

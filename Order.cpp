@@ -138,6 +138,7 @@ bool Order::removeFoodItem(FoodItem* aFoodItemPointer)
 void Order::printOrderInformation()
 {
 	// Step 1: View information
+	cout << "=========================================" << endl;
 	cout << "Showing Order and Customer Information..." << endl;
 	cout << "Order Status : " << orderStatus << endl;
 	cout << "Restaurant Name : " << restaurantName << endl;
