@@ -3,6 +3,8 @@
 #include <iomanip>
 #include <sstream>
 #include <limits>
+#include <chrono>
+#include <cstring>
 // Constructor
 RestaurantStaff::RestaurantStaff()
 {
@@ -167,7 +169,104 @@ void RestaurantStaff::addFoodItem()
     cout << "New food item added to the menu!" << endl;
 }
 
+void RestaurantStaff::generateReport()
+{
+    while (true)
+    {
+        string input;
+		int choice;
+            
+		cout << "What report would you like to generate?" << endl;
+		cout << "1. Total Sales for the last week" << endl;
+		cout << "2. Total Sales for the last month" << endl;
+		cout << "3. Total Sales for all time" << endl;
+		cout << "0. Exit" << endl;
+		cout << "Your choice ? ";
+        cin.ignore();
+		getline(cin, input);
+		choice = stoi(input);
+        switch (choice)
+        {
+        case 1: case 2: case 3:
+        {
+            loadPastOrders(input);
+            return;
+        }
 
+        case 0:
+            return;
+
+        default:
+            cout << "Invalid input" << endl;
+            break;
+        }
+    }
+}
+
+void RestaurantStaff::loadPastOrders(string date)
+{
+    ifstream inFile("pastorders.txt");
+    if (!inFile.is_open())
+    {
+        // no file exists
+        cout << "No orders exist!" << endl;
+        return;
+    }
+
+    string timestamp, restaurantName, customerName, totalCost, aString, line;
+    int count = 0;
+    double totalRevenue = 0;
+
+    // Get the current time
+    auto currentTime = chrono::system_clock::now();
+    time_t currentTimeT = chrono::system_clock::to_time_t(currentTime);
+
+    while (getline(inFile, line))
+    {
+        stringstream ss(line);
+        getline(ss, timestamp, ',');
+        getline(ss, restaurantName, ',');
+
+        if (restaurantName != restaurantPointer->getRestaurantName())
+        {
+            continue;
+        }
+
+        getline(ss, customerName, ',');
+        getline(ss, totalCost);
+
+        // Parse the order's timestamp using std::get_time
+        tm orderTime = {};
+        istringstream timestampStream(timestamp);
+        timestampStream >> get_time(&orderTime, "%Y-%m-%d %H:%M:%S");
+        time_t orderTimeT = mktime(&orderTime);
+
+        // Calculate the difference in seconds between current time and order time
+        double timeDifference = difftime(currentTimeT, orderTimeT);
+
+        if (date == "1" && timeDifference <= 7 * 24 * 60 * 60 && timeDifference >= 0) {
+            cout << "Order made on " << timestamp << " by " << customerName << " for $" << totalCost << endl;
+            totalRevenue += stod(totalCost);
+            count++;
+        }
+        else if (date == "2" && timeDifference <= 30 * 24 * 60 * 60 && timeDifference >= 0) {
+            cout << "Order made on " << timestamp << " by " << customerName << " for $" << totalCost << endl;
+            totalRevenue += stod(totalCost);
+            count++;
+        }
+        else if (date == "3") {
+            cout << "Order made on " << timestamp << " by " << customerName << " for $" << totalCost << endl;
+            totalRevenue += stod(totalCost);
+            count++;
+        }
+    }
+
+    cout << "=====================" << endl;
+    cout << "Total orders : " << count << endl;
+    cout << "Total revenue : $" << totalRevenue << endl;
+    inFile.close();
+    return;
+}
 
 
 string RestaurantStaff::getEmail()

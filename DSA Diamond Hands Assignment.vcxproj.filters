@@ -92,5 +92,8 @@
       <Filter>Source Files</Filter>
     </Text>
     <Text Include="foodItem.txt" />
+    <Text Include="pastorders.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

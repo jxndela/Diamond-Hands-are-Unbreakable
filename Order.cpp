@@ -192,4 +192,16 @@ void Order::printOrderInformation()
 	{
 		cout << foodItemCount[k] << "x " << uniqueItemNames[k] << endl;
 	}
+	cout << "Total Cost : $" << totalCost() << endl;
+}
+
+double Order::totalCost()
+{
+	double totalCost = 0;
+	for (int i = 0; i < ORDER_MAX_SIZE; i++)
+	{
+		if (orderedItems[i] != nullptr)
+			totalCost += orderedItems[i]->getPrice();
+	}
+	return totalCost;
 }
