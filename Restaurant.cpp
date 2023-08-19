@@ -58,8 +58,8 @@ RestaurantArray::RestaurantArray()
 RestaurantArray::~RestaurantArray()
 {
 	// Save before destroying.
-	writeRestaurantFile();
-	writeFoodItemsAVL();
+	//writeRestaurantFile();
+	//writeFoodItemsAVL();
 }
 
 // Get method - no. of restaurants

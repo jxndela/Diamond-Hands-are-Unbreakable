@@ -186,6 +186,7 @@ void StaffDictionary::loadFromFile(RestaurantArray* restaurantDatabase)
 			}
 		}
 		RestaurantStaff staff(emailKey, passwordHash, restaurantPtr);
+		staff.setRestaurantName(restaurantName);
 		addStaff(emailKey, staff);
 	}
 	//while (getline(inFile, emailKey, ','))
@@ -212,7 +213,7 @@ void StaffDictionary::saveToFile()
 {
 	ofstream outFile("staff_details.txt");
 
-	for (int i = 0; i < STAFF_MAX_SIZE; i++) {
+	for (int i = 0; i < STAFF_MAX_SIZE; ++i) {
 		RestaurantStaffNode* current = staffs[i];
 		while (current != nullptr) {
 			outFile << current->emailKey << ","
@@ -221,8 +222,10 @@ void StaffDictionary::saveToFile()
 			current = current->next;
 		}
 	}
+
 	outFile.close();
 }
+
 
 // searches for a user in the dictionary, returns a pointer to the user if found
 // Pre  : aEmailKey must be in email format
@@ -363,7 +366,7 @@ bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
 		cin >> staffInputRestaurant;
 		if (-1 < staffInputRestaurant && staffInputRestaurant <= aRestaurantDatabase.getNumberOfRestaurants())
 		{
-			restaurantPointer = aRestaurantDatabase.getRestaurant(staffInputRestaurant);
+			restaurantPointer = aRestaurantDatabase.getRestaurant(staffInputRestaurant-1);
 			validRestaurantChoice = true;
 			break;
 		}
@@ -386,7 +389,7 @@ bool StaffDictionary::registerStaffAccount(RestaurantArray aRestaurantDatabase)
 	}
 	// Step 5 : Otherwise, adding is succesful return as true
 	cout << "Registration success. Please proceed to login" << endl;
-	StaffDictionary::saveToFile();
+	saveToFile();
 	return true;
 }
 
