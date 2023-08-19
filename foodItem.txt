@@ -1,19 +1,24 @@
-0,Kopi,Coffee,Traditional,1.2,1
-Kaya Toast,Toast,Breakfast,1.5,1
-Soft Boiled Eggs,Eggs,Breakfast,1.1,1
-Nasi Lemak,Rice Dish,Lunch,2.99,1
-Teh Tarik,Tea,Breakfast,1.3,1
-1,Chicken Rice,Rice Dish,Lunch,5.99,1
-Bak Kut Teh,Pork Soup,Dinner,7.5,1
-Satay,Grilled Meat,Appetizer,0.75,1
-Chilli Crab,Seafood,Dinner,18.99,1
-Tiger Beer,Beer,Beverage,6.99,1
-2,Char Kway Teow,Fried Noodles,Dinner,5.5,1
-Barley Drink,Cold Drink,Beverage,1.8,1
-Otah,Fish Cake,Appetizer,1,1
-Laksa,Noodle Soup,Lunch,7.5,1
-Popiah,Spring Roll,Appetizer,2.5,1
-3,Har Gow,Shrimp Dumpling,Lunch,3.5,1
-Egg Tart,Pastry,Dessert,2,1
-Siu Mai,Pork Dumpling,Lunch,3,1
-Xiao Long Bao,Soup Dumpling,Dinner,4,1
+0,Kaya Toast,Toast,Breakfast,true,1.50
+0,Kopi,Coffee,Traditional,true,1.20
+0,Soft Boiled Eggs,Eggs,Breakfast,true,1.10
+0,Teh Tarik,Tea,Breakfast,true,1.30
+0,Nasi Lemak,Rice Dish,Lunch,true,2.99
+1,Bak Kut Teh,Pork Soup,Dinner,true,7.50
+1,Chicken Rice,Rice Dish,Lunch,true,5.99
+1,Satay,Grilled Meat,Appetizer,true,0.75
+1,Chilli Crab,Seafood,Dinner,true,18.99
+1,Tiger Beer,Beer,Beverage,true,6.99
+2,Barley Drink,Cold Drink,Beverage,true,1.80
+2,Char Kway Teow,Fried Noodles,Dinner,true,5.50
+2,Laksa,Noodle Soup,Lunch,true,7.50
+2,Popiah,Spring Roll,Appetizer,true,2.50
+2,Otah,Fish Cake,Appetizer,true,1.00
+3,Egg Tart,Pastry,Dessert,true,2.00
+3,Har Gow,Shrimp Dumpling,Lunch,true,3.50
+3,Siu Mai,Pork Dumpling,Lunch,true,3.00
+3,Xiao Long Bao,Soup Dumpling,Dinner,true,4.00
+4,Biryani,Rice Dish,Dinner,true,7.50
+4,Butter Chicken,Curry Dish,Lunch,true,6.50
+4,Mango Lassi,Yogurt Drink,Beverage,true,2.80
+4,Samosa,Fried Pastry,Appetizer,true,1.50
+4,Tandoori Naan,Flatbread,Bread,true,1.20

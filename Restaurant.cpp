@@ -206,21 +206,28 @@ void RestaurantArray::writeRestaurantFile()
 	outFile.close();
 }
 
-void RestaurantArray::writeFoodItemsRecursive(ofstream& aOutFile, AVLNode* aNode)
+void RestaurantArray::writeFoodItemsRecursive(ofstream& aOutFile, AVLNode* aNode, int& aIndexPosition)
 {
 	// End if the restaurant does not have any food items
 	if (aNode == nullptr)
 		return;
 
+	string availabilityString;
+	if (aNode->foodItem.getAvailability() == true)
+		availabilityString = "true";
+	if (aNode->foodItem.getAvailability() == false)
+		availabilityString = "false";
+
 	// Write food item recursively
-	aOutFile << aNode->foodItem.getName() << ","
+	aOutFile << aIndexPosition << ","
+		<< aNode->foodItem.getName() << ","
 		<< aNode->foodItem.getFoodDescription() << ","
 		<< aNode->foodItem.getCategory() << ","
-		<< aNode->foodItem.getPrice() << ","
-		<< aNode->foodItem.getAvailability() << endl;
+		<< availabilityString << ","
+		<< aNode->foodItem.getPrice() << endl;
 
-	writeFoodItemsRecursive(aOutFile, aNode->left);
-	writeFoodItemsRecursive(aOutFile, aNode->right);
+	writeFoodItemsRecursive(aOutFile, aNode->left, aIndexPosition);
+	writeFoodItemsRecursive(aOutFile, aNode->right, aIndexPosition);
 }
 
 void RestaurantArray::writeFoodItemsAVL()
@@ -237,8 +244,7 @@ void RestaurantArray::writeFoodItemsAVL()
 	for (int i = 0; i < numberOfRestaurants - 1; i++)
 	{
 		AVLNode* menuPointer = getRestaurant(i)->getRestaurantMenuPointer()->getRoot();
-		outFile << i << ",";
-		writeFoodItemsRecursive(outFile, menuPointer);
+		writeFoodItemsRecursive(outFile, menuPointer, i);
 	}
 }
 

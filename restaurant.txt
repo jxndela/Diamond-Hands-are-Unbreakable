@@ -2,3 +2,4 @@ Kaya Toast Cafe,159753
 Hainanese Chicken,486072
 Laksa House,278989
 Dim Sum Palace,623456
+India,123456
