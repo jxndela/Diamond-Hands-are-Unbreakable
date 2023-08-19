@@ -309,10 +309,10 @@ int main()
 			//break;
 
 			cout << "====================================================" << endl;
-			cout << "Welcome Back, " << staffPointer->getRestaurantPointer()->getRestaurantName() << endl;
+			cout << "Welcome Back, " << staffPointer->getRestaurantName() << endl;
 			cout << "What would you like to do?" << endl;
 			cout << "1. View All Orders" << endl;
-			cout << "2. Edit Orders" << endl;
+			cout << "2. Update Order Status" << endl;
 			cout << "3. View Menu" << endl;
 			cout << "4. Add Food Item" << endl;
 			cout << "5. Update Food Item" << endl;
@@ -328,11 +328,13 @@ int main()
 				break;
 			}
 
-			case 2: // Edit Orders
+			case 2: // update Order Status
 			{
-				cout << "i'm gna kms please dont try to edit orders yet" << endl;
+				Order* aOrder = staffPointer->getRestaurantPointer()->getIncomingOrder()->getFrontOrderNode()->orderPointer;
+				staffPointer->updateOrderStatus(*aOrder);
 				break;
 			}
+
 
 			case 3: // View Menu
 			{

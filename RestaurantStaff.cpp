@@ -31,68 +31,10 @@ void RestaurantStaff::viewOrderAndCustomerInfo(Order aOrder)
     aOrder.printOrderInformation();
 }
 
-void RestaurantStaff::updateOrderStatus(Order aOrder)
+void RestaurantStaff::updateOrderStatus(Order& aOrder)
 {
     cout << "Order has been set to completed" << endl;
     aOrder.setOrderStatusComplete();
-}
-
-void RestaurantStaff::editOrder()
-{
-	//Order* orderPointer = nullptr;
-	//while (true)
-	//{
-	//	string choice;
-
-	//	cout << "What Order would you like to update?";
-	//	restaurantPointer->getIncomingOrder()->printQueue();
-	//	cout << "Your choice ? ";
-	//	cin.ignore(); // Clear any remaining newline character
-	//	getline(cin, choice);
-	//	try
-	//	{
-	//		orderPointer = restaurantPointer->getIncomingOrder()->searchOrder(choice);
-	//		if (orderPointer == nullptr)
-	//			throw "Invalid Choice!";
-	//		break;
-	//	}
-	//	catch (const char* msg)
-	//	{
-	//		cout << "Invalid Choice!" << endl;
-	//		return;
-	//	}
-
-	//}
-
-	//while (true)
-	//{
-	//	cout << "What would you like to update?" << endl;
-	//	cout << "1. Order Status" << endl;
-	//	cout << "2. Food Item" << endl;
-	//	cout << "0. Exit" << endl;
-	//	cout << "Your choice ? ";
-	//	string choice;
-	//	cin.ignore(); // Clear any remaining newline character
-	//	getline(cin, choice);
-	//	if (choice == "1")
-	//	{
-	//		updateOrderStatus(*orderPointer);
-	//		break;
-	//	}
-	//	else if (choice == "2")
-	//	{
-	//		updateFoodItem();
-	//		break;
-	//	}
-	//	else if (choice == "0")
-	//	{
-	//		break;
-	//	}
-	//	else
-	//	{
-	//		cout << "Invalid Choice!" << endl;
-	//	}
-	//}
 }
 
 void RestaurantStaff::updateFoodItem(/*FoodItem* foodItemPointer*/)
