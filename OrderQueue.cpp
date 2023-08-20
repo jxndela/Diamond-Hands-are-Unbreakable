@@ -56,7 +56,7 @@ void OrderQueue::printQueue()
 {
 	if (isEmpty())
 	{
-		cout << "Cannot print out empty Queue you ding dong!" << endl;
+		cout << "Cannot print out empty Queue!" << endl;
 		return;
 	}
 
