@@ -1,4 +1,7 @@
-// DSA Diamond Hands Assignment.cpp : This file contains the 'main' function. Program execution begins and ends there.
+/*
+ * T03 Jonathan Ho S10246045 Ong Jun Jie S10240117
+ * Main Program done by both of us
+ */
 // Header Guard
 #pragma once
 
@@ -27,6 +30,10 @@ using namespace std;
 const int MAX_FOOD_ITEMS = 1000;
 
 // ======================================= Defining Dijkstra Algorithm ==============================================
+/*
+ * T03 Jonathan Ho S10246045 Ong Jun Jie S10240117
+ * Done by Jonathan Ho
+ */
 
 const int INF = 9999999; // Large value used to symbolise infinity
 
@@ -176,7 +183,10 @@ int getNearestZone(int const aPostalCode)
 }
 
 // ======================================= Defining merge sort functions ==============================================
-
+/*
+ * T03 Jonathan Ho S10246045 Ong Jun Jie S10240117
+ * Done by Ong Jun Jie
+ */
 
 // Make a function that adds all the restaurant food item pointer the food item array
 int addAllFoodItems(FoodItem* aFoodItemArray[], RestaurantArray& aRestaurantDatabase)
