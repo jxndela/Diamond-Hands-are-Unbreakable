@@ -516,6 +516,7 @@ int main()
 							isOrderReceived = true;
 							cout << "Order has been received." << endl;
 							// Dequeue from restaurant
+							currentOrder->getRestaurantPointer()->getIncomingOrder()->saveOrderToFile();
 							currentOrder->getRestaurantPointer()->getIncomingOrder()->dequeue();
 							customerPointer->setCurrentOrder(nullptr);
 							break;
@@ -720,6 +721,7 @@ int main()
 			case 3: // View Menu
 			{
 				staffPointer->getRestaurantPointer()->getRestaurantMenuPointer()->printAllInOrder();
+				
 				break;
 			}
 

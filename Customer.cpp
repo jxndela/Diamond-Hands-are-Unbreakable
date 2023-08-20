@@ -92,6 +92,7 @@ bool Customer::createNewOrder(Order* aNewOrder, RestaurantArray* aRestaurantData
 		aRestaurantDatabase->printRestaurants();
 		cout << "Please select the restaurant you wish to order from (0 to exit) : ";
 		cin >> restaurantNumber;
+		cin.ignore();
 		if (restaurantNumber <= aRestaurantDatabase->getNumberOfRestaurants() &&
 			0 < restaurantNumber)
 		{

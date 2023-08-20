@@ -118,7 +118,6 @@ bool OrderQueue::dequeue()
 		return false;
 	}
 
-	saveOrderToFile();
 	
 	// Create a temporary pointer
 	OrderNode* tempPointer = frontNode;
