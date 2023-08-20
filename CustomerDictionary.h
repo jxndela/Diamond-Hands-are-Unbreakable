@@ -1,3 +1,7 @@
+/*
+ * T03 Jonathan Ho S10246045 Ong Jun Jie S10240117
+ * Done by Jonathan Ho 
+ */
 #pragma once
 #include <iostream>
 #include <string>
@@ -39,11 +43,14 @@ public:
 	// Post: Returns INT value based on hash algorithm hashedKey
 	int getHashedKey(string& aEmailKey);
 
-	// Simple validator
+	// Prompts user and Simple validator
+	// Pre : ~
+	// Post: get a valid email string
 	string getValidEmail();
 
-	// Check if valid postal code
+	// Prompts user and Check if valid postal code 
 	// Postal Codes in SG are all 6 digits long , any digit is OK
+	// Post: get a valid postal code int
 	int getValidPostalCode();
 
 	// Add new item with the specified key to the Dictionary
@@ -57,7 +64,7 @@ public:
 	string retrievePassword(string& aEmailKey);
 
 	// Retrieve the user that matches the email key
-	// Pre : 
+	// Pre : ~
 	// Post: Returns the user
 	bool retrieveUser(string& aEmailKey, Customer& aCustomer);
 
@@ -67,24 +74,32 @@ public:
 	bool isEmpty();
 
 	// loads data from file
+	// Pre : ~
+	// Post: ~
 	void loadFromFile();
+
 	// saves data to file
+		// Pre : ~
+	// Post: ~
 	void saveToFile();
 
 	// INPUT HELPERS
+	// Hash the password for security reasons
 	string hashPassword(string& aUnhashedPassword);
 
+	// Login Function for customers
 	// Pre : Should only be when logged out
-	// Post: Return a true or false statement 
+	// Post: Return a true if successful
 	bool customerLogin(Customer*& aCustomer);
 
 	// Register New Customer
 	// Pre : Should only be when logged out
+	// Post: Return true if succesful
 	bool registerCustomerAccount();
 
 	// searches for a user in the dictionary, returns a pointer to the user if found
 	// Pre  : aEmailKey must be in email format
-	// Post : returns true if user is found
+	// Post : returns user if found else nullptr
 	Customer* search(string aEmail);
 };
 

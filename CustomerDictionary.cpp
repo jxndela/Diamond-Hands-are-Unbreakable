@@ -1,3 +1,7 @@
+/*
+ * T03 Jonathan Ho S10246045 Ong Jun Jie S10240117
+ * Done by Jonathan Ho
+ */
 #include "CustomerDictionary.h"
 
 // Constructor for the Dictionary
@@ -36,7 +40,6 @@ CustomerDictionary::~CustomerDictionary()
 // Post: Returns INT value based on hash algorithm hashedKey
 int CustomerDictionary::getHashedKey(string& aEmailKey)
 {
-	// TEMPORARY HASH FUNCTION
 	int sum = 0;
 	for (int i = 0; i < aEmailKey.length(); i++)
 	{
@@ -89,6 +92,7 @@ int CustomerDictionary::getValidPostalCode()
 			cout << "Please enter valid 6 digit postal code." << endl;
 			continue;
 		}
+		// Check that all the characters are digits
 		for (char aChar : userInputPostalCode) {
 			if (!isdigit(aChar))
 			{
@@ -96,6 +100,7 @@ int CustomerDictionary::getValidPostalCode()
 				isAllDigits = false;
 			}
 		}
+		// If valid, break from while loop
 		if (isAllDigits) break;
 		validPostal = true;
 	}
@@ -150,10 +155,8 @@ bool CustomerDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 		newUserNode->next = nullptr;
 		current->next = newUserNode;
 	}
-
 	// Increment size
 	size++;
-
 	// Return true as user has been added.
 	return true;
 }
@@ -229,11 +232,13 @@ void CustomerDictionary::loadFromFile()
 		}
 	}
 
+	// Create temp variabels
 	string emailKey, passwordHash, name, postalCodeString;
 	int postalCode;
 	string aString;
 	string line;
 
+	// Store all the values inside the variables
 	while (getline(inFile, line))
 	{
 		stringstream ss(line);
@@ -247,6 +252,7 @@ void CustomerDictionary::loadFromFile()
 		addCustomer(emailKey, newCustomer);
 		size++;
 	}
+	// close the file
 	inFile.close();
 }
 
@@ -269,6 +275,7 @@ void CustomerDictionary::saveToFile()
 	outFile.close();
 }
 
+// Hash password for security
 string CustomerDictionary::hashPassword(string& aUnhashedPassword)
 {
 	// TEMPORARY HASH FUNCTION
@@ -301,7 +308,6 @@ bool CustomerDictionary::customerLogin(Customer*& aCustomer)
 	}
 	isExistingCustomer = true;
 	// Step 3 check password
-
 	string comparedHash = retrievePassword(userInputEmail);
 	if (hashedPassword == comparedHash && isExistingCustomer)
 	{
@@ -348,7 +354,10 @@ bool CustomerDictionary::registerCustomerAccount()
 	saveToFile();
 	return true;
 }
-
+// Search for an email address and see if a user exists
+// searches for a user in the dictionary, returns a pointer to the user if found
+// Pre  : aEmailKey must be in email format
+// Post : returns user if found else nullptr
 Customer* CustomerDictionary::search(string aEmail)
 {
 	int index = getHashedKey(aEmail);
