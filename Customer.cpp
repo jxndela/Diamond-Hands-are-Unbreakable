@@ -227,8 +227,15 @@ void Customer::confirmOrder(Order* aNewOrder)
 // Cancel an order 
 // Pre : There must be an existing order that is in progress
 // Post: Returns true if successful, returns false otherwise
-bool Customer::cancelOrder(Order& order)
+bool Customer::cancelOrder()
 {
-	return false;
+	// If no Orders we just return no orders to cancel
+	if (getCurrentOrder() == nullptr)
+	{
+		cout << "No orders to cancel" << endl;
+		return false;
+	}
+	cout << "Now cancelling the order" << endl;
+	return true;
 }
 

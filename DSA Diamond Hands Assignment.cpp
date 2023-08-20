@@ -20,12 +20,13 @@
 #include "FoodItemAVL.h"
 #include "Order.h"
 
-
 // Name Space Standard
 using namespace std;
 
 // Declare Constants
 const int MAX_FOOD_ITEMS = 1000;
+
+// ======================================= Defining Dijkstra Algorithm ==============================================
 
 const int INF = 9999999; // Large value used to symbolise infinity
 
@@ -127,7 +128,8 @@ void dijkstra(int aSource, int aDestination)
 	}
 	// Print the shortest travel path and total time
 	cout << "---------------------------------------------------" << endl;
-	cout << "Shortest travel time from " << stationNames[aSource] << " to " << stationNames[aDestination] << " is: " << stationNames[aSource];
+	cout << "Shortest travel time from " << stationNames[aSource] << " to " << stationNames[aDestination]
+	<< " is: " << stationNames[aSource];
 	printPathRecursively(parent, aDestination);
 	cout << "\nTotal travel time: " << times[aDestination] << " minutes" << endl;
 }
@@ -171,6 +173,8 @@ int getNearestZone(int const aPostalCode)
 		return -1; // Return this for invalid input
 	}
 }
+
+// ======================================= Defining merge sort functions ==============================================
 
 
 // Make a function that adds all the restaurant food item pointer the food item array
@@ -300,6 +304,7 @@ void mergeSort(FoodItem* array[], int const begin, int const end, string const f
 }
 
 
+// ======================================= MAIN APPLICATION ============================================================
 int main()
 {
 	// Initialize the Restaurant database, automatically creates fooditems previously stored
@@ -525,22 +530,18 @@ int main()
 				}
 				// Else failed by IF checks -> order is still in kitchen
 				customerPointer->getCurrentOrder()->printOrderInformation();
-				int customerPostalCode = customerPointer->getCustomerPostalCode();
-				int restaurantPostalCode = customerPointer->getCurrentOrder()->getRestaurantPointer()->getPostalCode();
-				int customerNearestMRT = getNearestZone(customerPostalCode);
-				int restaurantNearestMRT = getNearestZone(restaurantPostalCode);
+				// Print waiting time infromation
+				const int customerPostalCode = customerPointer->getCustomerPostalCode();
+				const int restaurantPostalCode = customerPointer->getCurrentOrder()->getRestaurantPointer()->getPostalCode();
+				const int customerNearestMRT = getNearestZone(customerPostalCode);
+				const int restaurantNearestMRT = getNearestZone(restaurantPostalCode);
 				dijkstra(customerNearestMRT, restaurantNearestMRT);
-
-				continue;
 			}
 			case 3: // Cancel in progress order
+			{
+				// If there is something to cancel 
+				if (customerPointer->cancelOrder())
 				{
-					// If no Orders we just return no orders to cancel
-					if (customerPointer->getCurrentOrder() == nullptr)
-					{
-						cout << "No orders to cancel" << endl;
-						continue;
-					}
 					// Access the order queue of current order
 					Order* currentOrder = customerPointer->getCurrentOrder();
 					OrderQueue* restaurantQueue = currentOrder->getRestaurantPointer()->getIncomingOrder();
@@ -575,16 +576,17 @@ int main()
 								currentNode = currentNode->next;
 								tempQueue->dequeue();
 							}
-							break;
+							break;	// Break out of outer while loop
 						}
 						// Case 2 not found, push the current order pointer into the temp queue
 						tempQueue->enqueue(currentNode->orderPointer);
 						currentNode = currentNode->next;
 						restaurantQueue->dequeue();
-					}
+					} // Exited while loop, item has been dequeued
 					// Set current order to none 
 					customerPointer->removeCurrentOrder();
 				}
+			}
 			case 4: // Log out
 			{
 				cout << "Case 4" << endl;
