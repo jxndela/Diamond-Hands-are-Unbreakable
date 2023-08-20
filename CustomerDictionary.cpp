@@ -269,10 +269,12 @@ bool CustomerDictionary::registerCustomerAccount()
 	string userInputEmail = getValidEmail();
 	string userInputPassword;
 	cout << "Please enter a password : ";
-	cin >> userInputPassword;
+	cin.ignore();
+	getline(cin, userInputPassword);
 	string userInputName;
 	cout << "Please enter your Name : ";
-	cin >> userInputName;
+	cin.ignore();
+	getline(cin, userInputName);
 	int userInputPostalCode = getValidPostalCode();
 
 	// Step 1: Hash the user input password
