@@ -15,14 +15,4 @@ User::User(string aEmailKey, string hashedPassword)
 
 User::~User(){}
 
-string User::getPasswordHash()
-{
-	return passwordHash;
-}
-
-string User::getEmail()
-{
-	return email;
-}
-
 

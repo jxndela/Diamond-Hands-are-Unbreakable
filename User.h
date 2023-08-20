@@ -21,15 +21,5 @@ public:
 
     // Destructors
     ~User();
-
-    // Check the passwordHash of a user object
-    // Pre : ~
-    // Post: Returns passwordHash
-    string getPasswordHash();
-
-    // Check the email of a user object
-    // Pre : ~
-    // Post: Returns email
-    string getEmail();
 };
 
