@@ -136,7 +136,8 @@ void dijkstra(int aSource, int aDestination)
 
 int getNearestZone(int const aPostalCode)
 {
-	// Extract first two digits
+	// Extract first two digits and simulate real postal district
+	// assume the distance between building and mrt is 0 
 	int postalCodePrefix = stoi(to_string(aPostalCode).substr(0, 2));
 
 	if (postalCodePrefix >= 0 && postalCodePrefix <= 9) {
@@ -323,40 +324,34 @@ int main()
 	bool staffLoggedIn = false;
 	string staffEmail;
 
-
-	// Store pre-sorted items
-	FoodItem* foodItemsUnsorted[MAX_FOOD_ITEMS];
-	int numberOfAllFood = addAllFoodItems(foodItemsUnsorted, restaurantDatabase);
-	
-	// Pre Sort the items (Alphabetically)
-	mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1, "alpha");
-	FoodItem* foodItemSortedAlpha[MAX_FOOD_ITEMS];
-	for (int i = 0; i < numberOfAllFood; i++)
-	{
-		foodItemSortedAlpha[i] = foodItemsUnsorted[i];
-	}
-	// Pre Sort the items (Price)
-	mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1, "price");
-	FoodItem* foodItemSortedPrice[MAX_FOOD_ITEMS];
-	for (int i = 0; i < numberOfAllFood; i++)
-	{
-		foodItemSortedPrice[i] = foodItemsUnsorted[i];
-	}
-	// Pre Sort the items (Category)
-	mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1, "category");
-	FoodItem* foodItemSortedCategory[MAX_FOOD_ITEMS];
-	for (int i = 0; i < numberOfAllFood; i++)
-	{
-		foodItemSortedCategory[i] = foodItemsUnsorted[i];
-	}
-
-	int source = 4;
-	int destination =8 ;
-	dijkstra(source, destination);
-
-
 	while(true)
 	{
+		// Store pre-sorted items
+		FoodItem* foodItemsUnsorted[MAX_FOOD_ITEMS];
+		int numberOfAllFood = addAllFoodItems(foodItemsUnsorted, restaurantDatabase);
+
+		// Pre Sort the items (Alphabetically)
+		mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1, "alpha");
+		FoodItem* foodItemSortedAlpha[MAX_FOOD_ITEMS];
+		for (int i = 0; i < numberOfAllFood; i++)
+		{
+			foodItemSortedAlpha[i] = foodItemsUnsorted[i];
+		}
+		// Pre Sort the items (Price)
+		mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1, "price");
+		FoodItem* foodItemSortedPrice[MAX_FOOD_ITEMS];
+		for (int i = 0; i < numberOfAllFood; i++)
+		{
+			foodItemSortedPrice[i] = foodItemsUnsorted[i];
+		}
+		// Pre Sort the items (Category)
+		mergeSort(foodItemsUnsorted, 0, numberOfAllFood - 1, "category");
+		FoodItem* foodItemSortedCategory[MAX_FOOD_ITEMS];
+		for (int i = 0; i < numberOfAllFood; i++)
+		{
+			foodItemSortedCategory[i] = foodItemsUnsorted[i];
+		}
+
 		// User presented with two choices to log in or register
 		while (customerLoggedIn == false && staffLoggedIn == false)
 		{
@@ -388,7 +383,6 @@ int main()
 				if (userDatabase.customerLogin(customerPointer))
 				{
 					customerLoggedIn = true;
-					cout << "customer pointer " << customerPointer << endl;
 					break;
 				}
 				break;
@@ -450,13 +444,13 @@ int main()
 		{
 			//Present interface for the user
 			cout << "====================================================" << endl;
-			cout << "Welcome Back" << endl;
+			cout << "Welcome Back " << customerPointer->getCustomerName() << endl;
 			cout << "What would you like to do?" << endl;
 			cout << "1. Create new order" << endl;
 			cout << "2. Check order" << endl;
 			cout << "3. Cancel Order" << endl;
-			cout << "4. Log out" << endl;
-			cout << "5. View all food" << endl;
+			cout << "4. View all food" << endl;
+			cout << "5. Log out" << endl;
 			cout << "Your choice ? ";
 			int loginChoice;
 			cin >> loginChoice;
@@ -469,7 +463,7 @@ int main()
 				{
 					cout << "You can only have 1 order at a time. " << endl;
 					cout << "Check your order status and confirm its arrival before starting new order." << endl;
-					break;
+					continue;
 				}
 				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
 				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
@@ -480,11 +474,12 @@ int main()
 				if (customerPointer->createNewOrder(newOrder, &restaurantDatabase))
 					cout << "Order Successfully created" << endl;
 				else
-					break;
+					continue;
 				// Show the menu and ask for user for order
 				customerPointer->addItemToOrder(newOrder, &restaurantDatabase);
 				// Get final confirmation
 				customerPointer->confirmOrder(newOrder);
+				continue;
 			}
 			case 2: // Check current in progress order
 			{
@@ -536,6 +531,7 @@ int main()
 				const int customerNearestMRT = getNearestZone(customerPostalCode);
 				const int restaurantNearestMRT = getNearestZone(restaurantPostalCode);
 				dijkstra(customerNearestMRT, restaurantNearestMRT);
+				continue;
 			}
 			case 3: // Cancel in progress order
 			{
@@ -585,16 +581,10 @@ int main()
 					} // Exited while loop, item has been dequeued
 					// Set current order to none 
 					customerPointer->removeCurrentOrder();
+					continue;
 				}
 			}
-			case 4: // Log out
-			{
-				cout << "Case 4" << endl;
-				customerPointer = nullptr;
-				customerLoggedIn = false;
-				break;
-			}
-			case 5: // View All food items
+			case 4: // View All food items
 			{
 				bool isDoneViewing = false;
 				string customerViewChoice;
@@ -682,6 +672,13 @@ int main()
 				}
 				break;
 			}
+			case 5: // Log out
+			{
+				cout << "Case 4" << endl;
+				customerPointer = nullptr;
+				customerLoggedIn = false;
+				break;
+			}
 			default: // Else show an error
 				cout << "Invalid input. Please enter a valid option." << endl;
 				cout << "-------------------------------------------" << endl;
@@ -718,7 +715,6 @@ int main()
 			case 2: // update Order Status
 			{
 				Order* aOrder = staffPointer->getRestaurantPointer()->getIncomingOrder()->getFrontOrderNode()->orderPointer;
-				staffPointer->updateOrderStatus(*aOrder);
 				break;
 			}
 			case 3: // View Menu
@@ -730,6 +726,7 @@ int main()
 			case 4: // Add Food Item
 			{
 				staffPointer->addFoodItem();
+				// Store pre-sorted items
 				break;
 			}
 
