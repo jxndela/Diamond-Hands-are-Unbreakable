@@ -306,9 +306,7 @@ bool CustomerDictionary::customerLogin(Customer*& aCustomer)
 	if (hashedPassword == comparedHash && isExistingCustomer)
 	{
 		cout << "Authentication success" << endl;
-		cout << "address of user in dictionary : " << search(userInputEmail) << endl;
 		aCustomer = search(userInputEmail);
-		cout << "Customer actual pointer : " << aCustomer << endl;
 		return true;
 	}
 	cout << "Something went wrong, please try logging in again" << endl;
