@@ -327,11 +327,10 @@ bool CustomerDictionary::registerCustomerAccount()
 	string userInputEmail = getValidEmail();
 	string userInputPassword;
 	cout << "Please enter a password : ";
-	cin.ignore();
+	cin.ignore(); // Deny spaces in password, should be contiguous string
 	getline(cin, userInputPassword);
 	string userInputName;
 	cout << "Please enter your Name : ";
-	cin.ignore();
 	getline(cin, userInputName);
 	int userInputPostalCode = getValidPostalCode();
 
