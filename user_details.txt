@@ -6,4 +6,5 @@ ongjie90@gmail.com,2,Ong Jie,987651
 minty@gmail.com,1,minty,123333
 jon@gmail.com,0,Jon Doe,234561
 jxndela@gmail.com,0,Janet Xndela,456781
+jolyne@gmail.com,2,jolyne,90990
 jojolion@gmail.com,2,johnny,132312

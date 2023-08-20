@@ -20,11 +20,13 @@
 #include "FoodItemAVL.h"
 #include "Order.h"
 
+
 // Name Space Standard
 using namespace std;
 
 // Declare Constants
 const int MAX_FOOD_ITEMS = 1000;
+
 const int INF = 9999999; // Large value used to symbolise infinity
 
 // Declaring Constants for Dijkstra Algorithm and MRT Map
@@ -124,9 +126,10 @@ void dijkstra(int aSource, int aDestination)
 		}
 	}
 	// Print the shortest travel path and total time
+	cout << "---------------------------------------------------" << endl;
 	cout << "Shortest travel time from " << stationNames[aSource] << " to " << stationNames[aDestination] << " is: " << stationNames[aSource];
 	printPathRecursively(parent, aDestination);
-	cout << "\nTotal travel time: " << times[aDestination] << " minutes" << std::endl;
+	cout << "\nTotal travel time: " << times[aDestination] << " minutes" << endl;
 }
 
 int getNearestZone(int const aPostalCode)
@@ -456,123 +459,78 @@ int main()
 			{
 			case 1: // Create order
 			{
-				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
-				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
-				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
-				cout << "                                                                            " << endl;
 				// Check if there are existing orders
 				if (customerPointer->getCurrentOrder() != nullptr)
 				{
 					cout << "You can only have 1 order at a time. " << endl;
 					cout << "Check your order status and confirm its arrival before starting new order." << endl;
+					break;
 				}
+				cout << "____ ____ ____ ____ ___ ____    _  _ ____ _ _ _    ____ ____ ___  ____ ____ " << endl;
+				cout << "|    |__/ |___ |__|  |  |___    || | |___ | | |    |  | |__/ |  | |___ |__/ " << endl;
+				cout << "|___ |  | |___ |  |  |  |___    | || |___ |_|_|    |__| |  | |__/ |___ |  | " << endl;
+				cout << "                                                                            " << endl;
 				Order* newOrder = new Order;
 				// If successfully created return true
 				if (customerPointer->createNewOrder(newOrder, &restaurantDatabase))
 					cout << "Order Successfully created" << endl;
 				else
 					break;
-				// Add items into basket
-				Restaurant selectedRestaurant = *newOrder->getRestaurantPointer();
-				FoodItemAVL selectedMenu = *selectedRestaurant.getRestaurantMenuPointer();
-				string customerFoodChoice;
-				// Print menu of restaurant
-				selectedRestaurant.printMenu();
-				bool isFirstItemSelected = false;
-				while (true)
-				{
-					// Prompt user for input
-					cout << "Please enter the exact name of dish you wish to order (Type 'exit' to exit) : ";
-					getline(cin, customerFoodChoice);
-					// Check if input matches any of the name
-					if (customerFoodChoice == "exit")
-						break;
-					// Create temporary pointer to store
-					FoodItem* tempFoodItem = selectedMenu.searchNode(customerFoodChoice);
-					if (tempFoodItem == nullptr)
-					{
-						cout << "Please enter a valid food item name which you wish to order." << endl;
-						cout << "------------------------------------------------------------" << endl;
-						continue;
-					}
-					// Else it is successful it finding a food item, add into the order
-					if (newOrder->addFoodItem(tempFoodItem) == false)
-					{
-						cout << "Addition of food item unsuccessful. Something went wrong" << endl;
-						cout << "--------------------------------------------------------" << endl;
-					}
-					// Print success message
-					cout << "Successfully added " << tempFoodItem->getName() << " into the order." << endl;
-				}
-				// confirm the order and send over to the order queue
-				char customerResponse;
-				while (true)
-				{
-					newOrder->printOrderInformation();
-					cout << "Would you like to confirm your order? (Order will be cancelled otherwise) Y/N : ";
-					cin >> customerResponse;
-					if (tolower(customerResponse) == 'n')
-					{
-						cout << "Order cancelled" << endl;
-						delete newOrder;
-						break;
-					}
-					if (tolower(customerResponse) == 'y' && newOrder->getSize() > 0)
-					{
-						selectedRestaurant.getIncomingOrder()->enqueue(newOrder);
-						cout << "Order is confirmed and has been sent to the restaurant" << endl;
-						customerPointer->setCurrentOrder(newOrder);
-						customerPointer->confirmOrder();
-						break;
-					}
-					if (tolower(customerResponse) == 'y' && newOrder->getSize() == 0)
-					{
-						cout << "Empty order cannot be submitted, it will now be voided." << endl;
-						delete newOrder;
-						break;
-					}
-					cout << "Invalid response, please try again.";
-					cout << "-----------------------------------";
-				}
+				// Show the menu and ask for user for order
+				customerPointer->addItemToOrder(newOrder, &restaurantDatabase);
+				// Get final confirmation
+				customerPointer->confirmOrder(newOrder);
 			}
 			case 2: // Check current in progress order
 			{
-				if (customerPointer->getCurrentOrder() == nullptr)
+				Order* currentOrder = customerPointer->getCurrentOrder();
+				// Check if empty
+				if (currentOrder == nullptr)
 				{
 					cout << "No Current Orders ongoing" << endl;
 					continue;
 				}
-				if (customerPointer->getCurrentOrder()->getOrderStatus() == "Completed")
+				
+				// Check if order is sent by restaurant yet
+				if (currentOrder->getOrderStatus() == "Completed")
 				{
-					bool isOrderConfirmed = false;
-					customerPointer->getCurrentOrder()->printOrderInformation();
-					while (!isOrderConfirmed)
+					// Assume customer has not received
+					bool isOrderReceived = false;
+					currentOrder->printOrderInformation();
+					// While claimed to be sent by restaurant, need authentication from user
+					while (!isOrderReceived)
 					{
+						// Prompt user
 						char confirmOrderReceived;
 						cout << "Confirm that order is received ? (Y/N) : ";
 						cin >> confirmOrderReceived;
+						// Customer has not received it yet, just break
 						if (tolower(confirmOrderReceived) == 'n')
 						{
 							cout << "Order has not been delivered yet, returning to menu." << endl;
 							break;
 						}
+						// User has received it
 						if (tolower(confirmOrderReceived) == 'y')
 						{
+							isOrderReceived = true;
 							cout << "Order has been received." << endl;
-							// INSERT POINTS???????????????????????
-							customerPointer->getCurrentOrder()->getRestaurantPointer()->getIncomingOrder()->dequeue();
+							// Dequeue from restaurant
+							currentOrder->getRestaurantPointer()->getIncomingOrder()->dequeue();
 							customerPointer->setCurrentOrder(nullptr);
 							break;
 						}
 					}
 					continue;
 				}
+				// Else failed by IF checks -> order is still in kitchen
+				customerPointer->getCurrentOrder()->printOrderInformation();
 				int customerPostalCode = customerPointer->getCustomerPostalCode();
 				int restaurantPostalCode = customerPointer->getCurrentOrder()->getRestaurantPointer()->getPostalCode();
 				int customerNearestMRT = getNearestZone(customerPostalCode);
 				int restaurantNearestMRT = getNearestZone(restaurantPostalCode);
 				dijkstra(customerNearestMRT, restaurantNearestMRT);
-				customerPointer->getCurrentOrder()->printOrderInformation();
+
 				continue;
 			}
 			case 3: // Cancel in progress order
