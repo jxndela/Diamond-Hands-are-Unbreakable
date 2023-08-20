@@ -333,6 +333,7 @@ bool StaffDictionary::stafflogin(RestaurantStaff*& aStaff)
 	if (comparedHash == hashedPassword && isExistingStaff)
 	{
 		cout << "Authentication success" << endl;
+		aStaff = search(staffInputEmail);
 		return true;
 	}
 	cout << "Something went wrong, please try logging in again" << endl;
