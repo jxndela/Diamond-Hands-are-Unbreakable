@@ -1,11 +1,3 @@
-kaiyuan@gmail.com,5,Jojo Kaiyuan,123451
-jojo@gmail.com,1,Jojo Smith,678901
-ho@gmail.com,0,hoho,123321
-testing@gmail.com,2,Testing User,543211
-ongjie90@gmail.com,2,Ong Jie,987651
 minty@gmail.com,1,minty,123333
-staff1@gmail.com,1,taff 1,666666
 jon@gmail.com,0,Jon Doe,234561
 jxndela@gmail.com,0,Janet Xndela,456781
-jolyne@gmail.com,2,jolyne,90990
-jojolion@gmail.com,2,johnny,132312
