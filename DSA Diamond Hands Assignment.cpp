@@ -685,7 +685,6 @@ int main()
 			}
 			case 5: // Log out
 			{
-				cout << "Case 4" << endl;
 				customerPointer = nullptr;
 				customerLoggedIn = false;
 				break;
