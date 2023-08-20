@@ -27,22 +27,6 @@ FoodItem::~FoodItem()
 {
 }
 
-// Function to set price of food item
-// Pre : ~
-// Post: Price will be changed
-void FoodItem::setFoodItemPrice(double aPrice)
-{
-	price = aPrice;
-}
-
-// Function to set availability
-// Pre : ~
-// Post: Availability will be changed
-void FoodItem::setAvailability(bool aAvailableStatus)
-{
-	isAvailable = aAvailableStatus;
-}
-
 // Function to get name of food item
 // Pre : ~
 // Post: Retrieves the name of the food item
@@ -81,4 +65,20 @@ double FoodItem::getPrice()
 bool FoodItem::getAvailability()
 {
 	return isAvailable;
+}
+
+// Function to set price of food item
+// Pre : ~
+// Post: Price will be changed
+void FoodItem::setFoodItemPrice(double aPrice)
+{
+	price = aPrice;
+}
+
+// Function to set availability
+// Pre : ~
+// Post: Availability will be changed
+void FoodItem::setAvailability(bool aAvailableStatus)
+{
+	isAvailable = aAvailableStatus;
 }

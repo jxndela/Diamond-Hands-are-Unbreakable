@@ -25,16 +25,6 @@ public:
 	// Destructor
 	~FoodItem();
 
-	// Function to set price of food item
-	// Pre : ~
-	// Post: Price will be changed
-	void setFoodItemPrice(double price);
-
-	// Function to set availability
-	// Pre : ~
-	// Post: Availability will be changed
-	void setAvailability(bool aAvailableStatus);
-
 	// Function to get name of food item
 	// Pre : ~
 	// Post: Retrieves the name of the food item
@@ -60,5 +50,14 @@ public:
 	// Post: Retrieves availability of the food item
 	bool getAvailability();
 
+	// Function to set price of food item
+	// Pre : ~
+	// Post: Price will be changed
+	void setFoodItemPrice(double price);
+
+	// Function to set availability
+	// Pre : ~
+	// Post: Availability will be changed
+	void setAvailability(bool aAvailableStatus);
 };
 

@@ -28,6 +28,12 @@ void OrderQueue::getFront(Order& aOrder)
 		aOrder = *(frontNode->orderPointer);
 }
 
+// Get the front node
+OrderNode* OrderQueue::getFrontOrderNode()
+{
+	return frontNode;
+}
+
 // Get item from back of q
 // Pre : Order should exist
 // Post: Order will be stored in a0rder
@@ -55,12 +61,10 @@ void OrderQueue::printQueue()
 	}
 
 	cout << "Printing all orders in queue..." << endl;
-
 	// Create temporary node pointer set to front
 	// Create a counter to show appropriate number starting at 1
 	OrderNode* current = frontNode;
 	int counter = 1;
-
 	// Iterate throught the queue
 	/*while (current != nullptr)
 	{
@@ -75,7 +79,6 @@ void OrderQueue::printQueue()
 		current = current->next;
 		counter++;
 	}
-	
 }
 
 // Enqueue (add) item to back of q
@@ -87,7 +90,6 @@ bool OrderQueue::enqueue(Order* aOrderPointer)
 	OrderNode* tempNode = new OrderNode();
 	tempNode->orderPointer = aOrderPointer;
 	tempNode->next = nullptr;
-
 	// If empty then frontNode point to tempNode
 	if (isEmpty())
 	{
@@ -98,7 +100,6 @@ bool OrderQueue::enqueue(Order* aOrderPointer)
 	{
 		backNode->next = tempNode;
 	}
-
 	// Set the backNode to the tempNode
 	backNode = tempNode;
 	size++;
@@ -163,5 +164,8 @@ void OrderQueue::saveOrderToFile()
         << frontNode->orderPointer->totalCost()
         << endl;
 
+	// Close the file
     outFile.close();
 }
+
+

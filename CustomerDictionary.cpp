@@ -10,7 +10,6 @@ CustomerDictionary::CustomerDictionary()
 	}
 	// Set default size to 0
 	size = 0;
-
 	// Load user details from file
 	loadFromFile();
 }
@@ -20,7 +19,6 @@ CustomerDictionary::~CustomerDictionary()
 {
 	// Save user details to file before exiting
 	saveToFile();
-	
 	// Iterate through each bucket
 	for (int i = 0; i < CUSTOMER_MAX_SIZE; ++i) {
 		// Delete linked list nodes in the current bucket
@@ -47,16 +45,74 @@ int CustomerDictionary::getHashedKey(string& aEmailKey)
 	return sum % CUSTOMER_MAX_SIZE;
 }
 
+// Simple validator
+string CustomerDictionary::getValidEmail()
+{
+	bool validEmail = false;
+	string userInputEmail;
+	while (!validEmail)
+	{
+		cout << "Please enter your email : ";
+		cin >> userInputEmail;
+		// Reject empty input
+		if (userInputEmail.length() == 0)
+		{
+			cout << "Input cannot be empty. Please try again." << endl;
+			continue;
+		}
+		// Check for email format
+		size_t atSymbolIndex = userInputEmail.find('@');
+		size_t dotSymbolIndex = userInputEmail.rfind('.');
+		if (atSymbolIndex == -1 || dotSymbolIndex == -1 || atSymbolIndex > dotSymbolIndex)
+		{
+			cout << "Improper email format. Should look like example@gmail.com" << endl;
+			continue;
+		}
+		validEmail = true;
+	}
+	return userInputEmail;
+}
+
+// Check if valid postal code
+// Postal Codes in SG are all 6 digits long , any digit is OK
+int CustomerDictionary::getValidPostalCode()
+{
+	bool validPostal = false;
+	string userInputPostalCode;
+	while (!validPostal)
+	{
+		bool isAllDigits = true;
+		cout << "Please enter your postal code : ";
+		cin >> userInputPostalCode;
+		// Check length
+		if (userInputPostalCode.length() != 6) {
+			cout << "Please enter valid 6 digit postal code." << endl;
+			continue;
+		}
+		for (char aChar : userInputPostalCode) {
+			if (!isdigit(aChar))
+			{
+				cout << "Please enter valid 6 digit postal code." << endl;
+				isAllDigits = false;
+			}
+		}
+		if (isAllDigits) break;
+		validPostal = true;
+	}
+	// string to int and return
+	return stoi(userInputPostalCode);
+}
+
 // Add new item with the specified key to the Dictionary
 // Pre : EmailKey must be input validated beforehand. This emailKey comes from user input
-//       User Object is created 
+//       User Object is created
 // Post: New item added to dictionary, returns true. Otherwise return false
 bool CustomerDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 {
 	// Hash the email key to obtain index of the user
 	int index = CustomerDictionary::getHashedKey(aEmailKey);
 
-	// If space contains a nullptr, start new linked list 
+	// If space contains a nullptr, start new linked list
 	if (customers[index] == nullptr)
 	{
 		// Create a new node, entering the aEmailKey as well as the User Object
@@ -80,7 +136,7 @@ bool CustomerDictionary::addCustomer(string aEmailKey, Customer& aCustomer)
 		{
 			current = current->next;
 			// Check for duplicate user object in the rest of chain
-			// User objects cannot be associated with 2 email keys simultaneously 
+			// User objects cannot be associated with 2 email keys simultaneously
 			if (current->customer.getEmail() == aCustomer.getEmail())
 			{
 				// If matched, it means that user exists at some point of the chain
@@ -125,7 +181,7 @@ string CustomerDictionary::retrievePassword(string& aEmailKey)
 }
 
 // Retrieve the user that matches the email key
-// Pre : 
+// Pre :
 // Post: Returns the user
 bool CustomerDictionary::retrieveUser(string& aEmailKey, Customer& aCustomer)
 {
@@ -155,7 +211,6 @@ bool CustomerDictionary::isEmpty()
 {
 	return size == 0;
 }
-
 
 void CustomerDictionary::loadFromFile()
 {
@@ -226,9 +281,8 @@ string CustomerDictionary::hashPassword(string& aUnhashedPassword)
 	return hashedPassword;
 }
 
-
 // Pre : Should only be when logged out
-// Post: Return a true or false statement 
+// Post: Return a true or false statement
 bool CustomerDictionary::customerLogin(Customer*& aCustomer)
 {
 	bool isExistingCustomer = false;
@@ -279,7 +333,7 @@ bool CustomerDictionary::registerCustomerAccount()
 
 	// Step 1: Hash the user input password
 	string hashedPassword = hashPassword(userInputPassword);
-	// Step 2: Create a temporary user 
+	// Step 2: Create a temporary user
 	Customer tempUser = Customer(userInputEmail, hashedPassword,
 		userInputName, userInputPostalCode);
 	// STep 3: Add the user
@@ -310,62 +364,3 @@ Customer* CustomerDictionary::search(string aEmail)
 	}
 	return nullptr;
 }
-
-// Simple validator
-string CustomerDictionary::getValidEmail()
-{
-	bool validEmail = false;
-	string userInputEmail;
-	while (!validEmail)
-	{
-		cout << "Please enter your email : ";
-		cin >> userInputEmail;
-		// Reject empty input
-		if (userInputEmail.length() == 0)
-		{
-			cout << "Input cannot be empty. Please try again." << endl;
-			continue;
-		}
-		// Check for email format
-		size_t atSymbolIndex = userInputEmail.find('@');
-		size_t dotSymbolIndex = userInputEmail.rfind('.');
-		if (atSymbolIndex == -1 || dotSymbolIndex == -1 || atSymbolIndex > dotSymbolIndex)
-		{
-			cout << "Improper email format. Should look like example@gmail.com" << endl;
-			continue;
-		}
-		validEmail = true;
-	}
-	return userInputEmail;
-}
-
-// Check if valid postal code
-// Postal Codes in SG are all 6 digits long , any digit is OK
-int CustomerDictionary::getValidPostalCode()
-{
-	bool validPostal = false;
-	string userInputPostalCode;
-	while(!validPostal)
-	{
-		bool isAllDigits = true;
-		cout << "Please enter your postal code : ";
-		cin >> userInputPostalCode;
-		// Check length
-		if (userInputPostalCode.length() != 6) {
-			cout << "Please enter valid 6 digit postal code." << endl;
-			continue;
-		}
-		for (char aChar : userInputPostalCode) {
-			if (!isdigit(aChar)) 
-			{
-				cout << "Please enter valid 6 digit postal code." << endl;
-				isAllDigits = false;
-			}
-		}
-		if (isAllDigits) break;
-		validPostal = true;
-	}
-	// string to int and return
-	return stoi(userInputPostalCode);
-}
-

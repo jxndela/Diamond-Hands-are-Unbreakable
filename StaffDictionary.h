@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <string>
-
 #include "User.h"
 #include "RestaurantStaff.h"
 
@@ -20,14 +19,12 @@ struct RestaurantStaffNode
 	RestaurantStaffNode* next = nullptr;	// Pointer to next item
 };
 
-
 class StaffDictionary
 {
 private:
 	// Attributes
 	RestaurantStaffNode* staffs[STAFF_MAX_SIZE];
 	int size;
-
 
 public:
 	// Constructor for the Dictionary
@@ -38,6 +35,13 @@ public:
 	// Pre : ~
 	// Post: Returns INT value based on hash algorithm hashedKey
 	int getHashedKey(string aEmailKey);
+
+	// Simple validator
+	string getValidEmail();
+
+	// Check if valid postal code
+	// Postal Codes in SG are all 6 digits long , any digit is OK
+	int getValidPostalCode();
 
 	// Add new item with the specified key to the Dictionary
 	// Pre : EmailKey must be in email format
@@ -59,7 +63,6 @@ public:
 	// Post : Returns true if there nothing in the dictionary
 	bool isEmpty();
 
-
 	// loads data from file
 	void loadFromFile(RestaurantArray* restaurantDatabase);
 	/*void loadFromFile();*/
@@ -74,13 +77,6 @@ public:
 	// INPUT HELPERS
 	string hashPassword(string& aUnhashedPassword);
 
-	// Simple validator
-	string getValidEmail();
-
-	// Check if valid postal code
-	// Postal Codes in SG are all 6 digits long , any digit is OK
-	int getValidPostalCode();
-
 	// STAFF
 	// Functions 1 : Login
 	// Pre : Should only be when logged out
@@ -92,8 +88,6 @@ public:
 	// Pre : Should only be when logged out
 	bool registerStaffAccount(RestaurantArray aRestaurantDatabase);
 
-	// D
 	// Function 3 : Edit Food Items
 	void editFoodItems(RestaurantStaff* restaurantStaff);
-
 };

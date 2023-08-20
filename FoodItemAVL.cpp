@@ -17,6 +17,11 @@ FoodItemAVL::~FoodItemAVL()
     //deleteTree(root);
 }
 
+AVLNode* FoodItemAVL::getRoot()
+{
+    return root;
+}
+
 // Get the height of the node in the AVL Tree
 // Pre : Node exits
 // Post: Positive int value
@@ -358,7 +363,10 @@ bool FoodItemAVL::deleteNode(string& itemName)
     return false; // Node with itemName not found or tree is now empty
 }
 
-
+void FoodItemAVL::addFoodIntoArray(FoodItem* aFoodItemArray[], int& aIndexPosition)
+{
+	addFoodIntoArrayRecursive(root, aFoodItemArray, aIndexPosition);
+}
 
 
 

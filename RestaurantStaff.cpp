@@ -6,6 +6,7 @@
 #include <chrono>
 #include <cstring>
 // Constructor
+
 RestaurantStaff::RestaurantStaff()
 {
 
@@ -18,10 +19,45 @@ RestaurantStaff::RestaurantStaff(string aEmail, string aPasswordhash, Restaurant
     restaurantPointer = aRestaurantPointer;
 }
 
-
 RestaurantStaff::~RestaurantStaff()
 {
 }
+
+string RestaurantStaff::getEmail()
+{
+    return email;
+}
+
+string RestaurantStaff::getPasswordHash()
+{
+    return passwordHash;
+}
+
+string RestaurantStaff::getRestaurantName()
+{
+    return restaurantName;
+}
+
+Restaurant* RestaurantStaff::getRestaurantPointer()
+{
+    return restaurantPointer;
+}
+
+void RestaurantStaff::setRestaurantName(string aRestaurantName)
+{
+    restaurantName = aRestaurantName;
+}
+
+void RestaurantStaff::setRestaurantPointer(Restaurant* aRestaurantPointer)
+{
+    restaurantPointer = aRestaurantPointer;
+}
+
+void RestaurantStaff::setPasswordHash(string newPasswordHash)
+{
+    passwordHash = newPasswordHash;
+}
+
 
 void RestaurantStaff::viewAllOrders()
 {
@@ -269,37 +305,3 @@ void RestaurantStaff::loadPastOrders(string date)
 }
 
 
-string RestaurantStaff::getEmail()
-{
-    return email;
-}
-
-string RestaurantStaff::getPasswordHash()
-{
-    return passwordHash;
-}
-
-void RestaurantStaff::setPasswordHash(string newPasswordHash)
-{
-    passwordHash = newPasswordHash;
-}
-
-string RestaurantStaff::getRestaurantName()
-{
-	return restaurantName;
-}
-
-void RestaurantStaff::setRestaurantName(string aRestaurantName)
-{
-	restaurantName = aRestaurantName;
-}
-
-void RestaurantStaff::setRestaurantPointer(Restaurant* aRestaurantPointer)
-{
-	restaurantPointer = aRestaurantPointer;
-}
-
-Restaurant* RestaurantStaff::getRestaurantPointer()
-{
-	return restaurantPointer;
-}

@@ -71,6 +71,55 @@ int Order::getCustomerPostalCode()
 	return customerPostalCode;
 }
 
+// Get the size
+// Pre : ~
+// Post: Get size
+int Order::getSize()
+{
+	return size;
+}
+
+// Get the Restaurant Pointer
+// Pre : ~
+// Post: Get Restaurant Pointer
+Restaurant* Order::getRestaurantPointer()
+{
+	return restaurantPointer;
+}
+
+// Set the two main parties involved in an order, customer & restaurant
+// Pre : ~
+// Post: customer pointer and restaurant pointer are set
+void Order::setPartyInformation(Customer* aCustomer, Restaurant* aRestaurant)
+{
+	customerPointer = aCustomer;
+	restaurantPointer = aRestaurant;
+}
+
+// Set postal code of customer
+// Pre : ~
+// Post: Set customer postal code
+void Order::setCustomerPostalCode(int aPostalCode)
+{
+	customerPostalCode = aPostalCode;
+}
+
+// Set name of customer
+// Pre : ~
+// Post: Set customer name
+void Order::setCustomerName(string aName)
+{
+	customerName = aName;
+}
+
+// Set name of restaurant
+// Pre : ~
+// Post: Set restaurant name
+void Order::setRestaurantName(string aName)
+{
+	restaurantName = aName;
+}
+
 // Set method for order status from restaurant
 // Pre  : ~
 // Post : order status changed to completed
@@ -159,7 +208,6 @@ void Order::printOrderInformation()
 			tempFoodItemName = orderedItems[i]->getName();
 		// Else go on to the next index of orderedItems
 		else continue;
-
 		// Check if the item is not unique
 		int foodItemIndex = -1;
 		for (int j = 0; j < uniqueItemCounter; j++)
@@ -180,9 +228,7 @@ void Order::printOrderInformation()
 			foodItemIndex = uniqueItemCounter;
 			// Update counter such that it points to the next index for next unique
 			uniqueItemCounter++;
-
 		}
-
 		foodItemCount[foodItemIndex]++;
 	}
 
@@ -195,6 +241,8 @@ void Order::printOrderInformation()
 	cout << "Total Cost : $" << totalCost() << endl;
 }
 
+// Derive total cost of the order
+// Iterate through items and add to total cost
 double Order::totalCost()
 {
 	double totalCost = 0;

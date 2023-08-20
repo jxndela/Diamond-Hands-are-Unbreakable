@@ -108,6 +108,9 @@ public:
     // Destructor
     ~FoodItemAVL();
 
+    // Get the root
+    AVLNode* getRoot();
+
     // Insert node into the AVL tree
     // Pre : Tree must exist i guess
     // Post: The node will be inserted into the tree int the correct position
@@ -135,14 +138,7 @@ public:
     //       Returns false if unable to find node
     bool deleteNode(string& foodItemName);
 
-    AVLNode* getRoot()
-    {
-        return root;
-    }
-
-    void addFoodIntoArray(FoodItem* aFoodItemArray[], int& aIndexPosition)
-    {
-        addFoodIntoArrayRecursive(root, aFoodItemArray, aIndexPosition);
-    }
+    // Add food into array
+    void addFoodIntoArray(FoodItem* aFoodItemArray[], int& aIndexPosition);
 };
 

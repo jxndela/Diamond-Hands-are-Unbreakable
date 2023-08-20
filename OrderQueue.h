@@ -35,6 +35,9 @@ public:
 	// Post: Order will be stored in aOrder
 	void getFront(Order& aOrder);
 
+	// Get the front node
+	OrderNode* getFrontOrderNode();
+
 	// Get item from back of q
 	// Pre : Order should exist
 	// Post: Order will be stored in a0rder
@@ -56,11 +59,8 @@ public:
 	// Post: Order at front is removed
 	bool dequeue();
 
+	// Save order to file
 	void saveOrderToFile();
 
-	OrderNode* getFrontOrderNode()
-	{
-		return frontNode;
-	}
 };
 

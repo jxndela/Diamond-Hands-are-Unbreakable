@@ -56,38 +56,35 @@ public:
     // Post: Get customer postalcode
     int getCustomerPostalCode();
 
-    int getSize()
-    {
-        return size;
-    }
+    // Get the size
+    // Pre : ~
+    // Post: Get size
+    int getSize();
 
-    Restaurant* getRestaurantPointer()
-    {
-        return restaurantPointer;
-    }
+    // Get the Restaurant Pointer
+	// Pre : ~
+	// Post: Get Restaurant Pointer
+    Restaurant* getRestaurantPointer();
 
-    void setPartyInformation(Customer* aCustomer,Restaurant* aRestaurant)
-    {
-        customerPointer = aCustomer;
-        restaurantPointer = aRestaurant;
-    }
+    // Set the two main parties involved in an order, customer & restaurant
+    // Pre : ~
+    // Post: customer pointer and restaurant pointer are set
+    void setPartyInformation(Customer* aCustomer,Restaurant* aRestaurant);
 
-    void setCustomerPostalCode(int aPostalCode)
-    {
-        customerPostalCode = aPostalCode;
-    }
+    // Set postal code of customer
+	// Pre : ~
+	// Post: Set customer postal code
+    void setCustomerPostalCode(int aPostalCode);
 
-    void setCustomerName(string aName)
-    {
-        customerName = aName;
-    }
+    // Set name of customer
+	// Pre : ~
+	// Post: Set customer name
+    void setCustomerName(string aName);
 
-    void setRestaurantName(string aName)
-    {
-        restaurantName = aName;
-    }
-    // Get size of the 
-
+    // Set name of restaurant
+	// Pre : ~
+	// Post: Set restaurant name
+    void setRestaurantName(string aName);
 
     // Set method for order status from restaurant
     // Pre  : ~
@@ -114,6 +111,9 @@ public:
     // Post: ~
     void printOrderInformation();
 
+    // Derive total cost of the order
+    // Pre : ~
+    // Post: Returns total cost
 	double totalCost();
 };
 

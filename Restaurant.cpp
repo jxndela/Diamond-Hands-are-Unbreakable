@@ -3,7 +3,7 @@
 // Default Constructor
 Restaurant::Restaurant()
 {
-	restaurantName = "SUCK MY COCK";
+	restaurantName = "";
 	postalCode = 123456;
 	incomingOrder = nullptr;
 	restaurantMenu;
@@ -39,12 +39,32 @@ int Restaurant::getPostalCode()
 	return postalCode;
 }
 
+// Prints menu
+// Pre : ~
+// Post: Prints the entirety of the restaurants menu
 void Restaurant::printMenu()
 {
 	cout << "PRINTING MENU" << endl
 		<< "=============" << endl;
 	restaurantMenu.printInOrder();
 	cout <<"=============" << endl; 
+}
+
+// Get incoming Order
+// Pre : ~
+// Post: Get incoming order queue pointer
+OrderQueue* Restaurant::getIncomingOrder()
+{
+	return incomingOrder;
+}
+
+// Get restaurant menu
+// Pre : ~
+// Post: Get restaurant menu pointer
+FoodItemAVL* Restaurant::getRestaurantMenuPointer()
+{
+	FoodItemAVL* aPointer = &restaurantMenu;
+	return aPointer;
 }
 
 
@@ -91,6 +111,8 @@ void RestaurantArray::addRestaurant(Restaurant& aRestaurant, int& aIndexPosition
 }
 
 // Print Restaurant
+// Pre : ~
+// Post: Prints all the restaurants that were saved
 void RestaurantArray::printRestaurants()
 {
 	for (int i = 1; i < numberOfRestaurants + 1; i++)
@@ -102,6 +124,9 @@ void RestaurantArray::printRestaurants()
 
 
 // Read .txt file
+// Pre : ~
+// Post: Create restaurant objects after reading information
+// Post: Also read all food items and add them to respective restaurants
 void RestaurantArray::readRestaurantFile()
 {
 	// Open file restaurant.txt
@@ -112,7 +137,6 @@ void RestaurantArray::readRestaurantFile()
 		// Create the file if it doesn't exist
 		ofstream newFile("restaurant.txt");
 		newFile.close();
-
 		// Try opening the newly created file
 		inFile.open("restaurant.txt");
 		if (!inFile.is_open())
@@ -147,11 +171,10 @@ void RestaurantArray::readRestaurantFile()
 	string line;
 	string indexPositionString;
 	int indexPosition = 0;
-
+	// While there is something in the line read to create restayrabts and add to array
 	while (getline(inFile, line))
 	{
 		stringstream ss(line);
-		// Next value will be as follows followed by a comma
 		getline(ss, restaurantName, ',');
 		getline(ss, postalCodeString);
 		postalCode = stoi(postalCodeString);
@@ -162,11 +185,10 @@ void RestaurantArray::readRestaurantFile()
 		addRestaurant(newRestaurant, indexPosition);
 		indexPosition++;
 	}
+	// While there is something in the line, read to create food items and add to restaurants 
 	while (getline(inFile2, line))
 	{
 		stringstream ss(line);
-		// Next value will be as follows followed by a comma
-
 		getline(ss, indexPositionString, ',');
 		indexPosition = stoi(indexPositionString);
 		getline(ss, foodItemName, ',');
@@ -180,11 +202,15 @@ void RestaurantArray::readRestaurantFile()
 		// Create the new foodItem
 		FoodItem newFoodItem(foodItemName, description, category, isAvailable, price);
 		Restaurant* restaurantPointer = &allRestaurants[indexPosition];
+		// Add item into the menu
 		restaurantPointer->getRestaurantMenuPointer()->insertNode(newFoodItem);
 	}
 
 }
 
+// Save restaurants by writing to file
+// Pre : ~
+// Post: Restaurant information are stored inside a txt file
 void RestaurantArray::writeRestaurantFile()
 {
 	ofstream outFile("restaurant.txt");
@@ -207,19 +233,23 @@ void RestaurantArray::writeRestaurantFile()
 	outFile.close();
 }
 
+// Recursive function  to save the food items
+// Base Case : Current node = nullptr
+// Post: Else write out which restaurant it belongs to through index position, and store information
 void RestaurantArray::writeFoodItemsRecursive(ofstream& aOutFile, AVLNode* aNode, int& aIndexPosition)
 {
 	// End if the restaurant does not have any food items
 	if (aNode == nullptr)
 		return;
 
+	// store availability as a string for consistency in read / write
 	string availabilityString;
 	if (aNode->foodItem.getAvailability() == true)
 		availabilityString = "true";
 	if (aNode->foodItem.getAvailability() == false)
 		availabilityString = "false";
 
-	// Write food item recursively
+	// Write the food item informaiton
 	aOutFile << aIndexPosition << ","
 		<< aNode->foodItem.getName() << ","
 		<< aNode->foodItem.getFoodDescription() << ","
@@ -227,10 +257,15 @@ void RestaurantArray::writeFoodItemsRecursive(ofstream& aOutFile, AVLNode* aNode
 		<< availabilityString << ","
 		<< aNode->foodItem.getPrice() << endl;
 
+	// Write the food item recursively mid left right 
 	writeFoodItemsRecursive(aOutFile, aNode->left, aIndexPosition);
 	writeFoodItemsRecursive(aOutFile, aNode->right, aIndexPosition);
 }
 
+// Save food items
+// Pre :  ~
+// Post: Calls recursive function for each restaurant, and distributes index position for each of them
+//		 so that we can map which items belong to which restaurants
 void RestaurantArray::writeFoodItemsAVL()
 {
 	ofstream outFile("foodItem.txt");

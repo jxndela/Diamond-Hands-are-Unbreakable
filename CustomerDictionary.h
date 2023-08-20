@@ -17,9 +17,9 @@ const int CUSTOMER_MAX_SIZE = 5;
 // Dictionary structure containing user objects
 struct CustomerNode
 {
-	string emailKey;			// Search Key
-	Customer customer;					// Data item
-	CustomerNode* next = nullptr;	// Pointer to next item
+	string emailKey; // Search Key
+	Customer customer; // Data item
+	CustomerNode* next = nullptr; // Pointer to next item
 };
 
 class CustomerDictionary
@@ -38,6 +38,13 @@ public:
 	// Pre : ~
 	// Post: Returns INT value based on hash algorithm hashedKey
 	int getHashedKey(string& aEmailKey);
+
+	// Simple validator
+	string getValidEmail();
+
+	// Check if valid postal code
+	// Postal Codes in SG are all 6 digits long , any digit is OK
+	int getValidPostalCode();
 
 	// Add new item with the specified key to the Dictionary
 	// Pre : EmailKey must be in email format
@@ -67,13 +74,6 @@ public:
 	// INPUT HELPERS
 	string hashPassword(string& aUnhashedPassword);
 
-	// Simple validator
-	string getValidEmail();
-
-	// Check if valid postal code
-	// Postal Codes in SG are all 6 digits long , any digit is OK
-	int getValidPostalCode();
-
 	// Pre : Should only be when logged out
 	// Post: Return a true or false statement 
 	bool customerLogin(Customer*& aCustomer);
@@ -83,8 +83,8 @@ public:
 	bool registerCustomerAccount();
 
 	// searches for a user in the dictionary, returns a pointer to the user if found
-// Pre  : aEmailKey must be in email format
-// Post : returns true if user is found
+	// Pre  : aEmailKey must be in email format
+	// Post : returns true if user is found
 	Customer* search(string aEmail);
 };
 

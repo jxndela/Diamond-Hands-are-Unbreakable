@@ -29,6 +29,41 @@ public:
 	// Destructor
 	~RestaurantStaff();
 
+	// Check the email of a user object
+	// Pre : ~
+	// Post: Returns email
+	string getEmail();
+
+	// Check the passwordHash of a user object
+	// Pre : ~
+	// Post: Returns passwordHash
+	string getPasswordHash();
+
+	// restaurant name
+	// pre : ~
+	// post : returns restaurant name
+	string getRestaurantName();
+
+	// get restaurant pointer
+	// pre : ~
+	// post : returns restaurant pointer
+	Restaurant* getRestaurantPointer();
+
+	// set restaurant name
+	// pre : ~
+	// post : restaurant name is set
+	void setRestaurantName(string aRestaurantName);
+
+	// set restaurant pointer
+	// pre : ~
+	// post : restaurant pointer is set
+	void setRestaurantPointer(Restaurant* aRestaurantPointer);
+
+	// set password hash
+	// pre : ~
+	// post : password hash is set
+	void setPasswordHash(string aPasswordHash);
+
 	// View all active orders 
 	// Pre : ~
 	// Post: Return UI showing all the active orders
@@ -54,48 +89,11 @@ public:
 	// post : food item is added to the menu
 	void addFoodItem();
 
-
-	// Check the email of a user object
-	// Pre : ~
-	// Post: Returns email
-	string getEmail();
-
-	// Check the passwordHash of a user object
-	// Pre : ~
-	// Post: Returns passwordHash
-	string getPasswordHash();
-
-	// set password hash
-	// pre : ~
-	// post : password hash is set
-	void setPasswordHash(string aPasswordHash);
-
 	// Generate Report
 	// Pre : Must have completed orders in a given time period
 	// Post: Shows monthly report of total earnings and statistics.
 	void generateReport();
 
+	// Load all past orders
 	void loadPastOrders(string date);
-
-	// restaurant name
-	// pre : ~
-	// post : returns restaurant name
-	string getRestaurantName();
-	
-	// set restaurant name
-	// pre : ~
-	// post : restaurant name is set
-	void setRestaurantName(string aRestaurantName);
-
-	// set restaurant pointer
-	// pre : ~
-	// post : restaurant pointer is set
-	void setRestaurantPointer(Restaurant* aRestaurantPointer);
-
-	// get restaurant pointer
-	// pre : ~
-	// post : returns restaurant pointer
-	Restaurant* getRestaurantPointer();
-	
-
 };
