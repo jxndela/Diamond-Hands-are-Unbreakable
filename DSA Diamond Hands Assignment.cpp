@@ -715,11 +715,13 @@ int main()
 			case 2: // update Order Status
 			{
 				Order* aOrder = staffPointer->getRestaurantPointer()->getIncomingOrder()->getFrontOrderNode()->orderPointer;
+				staffPointer->updateOrderStatus(*aOrder);
 				break;
 			}
 			case 3: // View Menu
 			{
 				staffPointer->getRestaurantPointer()->getRestaurantMenuPointer()->printAllInOrder();
+				
 				break;
 			}
 
